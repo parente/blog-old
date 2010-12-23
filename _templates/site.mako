@@ -29,8 +29,9 @@
           <ul>
             <li>Blog</li>
             <li>About</hi>
-            <li>Papers</li>
+            <li>Software</li>
             <li>Clique</li>
+            <li>Papers</li>
           </ul>
         </nav>
         
@@ -55,7 +56,7 @@
               <li><a href="${post.path}">${post.title}</a></li>
             % endfor
             </ul>
-            <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/')}">Subscribe to posts »</a>
+            <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
 % if bf.config.blog.disqus.enabled:
             <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
 % endif

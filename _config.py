@@ -42,7 +42,7 @@ blog.description = "Collecting ideas since 1980"
 ## blog_timezone -- the timezone that you normally write your blog posts from
 blog.timezone = "US/Eastern"
 
-blog.disqus.name = 'peterparente'
+blog.disqus.name = 'mindtrove'
 blog.disqus.enabled = True
 blog.post_excerpts.enabled = True
 blog.post_excerpts.word_length = 25
