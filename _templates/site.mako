@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/reset.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/960.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/site.css')}" />
+    <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Tinos:regular,italic,bold' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->    
@@ -18,7 +21,7 @@
     <div id="wrapper" class="container_12">
       <header id="header" class="grid_12">
         <h1><a href="${bf.config.site.url}">${bf.config.blog.name}</a></h1>
-        <h2>${bf.config.blog.description}</h2>
+        <span>${bf.config.blog.description}</span>
       </header>
       <div id="content">
         
@@ -32,6 +35,7 @@
         </nav>
         
         <div id="main" class="grid_9">
+          <div style="width: 100%">&nbsp</div>
           ${next.body()}
         </div>
 
@@ -71,10 +75,11 @@
 <script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
           </aside>
         </div>
+        <div class="clear"></div>
         
-        <footer id="footer" class="grid_12">
-          <p>Copyright &copy; 2011 Peter Parente. All rights reserved.</p>
-          <p>Powered by <a href="http://blogofile.com">Blogofile</a></p>
+        <footer id="footer">
+          <p id="copy" class="grid_6">Copyright &copy; 2011 Peter Parente. All rights reserved.</p>
+          <p id="blogofile" class="grid_6">Powered by <a href="http://blogofile.com">Blogofile</a>.</p>
         </footer>
       </div>
     </div>

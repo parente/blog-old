@@ -1,6 +1,31 @@
 body {
     line-height: 1.33em;
-    color: #012020;
+    color: #102020;
+    font-family: "Tinos", serif;
+    font-size: 1.1em;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    font-family: "Nobile", sans-serif;
+    color: black;
+}
+
+h1 {
+    font-size: 2.25em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+#wrapper {
+    margin-top: 2em;
+    padding-bottom: 2em;
 }
 
 #sidebar h3 {
@@ -25,6 +50,17 @@ body {
 #greader div.f, 
 #sidebar .secondary {
     font-size: 0.8em;
+}
+
+#footer {
+    border-top: 1px solid #999;
+    margin-top: 40px;
+    padding-top: 10px;
+    font-size: 0.8em;
+}
+
+#blogofile {
+    text-align: right;
 }
 
 .githubIcon {
