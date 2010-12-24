@@ -22,7 +22,7 @@ a:active {
     color: red;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6,th {
     font-weight: normal;
     font-family: "Nobile", sans-serif;
     color: #222;
@@ -96,8 +96,21 @@ h3 {
     padding-left: 40px;
 }
 
-#main li {
-    
+#main table {
+    margin: 1em 0em;
+    border-collapse: collapse;
+    border: 1px solid #eee;
+}
+
+#main td, #main th {
+    border-top: 1px solid #eee;
+    padding: 5px 20px;
+    text-align: left;
+}
+
+#main th {
+    padding: 5px 20px;
+    text-align: left;
 }
 
 #content #menu {
