@@ -15,28 +15,32 @@
 <link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
     	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->    
+    <![endif]-->
   </head>
   <body>
     <div id="wrapper" class="container_12">
-      <header id="header" class="grid_12">
-        <h1><a href="${bf.config.site.url}">${bf.config.blog.name}</a></h1>
-        <span>${bf.config.blog.description}</span>
+
+      <header id="header">
+        <h1 id="siteTitle" class="grid_6">
+          <img src="/images/brain_logo.png" />
+<a href="${bf.config.site.url}">${bf.config.blog.name}</a>
+        </h1>
+        <h2 id="siteSubtitle" class="grid_6">${bf.config.blog.description}</h2>
       </header>
+      <div class="clear"></div>
+
       <div id="content">
-        
         <nav id="menu" class="grid_12">
           <ul>
-            <li>Blog</li>
-            <li>About</hi>
-            <li>Software</li>
-            <li>Clique</li>
-            <li>Papers</li>
+            <li><a href="/">Blog</a></li>
+            <li><a href="/about.html">About</a></hi>
+            <li><a href="/software.html">Software</a></li>
+            <li><a href="/clique.html">Clique</a></li>
+            <li><a href="/papers.html">Papers</a></li>
           </ul>
         </nav>
         
         <div id="main" class="grid_9">
-          <div style="width: 100%">&nbsp</div>
           ${next.body()}
         </div>
 
@@ -76,13 +80,14 @@
 <script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
           </aside>
         </div>
-        <div class="clear"></div>
-        
-        <footer id="footer">
-          <p id="copy" class="grid_6">Copyright &copy; 2011 Peter Parente. All rights reserved.</p>
-          <p id="blogofile" class="grid_6">Powered by <a href="http://blogofile.com">Blogofile</a>.</p>
-        </footer>
+        <div class="clear"></div>        
       </div>
+      
+      <footer id="footer">
+        <p id="copy" class="grid_6">Copyright &copy; 2011 Peter Parente. All rights reserved.</p>
+        <p id="blogofile" class="grid_6">Powered by <a href="http://blogofile.com">Blogofile</a>.</p>
+      </footer>
+      <div class="clear"></div>      
     </div>
     <%include file="footer.mako" />
   </body>

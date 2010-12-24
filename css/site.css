@@ -1,14 +1,31 @@
 body {
-    line-height: 1.33em;
-    color: #102020;
+    line-height: 1.4em;
+    color: #555;
     font-family: "Tinos", serif;
     font-size: 1.1em;
+    background-color: #ddd;
+}
+
+a {
+    color: #5050b0;
+}
+
+a:visited {
+    color: #8050b0;    
+}
+
+a:hover {
+    color: #5050e0;
+}
+
+a:active {
+    color: red;
 }
 
 h1,h2,h3,h4,h5,h6 {
     font-weight: normal;
     font-family: "Nobile", sans-serif;
-    color: black;
+    color: #222;
 }
 
 h1 {
@@ -24,21 +41,95 @@ h3 {
 }
 
 #wrapper {
-    margin-top: 2em;
-    padding-bottom: 2em;
+
+}
+
+#header {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#siteTitle {
+    font-weight: bolder;
+    font-size: 3em;
+    position: relative;
+    top: 10px;
+    text-shadow: white 1px 1px 2px;
+}
+
+#siteTitle img {
+    vertical-align: middle;
+}
+
+#siteTitle a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#siteSubtitle {
+    text-align: right;
+    font-size: 1em;
+    color: #555;
+    line-height: 64px;
+    position: relative;
+    top: 10px;
+}
+
+#content {
+    background-color: white;
+    padding-bottom: 40px;
+    -webkit-box-shadow: #999 1px 1px 10px;
+}
+
+#main {
+
+}
+
+#main p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#main ul, #main ol {
+    list-style: disc;
+    margin: 1em 0px;
+    padding-left: 40px;
+}
+
+#main li {
+    
+}
+
+#content #menu {
+	list-style: none;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#content #menu li {
+	float: left;
+	margin: 0 35px 0 0;
+	padding: 5px;
+	position: relative;
+}
+
+#content #menu a {
+    color: inherit;
+    text-decoration: none;
 }
 
 #sidebar h3 {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 #sidebar ul {
-    padding-left: 20px;
     margin-bottom: 10px;
 }
 
 #sidebar li {
+    font-size: 0.9em;
     margin-bottom: 10px;
+    line-height: 1em;
 }
 
 #sidebar .widget {
@@ -53,14 +144,19 @@ h3 {
 }
 
 #footer {
-    border-top: 1px solid #999;
-    margin-top: 40px;
     padding-top: 10px;
     font-size: 0.8em;
 }
 
 #blogofile {
     text-align: right;
+}
+
+img.inlineRight {
+    border: 1px solid #444;
+    float: right;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .githubIcon {
