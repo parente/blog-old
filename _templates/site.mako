@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/reset.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/960.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/site.css')}" />
+    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_murphy.css')}" />
     <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Tinos:regular,italic,bold' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>

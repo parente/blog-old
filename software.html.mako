@@ -1,5 +1,5 @@
 <%inherit file="_templates/site.mako" />
-<h2>Software</h2>
+<h1>Software</h1>
 
 <p>I am an active supporter and developer of <a href="http://www.opensource.org/docs/osd">open source software</a>. My most recent work is visible on GitHub at <a href="http://github.com/parente/">http://github.com/parente/</a> and <a href="http://github.com/uncopenweb/">http://github.com/uncopenweb/</a>.</p>
 

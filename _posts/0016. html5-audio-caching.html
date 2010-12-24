@@ -1,0 +1,42 @@
+---
+categories: Programming
+date: 2010/02/19 20:36:11
+permalink: http://mindtrove.info/html5-audio-caching/
+tags: audio, html5, jsonic, speech
+title: HTML5 audio caching
+---
+<p>One of my latest coding endeavors is a <a href="http://github.com/uncopenweb/jsonic">text-to-speech interface for JavaScript</a> using HTML5 &lt;audio&gt; elements to output synthesized speech from a server. To reduce the latency between a speech request and actual speech output, I'm using various levels of caching. One of these is the regular browser disk cache based on HTTP headers.
+</p>
+
+<p>It turns out that browser caching behavior for &lt;audio&gt; data varies wildly among browsers. The following table shows the HTML5 &lt;audio&gt; caching behavior of various browsers. I tested all of them on OS X 10.6 with the standard Mac Apache server hosting all of the tested audio files.</p>
+
+<table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>&lt;audio&gt; Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Firefox 3.6</td>
+<td>Respects cache headers for the sound data. Only contacts the server when the cache item expires. &lt;audio&gt; elements pointing to the same <code>src</code> reuse the cache data.</td>
+</tr>
+<tr>
+<td>Chrome 5.0.322.2</td>
+<td>Contacts the server on every <code>load()</code>. When it receives a 304 response, does not refetch content.*</td>
+</tr>
+<tr>
+<td>Safari 4.0.4</td>
+<td>Contacts the server to fetch first two bytes of the audio file on every <code>load()</code>. Receives a 206 response with partial content. Fetches the additional bytes from the file. Receives another 206 response with the partial content. Performs another fetch and receives a 304 response with no data. Continues to alternate between fetches that receive 206 partial data responses and 304 not modified responses. Nothing appears to get cached.</td>
+</tr>
+<tr>
+<td>Webkit r54921</td>
+<td>Same behavior as Safari 4.0.4.</td>
+</tr>
+</tbody>
+</table>
+
+<p><span style="font-size: smaller;">* Though not cache related, audio output in Chrome is often clipped before the end of the actual audio data. When this occurs, Chrome fires the <code>onended</code> event even before the audible output finishes.</span></p>
+
+<p>Except for Firefox 3.6, all of these browsers seem to exhibit pretty terrible caching behavior when it comes to audio. I've reported bugs where I thought appropriate, but maybe I'm missing something. Am I supposed to include additional headers in the server-side response? Or maybe I'm glossing over some key part of the &lt;audio&gt; API? If so, please let me know. If not, yikes: &lt;audio&gt; support has definite room for improvement.</p>

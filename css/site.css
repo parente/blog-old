@@ -29,7 +29,7 @@ h1,h2,h3,h4,h5,h6,th {
 }
 
 h1 {
-    font-size: 2.25em;
+    font-size: 1.75em;
 }
 
 h2 {
@@ -38,6 +38,10 @@ h2 {
 
 h3 {
     font-size: 1.25em;
+}
+
+pre {
+    line-height: 1.1em;
 }
 
 #wrapper {
@@ -50,6 +54,7 @@ h3 {
 }
 
 #siteTitle {
+    font-size: 2.25em;
     font-weight: bolder;
     font-size: 3em;
     position: relative;
@@ -81,8 +86,8 @@ h3 {
     -webkit-box-shadow: #999 1px 1px 10px;
 }
 
-#main {
-
+#main h3 {
+    margin-top: 15px;
 }
 
 #main p {
@@ -99,11 +104,11 @@ h3 {
 #main table {
     margin: 1em 0em;
     border-collapse: collapse;
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
 }
 
 #main td, #main th {
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ddd;
     padding: 5px 20px;
     text-align: left;
 }
@@ -111,6 +116,7 @@ h3 {
 #main th {
     padding: 5px 20px;
     text-align: left;
+    background-color: #eee;
 }
 
 #content #menu {
@@ -142,11 +148,11 @@ h3 {
 #sidebar li {
     font-size: 0.9em;
     margin-bottom: 10px;
-    line-height: 1em;
+    line-height: 1.25em;
 }
 
 #sidebar .widget {
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
@@ -163,6 +169,26 @@ h3 {
 
 #blogofile {
     text-align: right;
+}
+
+.blogPostMeta {
+    font-size: 0.8em;
+    color: #999;
+}
+
+.blogPostMeta a {
+    color: #999;
+}
+
+.blogPostTitle a {
+    text-decoration: none;
+    color: #222;
+}
+
+.blogPostRule {
+    margin-bottom: 1em;
+    border-width: 0px;
+    border-top: 1px solid #ddd;
 }
 
 img.inlineRight {

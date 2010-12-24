@@ -1,5 +1,5 @@
 <%inherit file="_templates/site.mako" />
-<h2>Papers</h2>
+<h1>Papers</h1>
 
 <ul>
 	<li>Parente, Peter and Bishop, Gary. <a href="http://doi.acm.org/10.1145/1520340.1520363">Out From Behind the Curtain: Learning from a Human Auditory Display</a>. in <em>Proceedings of the 27th international conference extended abstracts on Human factors in computing systems</em>. April, 2009.</li>

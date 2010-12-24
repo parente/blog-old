@@ -1,8 +1,8 @@
 <%page args="post"/>
-<div class="blog_post">
+<div class="blogPost">
   <a name="${post.slug}"></a>
-  <h2 class="blog_post_title"><a href="${post.permapath()}" rel="bookmark" title="Permanent Link to ${post.title}">${post.title}</a></h2>
-  <small>${post.date.strftime("%B %d, %Y at %I:%M %p")} | categories: 
+  <h1 class="blogPostTitle"><a href="${post.permapath()}" rel="bookmark" title="Permalink to ${post.title}">${post.title}</a></h1>
+  <p class="blogPostMeta">${post.date.strftime("%B %d, %Y at %I:%M %p")} | categories: 
 <% 
    category_links = []
    for category in post.categories:
@@ -16,8 +16,8 @@ ${", ".join(category_links)}
 % if bf.config.blog.disqus.enabled:
  | <a href="${post.permalink}#disqus_thread">View Comments</a>
 % endif
-</small><p/>
-  <div class="post_prose">
+  </p>
+  <div class="blog_post_prose">
     ${self.post_prose(post)}
   </div>
 </div>

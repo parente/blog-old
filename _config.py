@@ -14,7 +14,7 @@
 #  If you're hosting a blogofile powered site as a subdirectory of a larger
 #  non-blogofile site, then you would set the site_url to the full URL
 #  including that subdirectory: "http://www.yoursite.com/path/to/blogofile-dir"
-site.url = "http://localhost:8080"
+site.url = "http://mindtrove.info"
 
 #### Blog Settings ####
 blog = controllers.blog
@@ -46,4 +46,4 @@ blog.disqus.name = 'mindtrove'
 blog.disqus.enabled = True
 blog.post_excerpts.enabled = True
 blog.post_excerpts.word_length = 25
-blog.posts_per_page = 10
+# blog.posts_per_page = 10

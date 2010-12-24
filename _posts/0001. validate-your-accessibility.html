@@ -1,0 +1,32 @@
+---
+categories: Accessibility, Programming
+date: 2008/01/16 17:46:00
+permalink: http://mindtrove.info/validate-your-accessibility/
+tags: accerciser, at-spi, validation
+title: Validate your accessibility
+---
+<p>Eitan <a href="http://monotonous.org/?p=48">committed a new plug-in</a> for Accerciser that makes it dirt simple to find basic accessibility problems. You know, the ones that cause grief for apps like Orca, GOK, On-Board, etc. To use it, run Accerciser, point it at part of a GUI, click validate, and wait for the report.</p>
+
+<p>The rules in the plug-in aren't the greatest right now. But the plug-in is extensible with new rule sets called <em>schemas</em>. For instance, you could have a 'Desktop' schema to check basic GUI problems, a 'Web' schema to test document accessibility, and an 'Orca' schema to check a program's fitness for Orca scripting. The sky's the limit, and I'm sure Eitan, Will, and company will come up with quite a few useful tests.</p>
+
+<p>To ward off any fear brought on by the word 'schema,' I should note that they're really just Python modules with simple, three-method classes in them. For example:</p>
+
+$$code(lang=python)
+class CheckFocusable(Validator):
+  def condition(self, acc):
+    # only test accessibles that have the action interface
+    return acc.queryAction()
+  def after(self, acc, state, view):
+    # check an accessible after checking its descendants
+    # acc is the accessible
+    # state is a dictionary of whatever you need to store across tests
+    # view logs errors, warnings, etc.
+    pass
+  def before(self, acc, state, view):
+    # check an accessible before checking its descendants
+    s = acc.getState()
+    if not s.contains(STATE_FOCUSABLE):
+      view.error('actionable widget is not focusable')
+$$/code
+
+<p>No more excuses for inaccessible apps now, right?</p>
