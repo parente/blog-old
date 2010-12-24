@@ -9,7 +9,7 @@ title: GtkBuilder/Glade on IronPython
 
 <p>For completeness, here's the code I sent him that accomplishes the same thing using the older Glade.XML object for those that are interested. It answers a <a href="http://lists.ironpython.com/pipermail/users-ironpython.com/2005-August/000968.html">long standing mailing list question</a> about using Glade.XML.Autoconnect in IronPython.</p>
 
-<pre lang="python">
+$$code(lang=python)
 import clr
 clr.AddReference('gtk-sharp')
 clr.AddReference('glade-sharp')
@@ -42,4 +42,4 @@ class Application:
 Gtk.Application.Init()
 app = Application()
 Gtk.Application.Run()
-</pre>
+$$/code
