@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/reset.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/960.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/site.css')}" />
-    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_murphy.css')}" />
+    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_%s.css' % bf.config.filters.syntax_highlight.style)}" />
     <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Tinos:regular,italic,bold' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
@@ -46,6 +46,12 @@
         </div>
 
         <div id="sidebar" class="grid_3">
+          <aside class="widget">
+            <form action="http://www.google.com/search" method="GET">
+              <input type="text" name="q"/> <button type="submit">Search</button>
+              <input type="hidden" name="q" value="site:mindtrove.info" />
+            </form>
+          </aside>
           <aside class="widget">
             <h3>Contact</h3>
             Peter Parente<br/>

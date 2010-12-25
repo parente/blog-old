@@ -43,6 +43,8 @@ h3 {
 pre {
     line-height: 1.1em;
     margin-bottom: 1em;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 dt {
