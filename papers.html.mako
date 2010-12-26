@@ -1,3 +1,6 @@
+<%!
+   current_ = 'papers'
+%>
 <%inherit file="_templates/site.mako" />
 <h1>Papers</h1>
 

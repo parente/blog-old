@@ -1,3 +1,6 @@
+<%!
+   current_ = 'blog'
+%>
 <%inherit file="base.mako" />
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/960.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/site.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_%s.css' % bf.config.filters.syntax_highlight.style)}" />
-    <link href='http://fonts.googleapis.com/css?family=Cardo' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Tinos:regular,italic,bold' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
     <!--[if lt IE 9]>
@@ -31,15 +33,7 @@
       <div class="clear"></div>
 
       <div id="content">
-        <nav id="menu" class="grid_12">
-          <ul>
-            <li><a href="/">Blog</a></li>
-            <li><a href="/about.html">About</a></hi>
-            <li><a href="/software.html">Software</a></li>
-            <li><a href="/clique.html">Clique</a></li>
-            <li><a href="/papers.html">Papers</a></li>
-          </ul>
-        </nav>
+        <%include file="nav.mako" args="current=self.attr.current_" />
         
         <div id="main" class="grid_9">
           ${next.body()}
@@ -54,10 +48,12 @@
           </aside>
           <aside class="widget">
             <h3>Contact</h3>
-            Peter Parente<br/>
-            <a class="emailIcon" title="Email address" href="mailto:parente@cs.unc.edu">parente@cs.unc.edu</a><br/>
-            <a class="githubIcon" title="GitHub account" href="http://github.com/parente">github.com/parente</a><br/>
-            <a class="twitterIcon" title="Twitter account" href="http://twitter.com/parente">twitter.com/parente</a><br/>
+            <div>
+              Peter Parente<br/>
+              <a class="emailIcon" title="Email address" href="mailto:parente@cs.unc.edu">parente@cs.unc.edu</a><br/>
+              <a class="githubIcon" title="GitHub account" href="http://github.com/parente">github.com/parente</a><br/>
+              <a class="twitterIcon" title="Twitter account" href="http://twitter.com/parente">twitter.com/parente</a><br/>
+            </div>
           </aside>
 
           <aside class="widget">
@@ -67,10 +63,12 @@
               <li><a href="${post.path}">${post.title}</a></li>
             % endfor
             </ul>
-            <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
+            <div>
+              <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
 % if bf.config.blog.disqus.enabled:
-            <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
+              <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
 % endif
+            </div>
           </aside>
 
           <aside class="widget">

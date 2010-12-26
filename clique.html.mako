@@ -1,3 +1,6 @@
+<%!
+   current_ = 'clique'
+%>
 <%inherit file="_templates/site.mako" />
 <h1>Clique</h1>
 <p><em>Perceptually Based, Task Oriented Auditory Display for GUI Applications</em></p>
@@ -28,7 +31,10 @@
 
 <p>An accessible alternative to the Flash player embedded below is also available. <a href="http://static.mindtrove.info/clique/clique.mov">Click here to download and automatically play the movie in Quicktime.</a></p>
 
-<div style="margin: auto auto; text-align: center;"><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="512" height="384" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.vimeo.com/moogaloop.swf?clip_id=1206595&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed type="application/x-shockwave-flash" width="512" height="384" src="http://www.vimeo.com/moogaloop.swf?clip_id=1206595&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" allowscriptaccess="always" allowfullscreen="true"></embed></object></div>
+<div class="centered">
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="512" height="384" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.vimeo.com/moogaloop.swf?clip_id=1206595&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed type="application/x-shockwave-flash" width="512" height="384" src="http://www.vimeo.com/moogaloop.swf?clip_id=1206595&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" allowscriptaccess="always" allowfullscreen="true"></embed>
+  </object>
+</div>
 
 <h2>Example Sounds</h2>
 <p>The following sounds are examples of various concepts described in the dissertation document.</p>
