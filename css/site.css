@@ -167,6 +167,10 @@ object {
 #content #menu .menuCurrent {
     -webkit-border-top-left-radius: 15px 10px;
     -webkit-border-bottom-right-radius: 15px 10px;
+    -moz-border-top-left-radius: 15px 10px;
+    -moz-border-bottom-right-radius: 15px 10px;
+    -o-border-top-left-radius: 15px 10px;
+    -o-border-bottom-right-radius: 15px 10px;    
     background-color: #eee;
 }
 
