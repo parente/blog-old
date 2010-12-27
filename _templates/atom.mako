@@ -24,8 +24,8 @@
     <id>${post.permalink}</id>
     <updated>${post.updated.strftime("%Y-%m-%dT%H:%M:%SZ")}</updated>
     <published>${post.date.strftime("%Y-%m-%dT%H:%M:%SZ")}</published>
-% for category in post.categories:
-    <category scheme="${bf.config.blog.url}" term="${category}" />
+% for tag in post.tags:
+    <category scheme="${bf.config.blog.url}" term="${tag}" />
 % endfor
     <summary type="html"><![CDATA[${post.title}]]></summary>
     <content type="html" xml:base="${post.permalink}"><![CDATA[${post.content}]]></content>
