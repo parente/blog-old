@@ -71,6 +71,20 @@
             </div>
           </aside>
 
+          <aside id="greader" class="widget">
+            <script type="text/javascript" src="http://www.google.com/reader/ui/publisher-en.js"></script>
+<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
+          </aside>
+
+          <aside class="widget">
+            <h3>Tags</h3>
+            <nav id="tags">
+              % for tag, count in bf.config.blog.all_tags:
+              <span>${tag.name.replace(' ', '-')}</span>
+              % endfor
+            </nav>
+          </aside>
+
           <aside class="widget">
             <h3>Archives</h3>
               <select onchange="location=this.options[this.selectedIndex].value;">
@@ -78,12 +92,7 @@
                 <option value="${bf.util.site_path_helper(bf.config.blog.path,link)}/1">${name}&nbsp;(${num_posts})</option>
               % endfor
               </select>
-          </aside>
-
-          <aside id="greader" class="widget">
-            <script type="text/javascript" src="http://www.google.com/reader/ui/publisher-en.js"></script>
-<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
-          </aside>
+          </aside>          
         </div>
         <div class="clear"></div>        
       </div>
