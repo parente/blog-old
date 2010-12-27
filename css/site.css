@@ -105,7 +105,7 @@ object {
 }
 
 #content {
-    min-height: 800px;
+    min-height: 1024px;
     background-color: white;
     padding-bottom: 40px;
     -webkit-box-shadow: #999 1px 1px 10px;
