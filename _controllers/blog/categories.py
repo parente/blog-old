@@ -23,7 +23,6 @@ def sort_into_categories():
         blog.categorized_posts.items(), key=operator.itemgetter(0)):
         blog.all_categories.append((category, len(posts)))
 
-
 def write_categories():
     """Write all the blog posts in categories"""
     root = bf.util.path_join(blog.path, blog.category_dir)

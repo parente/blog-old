@@ -49,3 +49,5 @@ blog.post_excerpts.word_length = 25
 # blog.posts_per_page = 10
 
 filters.syntax_highlight.style = 'friendly'
+
+blog.tag_dir = 'tag'

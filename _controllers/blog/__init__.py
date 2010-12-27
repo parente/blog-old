@@ -4,6 +4,7 @@ from blogofile.cache import bf
 
 import archives
 import categories
+import tags
 import chronological
 import feed
 import permapage
@@ -28,9 +29,12 @@ def run():
     # Find all the categories and archives before we write any pages
     blog.archived_posts = {} ## "/archive/Year/Month" -> [post, post, ... ]
     blog.archive_links = []  ## [("/archive/2009/12", name, num_in_archive1), ...] (sorted in reverse by date)
+    blog.tagged_posts = {} ## "Tag Name" -> [post, post, ... ]
+    blog.all_tags = [] ## [("Tag 1",num_in_tag_1), ...] (sorted alphabetically)
     blog.categorized_posts = {} ## "Category Name" -> [post, post, ... ]
     blog.all_categories = [] ## [("Category 1",num_in_category_1), ...] (sorted alphabetically)
     archives.sort_into_archives()
+    tags.sort_into_tags()
     categories.sort_into_categories()
 
     blog.logger = logging.getLogger(config['name'])
@@ -39,5 +43,5 @@ def run():
     chronological.run()
     archives.run()
     categories.run()
+    tags.run()
     feed.run()
-

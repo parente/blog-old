@@ -238,7 +238,9 @@ class Post(object):
         except:
             pass
         try:
-            self.tags = set([x.strip() for x in y['tags'].split(",")])
+            self.tags = set([Category(x.strip()) for x in \
+                                       y['tags'].split(",")])
+            #self.tags = set([x.strip() for x in y['tags'].split(",")])
         except:
             pass
         try:
