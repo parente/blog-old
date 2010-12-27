@@ -238,7 +238,7 @@ class Post(object):
         except:
             pass
         try:
-            self.tags = set([Category(x.strip()) for x in \
+            self.tags = set([Tag(x.strip()) for x in \
                                        y['tags'].split(",")])
             #self.tags = set([x.strip() for x in y['tags'].split(",")])
         except:
@@ -310,6 +310,13 @@ class Category(object):
     def __cmp__(self, other):
         return self is other
 
+class Tag(Category):
+    def __init__(self, name):
+        super(Tag, self).__init__(name)
+        self.path = bf.util.site_path_helper(
+                bf.config.controllers.blog.path,
+                bf.config.controllers.blog.tag_dir,
+                self.url_name)
 
 def parse_posts(directory):
     """Retrieve all the posts from the directory specified.
