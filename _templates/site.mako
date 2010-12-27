@@ -89,8 +89,8 @@
       </div>
       
       <footer id="footer">
-        <p id="copy" class="grid_6">Copyright &copy; 2011 Peter Parente. All rights reserved.</p>
-        <p id="blogofile" class="grid_6">Powered by <a href="http://blogofile.com">Blogofile</a>.</p>
+        <p id="copy" class="grid_6">Copyright &copy; 2008, 2011 Peter Parente. All rights reserved.</p>
+        <p id="blogofile" class="grid_6"><a href="/site.html">About this site</a></p>
       </footer>
       <div class="clear"></div>      
     </div>
