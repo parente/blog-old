@@ -79,8 +79,8 @@
           <aside class="widget">
             <h3>Tags</h3>
             <nav id="tags">
-              % for tag, count in bf.config.blog.all_tags:
-              <span>${tag.name.replace(' ', '-')}</span>
+              % for tag, count in bf.config.blog.top_tags:
+              <a href="${bf.util.site_path_helper(bf.config.blog.path,bf.config.blog.tag_dir,tag.slug)}" class="tag${tag.score}" title="${tag.count} posts">${tag.slug}</a>
               % endfor
             </nav>
           </aside>

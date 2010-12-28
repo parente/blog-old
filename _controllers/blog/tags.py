@@ -2,6 +2,7 @@ import os
 import shutil
 import operator
 import feed
+from post import Tag
 from blogofile.cache import bf
 
 blog = bf.config.controllers.blog
@@ -10,21 +11,34 @@ blog = bf.config.controllers.blog
 def run():
     write_tags()
 
-
 def sort_into_tags():
     tags = set()
     for post in blog.posts:
         tags.update(post.tags)
-        #print dir(post)
     for tag in tags:
         tag_posts = [post for post in blog.posts
                             if tag in post.tags]
         blog.tagged_posts[tag] = tag_posts
-    for tag, posts in sorted(
-        blog.tagged_posts.items(), key=operator.itemgetter(0)):
-        blog.all_tags.append((tag, len(posts)))
-    # print blog.tagged_posts
-
+        count = len(tag_posts)
+        tag.count = count
+        blog.all_tags.append((tag, count))
+    # sort by count
+    blog.all_tags.sort(key=operator.itemgetter(1), reverse=True)
+    # keep only top tags
+    blog.top_tags = blog.all_tags[:blog.top_tags_count]
+    # find the max and the min of the top tags
+    max_count = 0
+    min_count = 1e308
+    for tag, count in blog.top_tags:
+        max_count = max(count, max_count)
+        min_count = min(count, min_count)
+    for tag, count in blog.top_tags:
+        tag.score = int(round(blog.tag_bins * (count - min_count) / float(max_count - min_count)))
+    # sort top tags by name
+    blog.top_tags.sort(key=operator.itemgetter(0))
+    # sort all tags by name
+    blog.all_tags.sort(key=operator.itemgetter(0))
+    
 def write_tags():
     """Write all the blog posts in tags"""
     root = bf.util.path_join(blog.path, blog.tag_dir)

@@ -307,12 +307,15 @@ class Category(object):
     def __cmp__(self, other):
         return cmp(self.name, other.name)
 
-    def __cmp__(self, other):
-        return self is other
+    #def __cmp__(self, other):
+    #    return self is other
 
 class Tag(Category):
     def __init__(self, name):
         super(Tag, self).__init__(name)
+        self.score = 0
+        self.count = 0
+        self.slug = self.name.replace(' ', '-')
         self.path = bf.util.site_path_helper(
                 bf.config.controllers.blog.path,
                 bf.config.controllers.blog.tag_dir,

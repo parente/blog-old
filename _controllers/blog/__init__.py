@@ -31,6 +31,7 @@ def run():
     blog.archive_links = []  ## [("/archive/2009/12", name, num_in_archive1), ...] (sorted in reverse by date)
     blog.tagged_posts = {} ## "Tag Name" -> [post, post, ... ]
     blog.all_tags = [] ## [("Tag 1",num_in_tag_1), ...] (sorted alphabetically)
+    blog.top_tags = []
     blog.categorized_posts = {} ## "Category Name" -> [post, post, ... ]
     blog.all_categories = [] ## [("Category 1",num_in_category_1), ...] (sorted alphabetically)
     archives.sort_into_archives()
