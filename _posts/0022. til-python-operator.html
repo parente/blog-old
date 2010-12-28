@@ -12,7 +12,7 @@ class O:
   def __init__(self, val):
     self.val = val
 arr = [O(4), O(5), O(1), O(2)]
-# sort by value attribute of the dictionary
+# sort by value attribute of the object
 arr.sort(key=operator.attrgetter('val'))
 print [i.val for i in arr]
 $$/code
