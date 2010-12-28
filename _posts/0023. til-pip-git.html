@@ -4,14 +4,29 @@ permalink: http://mindtrove.info/til-pip-git/
 tags: til, pip, git, python
 title: 'TIL: pip install from git repo'
 ---
-<p><a href="http://pip.openplans.org/">pip</a> installs Python packages. It knows about various source control systems and can install direct from a git repository. For example, to install Tornado HEAD from GitHub:</p>
+<p><a href="http://pip.openplans.org/">pip</a> installs Python packages. It knows about PyPI, various source control systems, and even local <tt>setup.py</tt> files. For example, to install Tornado HEAD from GitHub:</p>
 
 $$code(lang=console) 
-sudo pip install git+https://github.com/facebook/tornado.git
+$ sudo pip install git+https://github.com/facebook/tornado.git
 $$/code
+
+<p>To install Tornado 1.1 from PyPI:</p>
+
+$$code(lang=console) 
+$ sudo pip install Tornado
+$$/code
+
+<p>To install Tornado from a local clone of the source:</p>
+
+$$code(lang=console) 
+$ cd tornado
+$ sudo pip install -e .
+$$/code
+
+<p>This last one really just symlinks the source folder into site-packages like the distutils <tt>develop</tt> option.</p>
 
 <p>Uninstall is easy too and seems to be based on simple pattern matching.</p>
 
 $$code(lang=console) 
-sudo pip uninstall tornado
+$ sudo pip uninstall tornado
 $$/code
