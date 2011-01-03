@@ -45,6 +45,7 @@ pre {
     margin-bottom: 1em;
     overflow-x: auto;
     overflow-y: hidden;
+    border: 1px solid #dedede;
 }
 
 dt {
@@ -279,4 +280,17 @@ img.inlineRight {
 .emailIcon {
     background: url("../images/email_icon.png") no-repeat 0% 50%;
 	padding-left: 20px;
+}
+
+#content .gist pre {
+    font-family: monospace;
+}
+
+#content .gist-meta {
+    font-family: "Tinos", serif;
+}
+
+#content .gist-file, #content .gist-data {
+    background-color: #f0f0f0;
+    font-family: monospace;
 }
