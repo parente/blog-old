@@ -7,7 +7,7 @@ title: 'TIL: pip install from git repo'
 <p><a href="http://pip.openplans.org/">pip</a> installs Python packages. It knows about PyPI, various source control systems, and even local <tt>setup.py</tt> files. For example, to install Tornado HEAD from GitHub:</p>
 
 $$code(lang=console) 
-$ sudo pip install git+https://github.com/facebook/tornado.git
+$ sudo pip install -e git+https://github.com/facebook/tornado.git#egg=Tornado
 $$/code
 
 <p>To install Tornado 1.1 from PyPI:</p>
