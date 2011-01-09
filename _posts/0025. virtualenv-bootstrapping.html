@@ -12,7 +12,7 @@ title: virtualenv bootstrapping
   
 <p>For example, here's a bootstrap script that creates a virtual environment, installs the HEAD of the Tornado's master branch from GitHub, writes a script that runs a Tornado server with a static file handler pointing to a <tt>www</tt> directory, makes the run script executable, and dumps a hello world <tt>index.html</tt> file into the root of the static path.</p>
 
-<script src="https://gist.github.com/763048.js"> </script>
+<script async src="https://gist.github.com/763048.js"> </script>
 
 <p>You can execute this script, giving it a path to where you want the virtual environment to reside. After it completes, you can activate that environment and execute the <tt>run_server.py</tt> script it generates to start the Tornado server. Visiting <tt>http://localhost:8080/static/index.html</tt> in your browser shows the hello world page the <tt>setup_tornadoenv.py</tt> generated.</p>
 
