@@ -73,7 +73,7 @@
 
           <aside id="greader" class="widget">
             <script type="text/javascript" src="http://www.google.com/reader/ui/publisher-en.js"></script>
-<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC" async></script>
+<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
           </aside>
 
           <aside class="widget">
