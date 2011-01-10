@@ -1,0 +1,51 @@
+---
+date: 2011/1/10 13:30:00
+permalink: http://mindtrove.info/scp-backward/
+tags: bash, ssh, scp
+title: scp backward
+---
+<p>I get into this situation all the time:
+  <ol>
+    <li>ssh into a remote box</li>
+    <li>Look around for a file</li>
+    <li>Want to copy the file back to my local box</li>
+  </ol>
+</p>
+
+<p>Maybe I'm missing some magic everyone else knows, but at this point I usually:
+  <ol>
+    <li><em>*Grumble*</em></li>
+    <li>Run pwd on the remote box</li>
+    <li>Copy the path to the clipboard</li>
+    <li>Open another console</li>
+    <li>scp the pasted path to my local box</li>
+  </ol>
+or:
+  <ol>
+    <li><em>*Grumble*</em></li>
+    <li>Make sure I'm running sshd locally</li>
+    <li>Figure out the IP address of my local box</li>
+    <li>scp the file to my local box</li>
+  </ol>
+</p>
+
+<p>Both suck. Here's my latest solution. As long as I have sshd running on the local machine and this script on the remote machine:</p>
+
+$$code(lang=bash)
+#!/bin/bash
+RIP=${SSH_CLIENT%% *}
+scp $@ $RIP:
+$$/code
+
+<p>... I can do the following:</p>
+
+$$code(lang=console)
+$ ssh foobar.com
+$ cd some/place
+$ ls # looking ...
+$ cd some/other/place
+$ ls # looking ... etc.
+$ rscp -r some_file_or_dir
+$$/code
+
+<p>... to copy <em>some_file_or_dir</em> into my home dir on my local box.</p>
