@@ -124,9 +124,16 @@ object {
 }
 
 #main ul, #main ol {
-    list-style: disc;
     margin: 1em 0px;
     padding-left: 40px;
+}
+
+#main ul {
+    list-style-type: disc;
+}
+
+#main ol {
+    list-style-type: decimal;
 }
 
 #main table {
