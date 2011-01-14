@@ -4,7 +4,7 @@
   xmlns:thr="http://purl.org/syndication/thread/1.0"
   xml:lang="en"
    >
-  <title type="text">${bf.config.blog.name}</title>
+  <title type="text">${bf.config.blog.name} - ${bf.config.blog.owner}</title>
   <subtitle type="text">${bf.config.blog.description}</subtitle>
 
   <updated>${datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")}</updated>

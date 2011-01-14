@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
-    <title>${bf.config.blog.name}</title>
+    <title>${bf.config.blog.name} - ${bf.config.blog.owner}</title>
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/index.xml')}" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/atom/index.xml')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/reset.css')}" />
