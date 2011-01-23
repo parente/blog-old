@@ -1,0 +1,16 @@
+---
+date: 2011/1/23 14:30:00
+permalink: http://mindtrove.info/handlerbag-on-github/
+tags: python, tornado, utility
+title: handlerbag on github
+---
+<p>I recently pushed for a small utility of mine called <a href="http://github.com/parente/handlerbag">handlerbag</a> to github. The code defines a tiny controller for managing a bag of <a href="http://tornadoweb.org">Tornado</a> web server handlers. The controller supports auth using Google OpenID, dynamic loading and unloading of handlers, and simple persistence of handler configuration using anydbm.</p>
+
+<p>The following handlers ship with the code:</p>
+<ul>
+  <li>admin: Dirt simple UI for enabling, disabling, and configuring handlers</li>
+  <li>hello: Hello world</li>
+  <li>urlfetch: Downloads a resource given a URL to a local folder. Useful when I'm on my iPad and want to download something to my sync'ed Dropbox folder so I can check it out later on my desktop or laptop.</li>
+  <li>rstpages: Monitors a folder for <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> files using <a href="https://github.com/gorakhargosh/watchdog">watchdog</a> and renders them using <a href="http://docutils.sourceforge.net/">docutils</a> as they change.</li>
+  <li>xhrdrop: Allows cross-domain POSTs of plain text. Potentially useful for error reporting from web apps, though I haven't proven it yet.</li>
+</ul>
