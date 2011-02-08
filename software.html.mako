@@ -4,12 +4,11 @@
 <%inherit file="_templates/site.mako" />
 <h1>Software</h1>
 
-<p>I am an active supporter and developer of <a href="http://www.opensource.org/docs/osd">open source software</a>. My most recent work is visible on GitHub at <a href="http://github.com/parente/">http://github.com/parente/</a> and <a href="http://github.com/uncopenweb/">http://github.com/uncopenweb/</a>.</p>
+<p>I am an active supporter and developer of <a href="http://www.opensource.org/docs/osd">open source software</a>. My most recent work is visible on GitHub in <a href="http://github.com/parente/">on my profile page</a>, in the <a href="http://github.com/opencoweb/">OpenCoweb org</a>, and in the <a href="http://github.com/uncopenweb/">UNC Open Web org</a>.</p>
 
 <p>Some of the older projects on which I worked include the following:</p>
 
 <ul>
-	<li><a href="http://pypi.python.org/pypi/pyttsx">pyttsx</a>: Python cross platform text-to-speech</li>
 	<li><a href="http://live.gnome.org/GAP/PythonATSPI">pyatspi</a>: Python binding for the AT-SPI library</li>
 	<li><a href="http://pysonic.sf.net/">pySonic, pySonicEx</a>: Pythonic, object-oriented wrapper for the FMOD sound library</li>
 	<li><a href="http://ibmtts-sdk.sf.net/">pyibmtts</a>: Python wrapper for the IBM TTS speech engine API</li>
