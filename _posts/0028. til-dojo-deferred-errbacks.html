@@ -5,7 +5,7 @@ tags: javascript, dojo, deferred, promise, error
 title: 'TIL: Error handlers in dojo.Deferred chains'
 ---
 
-<p><a href="http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/">Starting in 1.5</a>, Dojo's <a href="http://dojotoolkit.org/api/1.5/dojo/Deferred">Deferred class</a> exposes a <tt>then()</tt> method that accepting three arguments: a success handler for <tt>callback()</tt>, an error handler for <tt>errback</tt>, and a progress handler for <tt>progress()</tt> updates. One interesting feature of the <tt>dojo.Deferred</tt> implementation is the ability of a callback handler to return a new deferred which becomes the target of the next handler scheduled on the original deferred.</p>
+<p><a href="http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/">Starting in 1.5</a>, Dojo's <a href="http://dojotoolkit.org/api/1.5/dojo/Deferred">Deferred class</a> exposes a <tt>then()</tt> method that accepts three arguments: a success handler for <tt>callback()</tt>, an error handler for <tt>errback</tt>, and a progress handler for <tt>progress()</tt> updates. One interesting feature of the <tt>dojo.Deferred</tt> implementation is the ability of a callback handler to return a new deferred which becomes the target of the next handler scheduled on the original deferred.</p>
 
 <p>Consider these two snippets. The first shows chaining on a single deferred. The second shows chaining with a new deferred returned within the chain.</p>
 
