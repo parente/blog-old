@@ -245,6 +245,7 @@ object {
 .blogPostMeta {
     font-size: 0.8em;
     color: #999;
+    line-height: 1.1em;
 }
 
 .blogPostMeta a {
