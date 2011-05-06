@@ -4,7 +4,7 @@
 <%inherit file="_templates/site.mako" />
 <h1>Software</h1>
 
-<p>I am an active supporter and developer of <a href="http://www.opensource.org/docs/osd">open source software</a>. My most recent work is visible on GitHub in <a href="http://github.com/parente/">on my profile page</a>, in the <a href="http://github.com/opencoweb/">OpenCoweb org</a>, and in the <a href="http://github.com/uncopenweb/">UNC Open Web org</a>.</p>
+<p>I am an active supporter and developer of <a href="http://www.opensource.org/docs/osd">open source software</a>. My most recent work is visible on GitHub <a href="http://github.com/parente/">on my profile page</a>, in the <a href="http://github.com/opencoweb/">OpenCoweb org</a>, and in the <a href="http://github.com/uncopenweb/">UNC Open Web org</a>.</p>
 
 <p>Some of the older projects on which I worked include the following:</p>
 
