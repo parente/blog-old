@@ -20,7 +20,7 @@
 	<li><a href="http://live.gnome.org/Accerciser">Accerciser</a>: Multi-function accessibility test tool</li>
 	<li><a href="http://live.gnome.org/LSR">Linux Screen Reader</a>: Extensible assistive technology for the GNOME desktop</li>
 	<li><a href="http://www.cs.unc.edu/Research/assist/bats">Blind Audio Tactile Mapping System</a>: Map exploration software for users with visual impairments</li>
-	<li><a href="http://wnerd.sourceforge.net/">Wrestling Nerd</a>: Software for wrestling tournament management</li>
-	<li>LabVIEW webcam library: Capture images from a webcam in LabVIEW</li>
+	<li><a href="http://wnerd.mindtrove.info/">Wrestling Nerd</a>: Software for wrestling tournament management</li>
+	<li><a href="http://github.com/parente/labview-webcam">LabVIEW webcam library</a>: Capture images from a webcam in LabVIEW</li>
 	<li><a href="http://www.sf.net/projects/slikiwiki">SlikiWiki</a>: Python wiki software featuring PyTextile markup, automatic Python code coloring, backlinking, full text searching, locking for concurrent writes, access control lists, and embedded RSS feeds.</li>
 </ul>
