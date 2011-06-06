@@ -1,6 +1,6 @@
 body {
     line-height: 1.4em;
-    color: #555;
+    color: #444;
     font-family: "Tinos", serif;
     font-size: 1.1em;
     background-color: #ddd;
@@ -37,7 +37,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1.25em;
+    font-size: 1.15em;
 }
 
 pre {
