@@ -1,9 +1,9 @@
 body {
-    line-height: 1.55em;
-    color: #222;
+    line-height: 1.4em;
+    color: #444;
     font-family: "Tinos", serif;
     font-size: 1.1em;
-    background-color: white;
+    background-color: #ddd;
 }
 
 a {
@@ -69,15 +69,26 @@ object {
     margin-bottom: 1em;
 }
 
-header#top {
-    background-color: black;
+#wrapper {
+
+}
+
+#header {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#siteTitle {
+    font-size: 2.25em;
     font-weight: bolder;
     font-size: 3em;
+    position: relative;
+    top: 10px;
     text-shadow: white 1px 1px 2px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    margin-bottom: 20px;
+}
+
+#siteTitle img {
+    vertical-align: middle;
 }
 
 #siteTitle a {
@@ -85,65 +96,75 @@ header#top {
     text-decoration: none;
 }
 
-#maincolumn {
+#siteSubtitle {
+    text-align: right;
+    font-size: 1em;
+    color: #555;
+    line-height: 64px;
+    position: relative;
+    top: 10px;
+}
+
+#content {
     min-height: 1024px;
+    background-color: white;
     padding-bottom: 40px;
-/*    -webkit-box-shadow: #999 1px 1px 10px;
+    -webkit-box-shadow: #999 1px 1px 10px;
     -moz-box-shadow: #999 1px 1px 10px;
     -o-box-shadow: #999 1px 1px 10px;
-*/}
+}
 
-#maincolumn h3 {
+#main h3 {
     margin-top: 15px;
 }
 
-#maincolumn p {
+#main p {
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
-#maincolumn ul, #maincolumn ol {
+#main ul, #main ol {
     margin: 1em 0px;
     padding-left: 40px;
 }
 
-#maincolumn ul {
+#main ul {
     list-style-type: disc;
 }
 
-#maincolumn ol {
+#main ol {
     list-style-type: decimal;
 }
 
-#maincolumn table {
+#main table {
     margin: 1em 0em;
     border-collapse: collapse;
     border: 1px solid #ddd;
 }
 
-#maincolumn td, #maincolumn th {
+#main td, #main th {
     border-top: 1px solid #ddd;
     padding: 5px 20px;
     text-align: left;
 }
 
-#maincolumn th {
+#main th {
     padding: 5px 20px;
     text-align: left;
     background-color: #eee;
 }
 
 #content #menu {
-    list-style: none;
-    margin-top: 1em;
-    margin-bottom: 1em;
+	list-style: none;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 #content #menu li {
-    float: left;
-    margin: 0 35px 0 0;
-    padding: 5px;
-    position: relative;
+	float: left;
+	margin: 0 35px 0 0;
+	padding: 5px;
+	position: relative;
 }
 
 #content #menu a {
@@ -251,22 +272,22 @@ img.inlineRight {
 
 .githubIcon {
     background: url("../images/github_icon.png") no-repeat 0% 50%;
-    padding-left: 20px;
+	padding-left: 20px;
 }
 
 .twitterIcon {
     background: url("../images/twitter_icon.png") no-repeat 0% 50%;
-    padding-left: 20px;
+	padding-left: 20px;
 }
 
 .feedIcon {
     background: url("../images/feed_icon.png") no-repeat 0% 50%;
-    padding-left: 20px;
+	padding-left: 20px;
 }
 
 .emailIcon {
     background: url("../images/email_icon.png") no-repeat 0% 50%;
-    padding-left: 20px;
+	padding-left: 20px;
 }
 
 #content .gist pre {

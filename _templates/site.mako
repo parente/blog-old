@@ -10,100 +10,62 @@
     <title>${bf.config.blog.name} - ${bf.config.blog.owner}</title>
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/index.xml')}" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/atom/index.xml')}" />
-    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/reset.css')}" />
-    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/960.css')}" />
-    <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/site.css')}" />
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_%s.css' % bf.config.filters.syntax_highlight.style)}" />
     <link href='http://fonts.googleapis.com/css?family=Tinos:regular,italic,bold' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/reset.css')}" type="text/less" media="screen" />
+    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/fluid.less')}" type="text/less" media="screen" />
+    <script src="${bf.util.site_path_helper(bf.config.blog.path,'/js/less-1.1.3.min.js')}" type="text/javascript"></script>
     <!--[if lt IE 9]>
     	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
+
   </head>
   <body>
-    <div id="wrapper" class="container_12">
+    <!-- Header -->
+    <header id="top">
+      <a href="${bf.config.site.url}">${bf.config.blog.name}</a>
+      <!--<h1 id="siteTitle"><a href="${bf.config.site.url}">${bf.config.blog.name}</a></h1>-->
+      <!--<h2 id="siteSubtitle" class="grid_6">${bf.config.blog.description}</h2>-->
+    </header>
 
-      <header id="header">
-        <h1 id="siteTitle" class="grid_6">
-          <img src="/images/brain_logo.png" />
-<a href="${bf.config.site.url}">${bf.config.blog.name}</a>
-        </h1>
-        <h2 id="siteSubtitle" class="grid_6">${bf.config.blog.description}</h2>
-      </header>
-      <div class="clear"></div>
+    <!-- Main Body -->
+    <article id="maincolumn">
+      ${next.body()}
+    </article>
 
-      <div id="content">
-        <%include file="nav.mako" args="current=self.attr.current_" />
-        
-        <div id="main" class="grid_9">
-          ${next.body()}
+    <!-- Sidebar -->
+    <section id="sidebar">
+      <aside class="widget">
+        <h3>Contact</h3>
+        <div>
+          Peter Parente<br/>
+          <a class="emailIcon" title="Email address" href="mailto:parente@cs.unc.edu">parente@cs.unc.edu</a><br/>
+          <a class="githubIcon" title="GitHub account" href="http://github.com/parente">github.com/parente</a><br/>
+          <a class="twitterIcon" title="Twitter account" href="http://twitter.com/parente">twitter.com/parente</a><br/>
         </div>
+      </aside>
 
-        <div id="sidebar" class="grid_3">
-          <aside class="widget">
-            <form action="http://www.google.com/search" method="GET">
-              <input type="text" name="q"/> <button type="submit">Search</button>
-              <input type="hidden" name="q" value="site:mindtrove.info" />
-            </form>
-          </aside>
-          <aside class="widget">
-            <h3>Contact</h3>
-            <div>
-              Peter Parente<br/>
-              <a class="emailIcon" title="Email address" href="mailto:parente@cs.unc.edu">parente@cs.unc.edu</a><br/>
-              <a class="githubIcon" title="GitHub account" href="http://github.com/parente">github.com/parente</a><br/>
-              <a class="twitterIcon" title="Twitter account" href="http://twitter.com/parente">twitter.com/parente</a><br/>
-            </div>
-          </aside>
-
-          <aside class="widget">
-            <h3>Latest posts</h3>
-            <ul>
-            % for post in bf.config.blog.posts[:5]:
-              <li><a href="${post.path}">${post.title}</a></li>
-            % endfor
-            </ul>
-            <div>
-              <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
+      <aside class="widget">
+        <h3>Latest posts</h3>
+        <ul>
+        % for post in bf.config.blog.posts[:8]:
+          <li><a href="${post.path}">${post.title}</a></li>
+        % endfor
+        </ul>
+        <div>
+          <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
 % if bf.config.blog.disqus.enabled:
-              <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
+          <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
 % endif
-            </div>
-          </aside>
-
-          <aside id="greader" class="widget">
-            <script type="text/javascript" src="http://www.google.com/reader/ui/publisher-en.js"></script>
-<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/15451515962691441753/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22Google%20Reader%22%2Cs%3A%22true%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
-          </aside>
-
-          <aside class="widget">
-            <h3>Top Tags</h3>
-            <nav id="tags">
-              % for tag, count in bf.config.blog.top_tags:
-              <a href="${bf.util.site_path_helper(bf.config.blog.path,bf.config.blog.tag_dir,tag.slug)}" class="tag${tag.score}" title="${tag.count} posts">${tag.slug}</a>
-              % endfor
-            </nav>
-          </aside>
-
-          <aside class="widget">
-            <h3>Archives</h3>
-              <select onchange="location=this.options[this.selectedIndex].value;">
-              <option disabled>Choose a month</option>
-              % for link, name, num_posts in bf.config.blog.archive_links:
-                <option value="${bf.util.site_path_helper(bf.config.blog.path,link)}/1">${name}&nbsp;(${num_posts})</option>
-              % endfor
-              </select>
-          </aside>          
         </div>
-        <div class="clear"></div>        
-      </div>
-      
-      <footer id="footer">
-        <p id="copy" class="grid_6">Copyright &copy; 2008, 2011 Peter Parente. All rights reserved.</p>
-        <p id="blogofile" class="grid_6"><a href="/site.html">About this site</a></p>
-      </footer>
-      <div class="clear"></div>      
-    </div>
+      </aside>
+
+      <aside id="info" class="widget">
+        Copyright &copy; 2008, 2012 Peter Parente. All rights reserved.
+      </aside>
+    </section>
+
     <%include file="footer.mako" />
   </body>
 </html>

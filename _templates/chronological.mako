@@ -4,11 +4,11 @@
   <hr class="blogPostRule" />
 % endfor
 % if prev_link:
- <a href="${prev_link}">« Previous Page</a>
+ <a href="${prev_link}">« Newer Post</a>
 % endif
 % if prev_link and next_link:
   --  
 % endif
 % if next_link:
- <a href="${next_link}">Next Page »</a>
+ <a href="${next_link}">Older Post »</a>
 % endif

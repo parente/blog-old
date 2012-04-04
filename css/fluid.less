@@ -1,3 +1,21 @@
+@import 'grid.less';
+
+// Specify the number of columns and set column and gutter widths
+@columns: 12;
+@column-width: 60;
+@gutter-width: 40;
+
+// Remove the definition below for a pixel-based layout
+@total-width: 100%;
+
+// main column & sidebar
+#maincolumn {
+    .column(9);
+}
+#sidebar {
+    .column(3);
+}
+
 body {
     line-height: 1.55em;
     color: #222;
@@ -78,20 +96,20 @@ header#top {
     padding-bottom: 20px;
     padding-left: 10px;
     margin-bottom: 20px;
+
+    -webkit-box-shadow: #999 1px 1px 10px;
+    -moz-box-shadow: #999 1px 1px 10px;
+    -o-box-shadow: #999 1px 1px 10px;
 }
 
-#siteTitle a {
+header#top a {
     color: inherit;
     text-decoration: none;
 }
 
 #maincolumn {
-    min-height: 1024px;
     padding-bottom: 40px;
-/*    -webkit-box-shadow: #999 1px 1px 10px;
-    -moz-box-shadow: #999 1px 1px 10px;
-    -o-box-shadow: #999 1px 1px 10px;
-*/}
+}
 
 #maincolumn h3 {
     margin-top: 15px;
@@ -212,13 +230,9 @@ header#top {
     font-size: 0.8em;
 }
 
-#footer {
-    padding-top: 10px;
-    font-size: 0.8em;
-}
-
-#blogofile {
-    text-align: right;
+aside#info {
+    font-size: 0.7em;
+    line-height: 1.0em;
 }
 
 .blogPostMeta {
