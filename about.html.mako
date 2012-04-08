@@ -4,8 +4,16 @@
 <%inherit file="_templates/site.mako" />
 <h1 class="pageTitle">About</h1>
 
-<p><img class="inlineRight" width="128" height="128" src="http://www.gravatar.com/avatar/37d5a369729db7a9be4fb3ac9b9dd438?s=128" /> Peter Parente is a software developer in <a class="reference external" href="http://www.ibm.com/">IBM's</a> Emerging Internet Technology group. Currently he is a committer to the <a href="http://github.com/opencoweb/coweb">Open Cooperative Web Framework</a>, an IBM contribution to the <a href="http://dojofoundation.org">Dojo Foundation</a>, that grew out of IBM's <a href="http://www-01.ibm.com/software/ebusiness/jstart/bluespruce/">Project Blue Spruce</a>. His past responsibilities included developing IBM's <a href="http://live.gnome.org/LSR">Linux Screen Reader</a> and the <a href="http://live.gnome.org/Accerciser">Accerciser</a> testing tool; working on the accessibility infrastructure of the <a href="http://www.gnome.org/">GNOME desktop</a>; participating in the W3C <a href="http://www.w3.org/WAI/UA/">User Agent Accessibility Working Group</a> (UAAG); and contributing to the <a href="http://services.alphaworks.ibm.com/qedwiki/">QEDWiki</a> and <a href="http://services.alphaworks.ibm.com/mashuphub/">Mashup Hub</a> projects, the proof-of-concept software that spurred the development of the <a href="http://www-306.ibm.com/software/info/mashup-center/">IBM Mashup Center</a> product.</p>
-
-<p>Peter holds a Ph.D. in <a href="http://www.cs.unc.edu">computer science</a> from the <a href="http://www.unc.edu/">University of North Carolina at Chapel Hill</a>. His <a href="/clique.html">dissertation</a> was about perceptually based, task oriented auditory displays for GUI applications. His goal was, and still is, to show that we can do better than reading the screen for many people with visual impairments and benefit mobile sighted users at the same time.</p>
-
-<p>Parente's vocational and research interests include collaboration, usability, accessiblity, auditory display, and visualization. He is a <a href="http://www.python.org/">Python</a> hacker-enthusiast, but has lived in the land of JavaScript, particularly <a href="http://dojotoolkit.org">Dojo</a>, as of late. He is an avid contributor to <a href="software.html">open source projects</a>.</p>
+<p><img class="inlineRight" width="128" height="128" src="http://www.gravatar.com/avatar/37d5a369729db7a9be4fb3ac9b9dd438?s=128" /> I am, in no particular order:
+<ul>
+    <li>the fellow depicted to the right,</li>
+    <li>a software developer in <a href="http://www-01.ibm.com/software/ebusiness/jstart/">IBM's Emerging Technology</a> group</li>
+    <li>perpetually interested in human-computer interaction, especially visualization and accessibility,</li>
+    <li>currently working on <a href="http://www-03.ibm.com/innovation/us/watson/index.html">IBM Watson</a>,</li>
+    <li>a <a href="/clique">recipient of a Ph.D.</a> from the <a href="http://cs.unc.edu">Computer Science Department at UNC - Chapel Hill</a>,</li>
+    <li>an <a href="http://github.com/parente">open-source hobbyist</a>,</li>
+    <li>a husband to a <a href="http://www.facebook.com/jackie.parente">wonderful woman</a>,</li>
+    <li>a father to a beautiful daughter, and</li>
+    <li>a fan of <a href="http://www.tarheelblue.com/sports/m-baskbl/unc-m-baskbl-body.html">Tar Heel basketball</a>.</li>
+</ul>
+</p>

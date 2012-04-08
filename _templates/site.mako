@@ -51,13 +51,15 @@
           <li><a href="${post.path}">${post.title}</a></li>
         % endfor
         </ul>
-        <div>
-          <a class="feedIcon secondary" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a>
-% if bf.config.blog.disqus.enabled:
-          <br/><a class="feedIcon secondary" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</a>
-% endif
-        </div>
       </nav>
+
+      <ul class="secondary">
+          <li><a href="/posts.html">See all posts »</a></li>
+          <li><a class="feedIcon" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a></li>
+% if bf.config.blog.disqus.enabled:
+          <li><a class="feedIcon" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</li>
+% endif
+        </ul>
     </section>
 
     <footer id="siteFooter">
