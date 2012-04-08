@@ -55,9 +55,9 @@
 
       <ul class="secondary">
           <li><a href="/posts.html">See all posts »</a></li>
-          <li><a class="feedIcon" href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a></li>
+          <li><a href="${bf.util.site_path_helper(bf.config.blog.path,'feed/index.xml')}">Subscribe to posts »</a></li>
 % if bf.config.blog.disqus.enabled:
-          <li><a class="feedIcon" href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</li>
+          <li><a href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Subscribe to comments »</li>
 % endif
         </ul>
     </section>
