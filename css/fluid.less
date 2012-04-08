@@ -2,8 +2,8 @@
 
 // Specify the number of columns and set column and gutter widths
 @columns: 12;
-@column-width: 60;
-@gutter-width: 40;
+@column-width: 85.3;
+@gutter-width: 80;
 
 // Remove the definition below for a pixel-based layout
 @total-width: 100%;
@@ -15,25 +15,31 @@
 #sidebar {
     .column(3);
 }
+#siteFooter {
+    .column(9);
+}
 
 body {
-    line-height: 1.55em;
-    color: #222;
-    font-family: "Tinos", serif;
-    font-size: 1.1em;
+    line-height: 1.725em;
+    color: #111;
+    font-family: "Gentium Basic", serif;
     background-color: white;
+    max-width: 1024px;
+    margin: 0 auto;
 }
 
 a {
-    color: #5050b0;
+    color: #438099;
+    text-decoration: none;
+    border-bottom: 1px dotted #438099;
 }
 
 a:visited {
-    color: #8050b0;    
+    color: #438099;
 }
 
 a:hover {
-    color: #5050e0;
+    color: #438099;
 }
 
 a:active {
@@ -42,12 +48,16 @@ a:active {
 
 h1,h2,h3,h4,h5,h6,th {
     font-weight: normal;
-    font-family: "Nobile", sans-serif;
+    font-family: "Dosis", sans-serif;
     color: #222;
 }
 
 h1 {
     font-size: 1.75em;
+}
+
+h1 a, h2 a, h3 a {
+    border-bottom: 0px;
 }
 
 h2 {
@@ -59,11 +69,14 @@ h3 {
 }
 
 pre {
-    line-height: 1.1em;
-    margin-bottom: 1em;
+    line-height: 1.25em;
+    margin-bottom: 1.25em;
     overflow-x: auto;
     overflow-y: hidden;
     border: 1px solid #dedede;
+    padding: 0.5em;
+    font-family: monospace;
+    font-size: 1.25em;
 }
 
 dt {
@@ -87,28 +100,32 @@ object {
     margin-bottom: 1em;
 }
 
-header#top {
-    background-color: black;
-    font-weight: bolder;
-    font-size: 3em;
-    text-shadow: white 1px 1px 2px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    margin-bottom: 20px;
-
-    -webkit-box-shadow: #999 1px 1px 10px;
-    -moz-box-shadow: #999 1px 1px 10px;
-    -o-box-shadow: #999 1px 1px 10px;
+#siteTitle {
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
-header#top a {
+#siteTitle h1 {
+    font-weight: 600;
+}
+
+#siteTitle a {
     color: inherit;
     text-decoration: none;
 }
 
+#siteTitle nav {
+    margin-top: 0.75em;
+}
+
+#siteTitle nav a {
+    margin-right: 1.75em;
+    font-family: "Dosis", sans-serif;
+}
+
 #maincolumn {
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }
 
 #maincolumn h3 {
@@ -151,36 +168,6 @@ header#top a {
     background-color: #eee;
 }
 
-#content #menu {
-    list-style: none;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-#content #menu li {
-    float: left;
-    margin: 0 35px 0 0;
-    padding: 5px;
-    position: relative;
-}
-
-#content #menu a {
-    color: inherit;
-    text-decoration: underline;
-}
-
-#content #menu .menuCurrent {
-    -webkit-border-top-left-radius: 15px 10px;
-    -webkit-border-bottom-right-radius: 15px 10px;
-    -moz-border-radius-topleft: 15px 10px;
-    -moz-border-radius-bottomright: 15px 10px;
-    -o-border-top-left-radius: 15px 10px;
-    -o-border-bottom-right-radius: 15px 10px;    
-    border-top-left-radius: 15px 10px;
-    border-bottom-right-radius: 15px 10px;    
-    background-color: #eee;
-}
-
 #sidebar h3 {
     margin-bottom: 10px;
 }
@@ -201,37 +188,8 @@ header#top a {
     padding-bottom: 10px;
 }
 
-#sidebar #tags .tag0 {
+.secondary {
     font-size: 0.8em;
-}
-
-#sidebar #tags .tag1 {
-    font-size: 0.9em;
-}
-
-#sidebar #tags .tag2 {
-    font-size: 1.0em;
-}
-
-#sidebar #tags .tag3 {
-    font-size: 1.1em;
-}
-
-#sidebar #tags .tag4 {
-    font-size: 1.2em;
-}
-
-#sidebar #tags .tag5 {
-    font-size: 1.3em;
-}
-
-#greader div.f, 
-#sidebar .secondary {
-    font-size: 0.8em;
-}
-
-aside#info {
-    font-size: 0.7em;
     line-height: 1.0em;
 }
 
@@ -245,15 +203,14 @@ aside#info {
     color: #999;
 }
 
-.blogPostTitle a {
-    text-decoration: none;
-    color: #222;
+.blogPostTitle, .pageTitle {
+    border-bottom: 1px solid #ccc;
+    color: #338866;
 }
 
-.blogPostRule {
-    margin: 2.5em 1em;
-    border-width: 0px;
-    border-top: 1px solid #ddd;
+.blogPostTitle a, .pageTitle a {
+    text-decoration: none;
+    color: inherit;
 }
 
 img.inlineRight {
@@ -283,15 +240,22 @@ img.inlineRight {
     padding-left: 20px;
 }
 
-#content .gist pre {
+body .gist pre {
     font-family: monospace;
+    font-size: 1.0em;
 }
 
-#content .gist-meta {
-    font-family: "Tinos", serif;
+body .gist-meta {
+    font-family: "Gentium Basic", serif;
 }
 
-#content .gist-file, #content .gist-data {
+body .gist-file, #content .gist-data {
     background-color: #f0f0f0;
     font-family: monospace;
+}
+
+#siteFooter {
+    margin-bottom: 30px;
+    padding-top: 1em;
+    border-top: 1px solid #ccc;
 }

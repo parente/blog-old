@@ -33,8 +33,8 @@ blog.path = ""
 
 ## blog_name -- Your Blog's name.
 # This is used repeatedly in default blog templates
-blog.name = "mindtrove"
-blog.owner = "Peter Parente's blog"
+blog.name = "Parente's Mindtrove"
+blog.owner = "Peter Parente"
 
 ## blog_description -- A short one line description of the blog
 # used in the RSS/Atom feeds.
@@ -44,7 +44,7 @@ blog.description = "Collecting ideas since 1980"
 blog.timezone = "US/Eastern"
 
 blog.disqus.name = 'mindtrove'
-blog.disqus.enabled = True
+blog.disqus.enabled = False
 blog.post_excerpts.enabled = True
 blog.post_excerpts.word_length = 25
 blog.posts_per_page = 1
