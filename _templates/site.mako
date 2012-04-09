@@ -13,8 +13,9 @@
     <link rel="stylesheet" type="text/css" href="${bf.util.site_path_helper(bf.config.blog.path,'css/pygments_%s.css' % bf.config.filters.syntax_highlight.style)}" />
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/reset.css')}" type="text/less" media="screen" />
-    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/fluid.less')}" type="text/less" media="screen" />
+    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/reset.css')}" type="text/css" media="screen" />
+    <!--<link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/fluid.less')}" type="text/less" media="screen" />-->
+    <link rel="stylesheet" href="${bf.util.site_path_helper(bf.config.blog.path,'/css/fluid.css')}" type="text/css" media="screen" />
     <script src="${bf.util.site_path_helper(bf.config.blog.path,'/js/less-1.1.3.min.js')}" type="text/javascript"></script>
     <!--[if lt IE 9]>
     	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
