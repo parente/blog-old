@@ -28,6 +28,34 @@ body:after {
   width: 70.96692881629362%;
   margin: 0 2.016535591853196%;
 }
+@media screen and (min-device-width: 768px) and (orientation: portrait) {
+  #maincolumn,
+  #sidebar,
+  #siteFooter {
+    display: inline;
+    float: left;
+    width: 95.96692881629362%;
+    margin: 0 2.016535591853196%;
+    margin-bottom: 1em;
+  }
+  #maincolumn {
+    border-bottom: 1px solid #ddd;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  #maincolumn,
+  #sidebar,
+  #siteFooter {
+    display: inline;
+    float: left;
+    width: 95.96692881629362%;
+    margin: 0 2.016535591853196%;
+    margin-bottom: 1em;
+  }
+  #maincolumn {
+    border-bottom: 1px solid #ddd;
+  }
+}
 body {
   line-height: 1.725em;
   color: #111;

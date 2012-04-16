@@ -8,16 +8,41 @@
 // Remove the definition below for a pixel-based layout
 @total-width: 100%;
 
-// main column & sidebar
+// main column & true sidebar
 #maincolumn {
     .column(9);
 }
 #sidebar {
     .column(3);
 }
-#siteFooter {
-    .column(9);
+
+#siteFooter { 
+        .column(9);
 }
+
+// main column & sidebar below
+@media screen and (min-device-width: 768px) and (orientation : portrait) {
+    #maincolumn, #sidebar, #siteFooter {
+        .column(12);
+        margin-bottom: 1em;
+    }
+
+    #maincolumn {
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    #maincolumn, #sidebar, #siteFooter {
+        .column(12);
+        margin-bottom: 1em;
+    }
+
+    #maincolumn {
+        border-bottom: 1px solid #ddd;
+    }
+}
+
 
 body {
     line-height: 1.725em;
