@@ -64,7 +64,7 @@
     </section>
 
     <footer id="siteFooter">
-      <p class="secondary">Copyright &copy; 2008, 2012 Peter Parente. All rights reserved.</p>
+      <p class="secondary">Copyright &copy; 2008, 2013 Peter Parente. All rights reserved.</p>
     </footer>
 
     <%include file="footer.mako" />

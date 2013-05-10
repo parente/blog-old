@@ -9,7 +9,6 @@
     <li>the fellow depicted to the right,</li>
     <li>a software developer in <a href="http://www-01.ibm.com/software/ebusiness/jstart/">IBM's Emerging Technology</a> group</li>
     <li>perpetually interested in human-computer interaction, especially visualization and accessibility,</li>
-    <li>currently working on <a href="http://www-03.ibm.com/innovation/us/watson/index.html">IBM Watson</a>,</li>
     <li>a <a href="/clique">recipient of a Ph.D.</a> from the <a href="http://cs.unc.edu">Computer Science Department at UNC - Chapel Hill</a>,</li>
     <li>an <a href="http://github.com/parente">open-source hobbyist</a>,</li>
     <li>a husband to a <a href="http://www.facebook.com/jackie.parente">wonderful woman</a>,</li>
