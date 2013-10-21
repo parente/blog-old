@@ -11,7 +11,7 @@ a {
 }
 
 a:visited {
-    color: #8050b0;    
+    color: #8050b0;
 }
 
 a:hover {
@@ -63,7 +63,7 @@ object {
 }
 
 .centered {
-    margin: auto auto; 
+    margin: auto auto;
     text-align: center;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -157,9 +157,9 @@ header#top {
     -moz-border-radius-topleft: 15px 10px;
     -moz-border-radius-bottomright: 15px 10px;
     -o-border-top-left-radius: 15px 10px;
-    -o-border-bottom-right-radius: 15px 10px;    
+    -o-border-bottom-right-radius: 15px 10px;
     border-top-left-radius: 15px 10px;
-    border-bottom-right-radius: 15px 10px;    
+    border-bottom-right-radius: 15px 10px;
     background-color: #eee;
 }
 
@@ -207,7 +207,7 @@ header#top {
     font-size: 1.3em;
 }
 
-#greader div.f, 
+#greader div.f,
 #sidebar .secondary {
     font-size: 0.8em;
 }
@@ -269,7 +269,7 @@ img.inlineRight {
     padding-left: 20px;
 }
 
-#content .gist pre {
+/*#content .gist pre {
     font-family: monospace;
 }
 
@@ -280,4 +280,4 @@ img.inlineRight {
 #content .gist-file, #content .gist-data {
     background-color: #f0f0f0;
     font-family: monospace;
-}
+}*/
