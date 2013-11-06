@@ -20,9 +20,9 @@
     <div class="container">
       <!-- Header -->
       <header id="siteTitle">
-        <h1><a href="${site_root}">${site_name}</a></h1>
+        <h1><a href="${site_root}/">${site_name}</a></h1>
         <nav>
-          <a href="${site_root}">Latest</a>
+          <a href="${site_root}/">Latest</a>
           <a href="${site_root}/posts.html">Posts</a>
           <a href="${site_root}/about">About</a>
         </nav>
