@@ -1,6 +1,6 @@
-.PHONY: site publish watch
+.PHONY: build publish watch
 
-site:
+build:
 	@python generate.py
 
 publish:
