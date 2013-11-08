@@ -1,2 +1,3 @@
 mako
 pygments
+markdown
