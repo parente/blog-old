@@ -1,7 +1,7 @@
 title: Watch Vagrant Changes
 date: 2013-11-07
 
-[Vagrant]() is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type `vagrant up` and `vagrant ssh` in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient `/vagrant` project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.
+[Vagrant](http://vagrantup.com) is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type `vagrant up` and `vagrant ssh` in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient `/vagrant` project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.
 
 One gotcha I've found using Vagrant and VirtualBox occurs when I use tools that watch the filesystem like [node-supervisor](https://github.com/isaacs/node-supervisor) and [wr](https://github.com/pmuellr/wr). These utils are handy when I want my test suite to execute, or my static code to compile, or my web app server to restart each time I make changes to my code base. Unfortunately, they fail to monitor the VirtualBox mounted `/vagrant` folder effectively, undoubtedly because of some VirtualBox shared folder magic.
 
