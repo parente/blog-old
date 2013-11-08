@@ -135,6 +135,11 @@ body .gist {
     padding: 5px;
 }
 
+.rounded {
+    -moz-border-radius: 64px;
+    border-radius: 64px;
+}
+
 .inlineRight {
     float: right;
     margin-left: 2%;
