@@ -17,11 +17,11 @@ We could write a Dockerfile that installs NodeJS, downloads reveal.js, installs 
 FROM ubuntu:13.10
 MAINTAINER Peter Parente <parente@cs.unc.edu>
 
-# dependency ellided setup, then ...
+# elided dependency setup, then ...
 
 ONBUILD ADD slides.md /revealjs/md/
 
-# and some final setup
+# elided final setup
 ```
 
 We can build the base image once and store it in the Docker registry via `docker push`, or setup a trusted build. (I've [done the latter](https://index.docker.io/u/parente/revealjs/), which shows the full Dockerfile, if you're interested).
