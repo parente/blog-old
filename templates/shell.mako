@@ -15,6 +15,18 @@
     <link rel="stylesheet" href="${site_root}/static/css/bootstrap.min.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="${site_root}/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="${site_root}/static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
   </head>
   <body>
     <div class="container">
@@ -67,7 +79,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p>Copyright &copy; 2008, 2013 Peter Parente. All rights reserved.</p>
+        <p class="footerText">Copyright &copy; 2008, 2014 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

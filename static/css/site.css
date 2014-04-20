@@ -116,8 +116,8 @@ iframe {
     border-top: 1px solid #ddd;
 }
 
-.footerSection h3 {
-
+.footnote {
+    font-size: 0.7em;
 }
 
 body .gist {
@@ -137,14 +137,14 @@ body .gist {
 .rounded {
     -moz-border-radius: 64px;
     border-radius: 64px;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
 
 .inlineRight {
     float: right;
     margin-left: 2%;
     margin-bottom: 2%;
-    border: 1px solid #ddd;
-    padding: 5px;
 }
 
 .nextPage {
