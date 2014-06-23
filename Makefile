@@ -1,5 +1,11 @@
 .PHONY: build publish watch
 
+help:
+	@echo
+	@echo 'targets: build, publish, watch'
+	@echo 'e.g, SITE_ROOT=/~parente/blog make build'
+	@echo
+
 build:
 	@python generate.py
 
@@ -8,4 +14,4 @@ publish:
 	@rsync -avzL --delete _output/ mindtrove.info:webapps/blog/
 
 watch:
-	@SITE_ROOT=/~parente/blog wr "make build" pages templates static generate.py
+	@wr "make build" pages templates static generate.py
