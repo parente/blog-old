@@ -33,8 +33,7 @@ Next visit the *Devices* drop down, select *Device List*, and click the *Order D
 1. Select any data center you wish.
 2. Choose the Ubuntu 14.04 minimal install (64-bit).
 3. Click *Continue Your Order*.
-4. Put the following URL in the *Provision scripts* URL box. It installs the latest stable version of Docker from the Docker, Inc. apt-get repository when SoftLayer provisions your VM.
-    * https://gist.githubusercontent.com/parente/025dcb2b9400a12d1a9f/raw/d12e88d9c38d71d6123516526eea45c06a7a3d9f/install_latest_docker.sh
+4. Put the following URL in the *Provision scripts* URL box: [https://bit.ly/1l2xaWE](https://bit.ly/1l2xaWE) (It installs the latest stable version of Docker from the Docker, Inc. apt-get repository when SoftLayer provisions your VM.)
 5. Choose a public SSH key to add to your VM. (If you don't have one in your account, you can use root password generated when you order your VM for this experiment.)
 6. Give your server any host and domain name you wish. (You'll be using its public IP address.)
 7. Read and accept the *Terms and Conditions*.
