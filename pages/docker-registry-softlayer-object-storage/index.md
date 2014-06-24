@@ -8,7 +8,7 @@ me@local$ mkdir -p /mnt/registry
 me@local$ sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registry
 ```
 
-Such a standalone registry can prove useful, say, in quickly deploying containers on a cloud private network. Of course, for serious applications, you'll want more robust storage than local disk, especially on virtual hosts. Thankfully, the registry project defines an interface for storage drivers and even ships with one for [S3](https://github.com/dotcloud/docker-registry/blob/master/docker_registry/drivers/s3.py) and 
+Such a standalone registry can prove useful, say, in quickly deploying containers on a cloud private network. Of course, for serious applications, you'll want more robust storage than local disk, especially on virtual hosts. Thankfully, the registry project defines an interface for storage drivers and even ships with one for [S3](https://github.com/dotcloud/docker-registry/blob/master/docker_registry/drivers/s3.py). 
 
 In this post, I'll show you how to configure the [OpenStack Swift registry storage driver](https://github.com/bacongobbler/docker-registry-driver-swift) so that it works with [IBM SoftLayer Object Storage](https://sldn.softlayer.com/reference/objectstorageapi). At the end of the post, you'll have a registry container running on a SoftLayer VM and persisting Docker repositories in SoftLayer Object Storage. I won't cover adding authentication to your registry, but the result can still prove useful in a secure environment.
 
@@ -83,7 +83,7 @@ root@vm$ docker run -it -d \
     -e OS_CONTAINER='docker-registry' \
     -e GUNICORN_WORKERS=8 \
     -p 127.0.0.1:5000:5000 \
-    parente/registry:0.7.3
+    parente/registry-swift:0.7.3
 ```
 
 * Set `SETTINGS_FLAVOR=swift` to use the Swift storage driver. 
