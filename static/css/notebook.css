@@ -1,0 +1,139 @@
+/* Bits and pieces from nbviewer and 
+ * http://danielfrg.com/blog/2013/03/07/kaggle-bulldozers-basic-cleaning
+ */
+.input {
+    page-break-inside: avoid;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: horizontal;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: horizontal;
+    box-align: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.input_area {
+    border: none;
+    background: none;
+    margin-left: 6px;
+}
+
+.input_area pre {
+    padding: 6px;
+}
+
+.output_wrapper {
+    position: relative;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.output {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.output_area {
+    padding: 0;
+    page-break-inside: avoid;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: horizontal;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: horizontal;
+    box-align: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.output_subarea {
+    padding: 0;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    flex: 1;
+    font-size: 14px;
+}
+
+.output_subarea pre {
+    background-color: transparent;
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    padding-left: 6px;
+}
+
+.output_subarea th,
+.output_subarea td,
+.output_subarea table {
+    font-family: monospace;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.output_subarea th {
+    font-weight: bold;
+}
+
+.output_text {
+    text-align: left;
+    color: #000;
+}
+
+.output_html {
+    padding: 0;
+    padding-left: 6px;
+}
+
+.inner_cell {
+    width: 100%;
+}
+
+.prompt {
+    min-width: 11ex;
+    margin: 0;
+    font-family: monospace;
+    text-align: right;
+    font-size: 14px;
+}
+
+.input_prompt {
+    margin-top: 6px;
+}
+
+.output_prompt {
+    color: #8b0000;
+}
+
+.input_prompt {
+    color: #000080;
+}
