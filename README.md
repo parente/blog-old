@@ -1,0 +1,1 @@
+The static-site builder for my blog: http://mindtrove.info. Uses a Docker contianer for a consistent site generation environment. Supports pages written in Markdown or IPython Notebooks.
