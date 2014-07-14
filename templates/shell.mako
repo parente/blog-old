@@ -49,7 +49,7 @@
       <%block name="pageMeta" />
 
       <div class="row footerSection" id="siteMeta">
-        <div class="col-sm-4" id="contact">
+        <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
             <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="col-sm-4" id="latest">
+        <div class="col-md-4" id="latest">
           <h3>Latest</h3>
           <ul>
           % for recent in all_pages[:4]:
@@ -68,7 +68,7 @@
           </ul>
         </div>
 
-        <div class="col-sm-4" id="other">
+        <div class="col-md-4" id="other">
           <h3>More</h3>
           <ul>
             <li><a href="${site_root}/posts.html">See all posts &#187;</a></li>
