@@ -11,7 +11,7 @@ build:
 	@docker build --rm -t $(IMAGE) .
 
 publish:
-	@docker run -it --rm -v `pwd`:/srv/blog $(IMAGE) bash -c 'python generate.py; rsync -avzL --delete _output/ mindtrove.info:webapps/blog/'
+	@docker run -it --rm -v `pwd`:/srv/blog $(IMAGE) bash -c 'python generate.py; rsync -avzL --delete _output/ parente@mindtrove.info:webapps/blog/'
 
 watch:
 	@docker run -it --rm -v `pwd`:/srv/blog $(IMAGE) watchmedo shell-command -W -R --command="python /srv/blog/generate.py" pages static templates
