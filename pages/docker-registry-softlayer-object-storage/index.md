@@ -91,10 +91,10 @@ root@vm$ docker run -it -d \
 * Set `OS_AUTH_VERSION=1` to match the version used by SoftLayer.
 * Set `OS_USERNAME` to the object storage username you noted earlier.
 * Set `OS_PASSWORD` to the object Ssorage API key you noted earlier.`
-* Set `OS_CONTAINER=docker-registry`, the name of the object storage container you created earlier.
+* Set `OS_CONTAINER=docker-registry` to the name of the object storage container you created earlier.
 * Optionally, set `GUNICORN_WORKERS` to the number of Flask workers you want the registry to run, overriding the default of `4`.
 * Set the interface and port on which the registry should listen. Above, I've set it to listen on localhost only for demo purposes. You could, for example, set it to listen on the private IP of the VM (i.e., `-p 10.108.66.125:5000:5000`) or even all interfaces to allow public access (i.e., `-p 5000:5000`).
-* Finally, remember to change the `parente` to match the username name you used when building your image. 
+* Finally, remember to change the `parente` to match the username you used when building your image. 
 
 ## Push to Test
 
