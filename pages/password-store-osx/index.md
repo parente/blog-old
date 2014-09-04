@@ -30,6 +30,21 @@ laptop$ scp desktop:/tmp/key* /tmp
 laptop$ gpg2 --import /tmp/key.pub
 laptop$ gpg2 --import /tmp/key
 
+# trust keys on laptop
+laptop$ gpg --edit-key parente@cs.unc.edu
+...
+gpg> trust
+...
+  5 = I trust ultimately
+  m = back to the main menu
+
+Your decision? 5
+Do you really want to set this key to ultimate trust? (y/N) y
+...
+gpg> quit
+
 # git clone to laptop
 laptop$ git clone desktop/.password-store ~/.password-store
 ```
+
+*Update 2014-09-03*: I added the missing step of assigning ultimate trust to the imported key on the laptop.
