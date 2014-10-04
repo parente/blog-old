@@ -350,7 +350,7 @@ templatePath: dojo.moduleUrl('info.mindtrove', 'templates/Rating.html'),
 
 <h2>Source Code</h2>
 
-<p>The source code for the completed widget and an example page including it are <a href="http://github.com/parente/mindtrove">available on GitHub</a>.</p>
+<p>The source code for the completed widget and an example page including it are <a href="https://github.com/parente/dojo-a11y-rating">available on GitHub</a>.</p>
 
 <h2>References</h2>
 <ul>
