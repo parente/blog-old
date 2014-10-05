@@ -4,8 +4,8 @@ REPO:=parente/blog
 TAG:=latest
 IMAGE:=$(REPO):$(TAG)
 
-REMOTE_TARGET:=mindtrove.info:webapps/blog/
-REMOTE_KEY:=~/.ssh/mindtrove
+REMOTE_TARGET:=root@mindtrove.info:/srv/html/blog/
+REMOTE_KEY:=~/.ssh/do
 
 SITE_AUTHOR:=Peter Parente
 SITE_NAME:=Parente's Mindtrove
@@ -24,7 +24,7 @@ publish:
 		-e SITE_DOMAIN='$(SITE_DOMAIN)' \
 		-v `pwd`:/srv/blog \
 		$(IMAGE) bash -c 'python generate.py'
-	@rsync -avzL --delete -e "ssh -i $(REMOTE_KEY)" _output/ $(REMOTE_TARGET)
+	@rsync -rltvz --delete -e "ssh -i $(REMOTE_KEY)" _output/ $(REMOTE_TARGET)
 
 watch:
 	@docker run -it --rm \
