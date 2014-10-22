@@ -1,15 +1,9 @@
-@media (min-width: 1200px) {
-    .container{
-        max-width: 970px;
-    }
-}
-
 body {
     font-family: "Gentium Basic", serif;
     font-size: 2.125em;
 }
 
-h1,h2,h3,h4,h5,h6,th {
+h1,h2,h3,h4,h5,h6 {
     font-weight: normal;
     font-family: "Dosis", sans-serif;
     color: #222;
