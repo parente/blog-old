@@ -159,7 +159,12 @@ class IPythonNotebookParser(object):
             return ''
         for cell in cells:
             if cell['cell_type'] == 'markdown':
-                return MarkdownParser.md.convert(''.join(cell['source']))
+                excerpt = []
+                for line in cell['source']:
+                    if line.strip() == '':
+                        break
+                    excerpt.append(line)
+                return MarkdownParser.md.convert(''.join(excerpt))
         return ''
 
 class MarkdownParser(object):
