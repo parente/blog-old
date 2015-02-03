@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="col-md-4" id="latest">
+        <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
           % for recent in all_pages[:4]:
@@ -68,7 +68,7 @@
           </ul>
         </div>
 
-        <div class="col-md-4" id="other">
+        <div class="col-md-3" id="other">
           <h3>More</h3>
           <ul>
             <li><a href="${site_root}/posts.html">See all posts &#187;</a></li>

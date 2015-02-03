@@ -65,6 +65,11 @@ iframe {
     padding: 0;
 }
 
+#siteMeta ul li {
+    line-height: 1.0em;
+    padding: 0.25em 0;
+}
+
 #siteMeta.row {
     padding-top: 0;
     margin: 0;
