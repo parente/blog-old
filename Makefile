@@ -5,7 +5,7 @@ TAG:=latest
 IMAGE:=$(REPO):$(TAG)
 
 REMOTE_TARGET:=root@mindtrove.info:/srv/html/blog/
-REMOTE_KEY:=~/.ssh/do
+REMOTE_KEY:=$(HOME)/.ssh/do
 
 SITE_AUTHOR:=Peter Parente
 SITE_NAME:=Parente's Mindtrove
