@@ -47,4 +47,6 @@ gpg> quit
 laptop$ git clone desktop/.password-store ~/.password-store
 ```
 
+*Update 2015-02-08*: If you're using [GPG Tools](https://gpgtools.org/) for Mac, the password prompt appears in a GUI dialog. If you prefer a curses command line prompt, add `export PINENTRY_USER_DATA="USE_CURSES=1"` to your interactive shell startup script.
+
 *Update 2014-09-03*: I added the missing step of assigning ultimate trust to the imported key on the laptop.
