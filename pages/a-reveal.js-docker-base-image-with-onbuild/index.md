@@ -56,7 +56,7 @@ $ docker build -t slideshow .
 During this build, Docker executes the delayed `ONBUILD ADD slides.md /revealjs/md/` instruction. It pulls our local `slides.md` file into the child image. The result is a portable Docker image that can run our slideshow server anywhere Docker runs.
 
 ```bash
-$ docker run -d -P myslides
+$ docker run -d -P slideshow
 ```
 
 And of course all the standard `docker run` options still apply: a fixed port, container naming, running in the foreground, etc.
