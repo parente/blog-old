@@ -38,28 +38,33 @@ c.InteractiveShellApp.extensions = [
 ]
 ```
 
-Writing a Python module that can serve as a kernel extension requires implementing a `load_ipython_extension` function and optionally implementing `unload_ipython_extension`. Both functions receive an [`InteractiveShell`]() instance as their one and only parameter. The loading function typically uses methods on the instance to add features while the unload function cleans them up.
+Writing a Python module that can serve as a kernel extension requires implementing a `load_ipython_extension` function and optionally implementing `unload_ipython_extension`. Both functions receive an [`InteractiveShell`](https://ipython.org/ipython-doc/dev/api/generated/IPython.core.interactiveshell.html) instance as their one and only parameter. The loading function typically uses methods on the instance to add features while the unload function cleans them up.
 
 ## 3. Notebook Extensions
 
 Jupyter Notebook extensions (*nbextensions*) are JavaScript modules that can load on most major web pages comprising the Notebook frontend. Once loaded, they have access to the complete page DOM and frontend Jupyter JavaScript API with which to modify the notebook, dashboard, editor, etc. user experience. As their name suggests, these extensions are exclusive to the Notebook frontend for Jupyter and [typically add features to the notebook authoring portion of the user interface.](https://github.com/ipython-contrib/IPython-notebook-extensions/wiki/Home_3x)
 
-Install.
+Notebook extension mangagement is burgeoning area of interest in the Jupyter project. Today, the recommended way of installing, loading, and unloading extensions requires running a few snippets of code either within an IPython notebook document or in an external Python script.
 
+To install, for example, [minrk's](https://twitter.com/minrk) gist nbextension, you can execute the following code in a notebook.
 
 ```
 import IPython
 IPython.html.nbextensions.install_nbextension('https://rawgithub.com/minrk/ipython_extensions/master/nbextensions/gist.js', user=True)
 ```
 
-Load one-off
+Once installed, you can load the gist extension by executing the following JavaScript magic in a code cell.
 
 ```
 %%javascript
 IPython.load_extensions('gist');
 ```
 
-Install.
+The cell above emits a `<script>` element into the output area of the notebook cell. The code in that element loads the gist JavaScript module from the Notebook server backend. In the case of the gist extension, a button appears in the toolbar for posting the current notebook document as a gist.
+
+After you save the notebook, the `<script>` element will persist in it. This script block will execute whenever you reload this particular notebook. To stop this behavior, you can delete the cell and refresh the page.
+
+If you want to load the extension automatically whenever you open any notebook document, you can add it to the notebook configuration section of your profile.
 
 ```
 from IPython.html.services.config import ConfigManager
@@ -68,14 +73,20 @@ cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
 cm.update('notebook', {"load_extensions": {"gist": True}})
 ```
 
-Uninstall.
+You can stop the extension from loading automatically across notebooks using similar code. Pay attention to the use of `None` instead of `False` as the value required to disable the extension.
 
 ```
 from IPython.html.services.config import ConfigManager
 ip = get_ipython()
 cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
+# update with None, not False, to disable auto loading
 cm.update('notebook', {"load_extensions": {"gist": None}})
 ```
+
+Take note of the first parameter value in the `ConfigManager.update` invocation. It associates the extension with one of the primary Jupyter Notebook views, in this case the notebook editor view. While most extensions, like gist, operate on the notebook view, it is possible to write and load extensions against other views such as the text editor (`edit`) and dashboard (`tree`), or all views (`common`).
+
+
+Creating a Notebook extension 
 
 Writing one: AMD, requirejs, DOM manipulation, Jupyter JS API
 
