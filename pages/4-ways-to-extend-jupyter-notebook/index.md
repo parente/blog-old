@@ -171,7 +171,7 @@ Creating a Python module that can serve as a server extension requires implement
 To demonstrate the concept, a server extension that adds a (dumb) "hello world" handler to the Notebook server appears below. More compelling examples likely involve both Notebook server and frontend extensions working in conjunction.
 
 ```python
-from IPython.html.utils import url_path_join
+from notebook.utils import url_path_join
 from tornado.web import RequestHandler
 
 class HelloWorldHandler(RequestHandler):
