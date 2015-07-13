@@ -186,8 +186,8 @@ def load_jupyter_server_extension(nb_app):
     '''
     web_app = nb_app.web_app
     host_pattern = '.*$'
-    route_pattern = url_path_join(webapp.settings['base_url'], '/hello')
-    webapp.add_handlers(host_pattern, [route_pattern, HelloWorldHandler])
+    route_pattern = url_path_join(web_app.settings['base_url'], '/hello')
+    web_app.add_handlers(host_pattern, [(route_pattern, HelloWorldHandler)])
 ```
 
 ## A Word on Packaging and Distribution
