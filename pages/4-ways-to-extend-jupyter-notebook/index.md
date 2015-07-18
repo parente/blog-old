@@ -1,7 +1,7 @@
 Title: Four Ways to Extend Jupyter Notebook
-Date: 2015-07-07
+Date: 2015-07-17
 
-[Jupyter Notebook](https://try.jupyter.org/) (n&#233;e [IPython Notebook](http://ipython.org)) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a [variety of plug-in points](http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html) which one can use to extend the capabilities of the authoring environment itself. In this post, I'll touch on four of these extension mechanisms, some more stable and well-known than others, and finish off with an example of how to package and distribute a set of cooperating extensions.
+[Jupyter Notebook](https://try.jupyter.org/) (n&#233;e [IPython Notebook](http://ipython.org)) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a [variety of plug-in points](http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html) that you can use to extend the capabilities of the authoring environment itself. In this post, I'll touch on four of these extension mechanisms and finish off with a word on packaging and distribution.
 
 Two words of caution before you proceed. First, I wrote this post based on what exists in the current master branch of the [jupyter/notebook](https://github.com/jupyter/notebook) project. At the time of this writing, that branch is close to reaching a stable 4.0 release. If you try to apply these techniques to pre-["Big Split"](https://blog.jupyter.org/2015/04/15/the-big-split/) releases (e.g., IPython 3.x) you may need to change some details (e.g., Jupyter -> IPython). Second, the story of [extensions for Jupyter is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
 
@@ -28,13 +28,12 @@ Creating new kernels can be as simple as implementing [a Python `IPython.kernel.
 
 The IPython kernel ships with four magics that allow for the management of extensions from within notebooks (or other Jupyter interfaces).
 
-1. `%install_ext <URL|path>` installs a Python module as an extension 
-2. `%load_ext <name>` loads the extension module and invokes its load function
-3. `%reload_ext <name>` invokes the extension module unload function, reloads the extension module itself, and then invokes its load function 
+1. `%install_ext <URL|path>` installs a Python module as an extension ([deprecated](https://github.com/ipython/ipython/pull/8601))
+2. `%load_ext <name>` imports the extension module and invokes its load function
+3. `%reload_ext <name>` invokes the extension module unload function, re-imports the extension module itself, and then invokes its load function 
 4. `%unload_ext <name>` invokes the extension module unload function and drops the module reference
 
-
-The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, the load magic must run again to re-enable the extension.
+The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, you must run the load magic again to re-enable the extension.
 
 The Jupyter configuration system exposes the `InteractiveShellApp.extensions` list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you could add the following lines to the Notebook configuration file in your Jupyter profile (e.g., `~/.jupyter/profile_default/jupyter_notebook_config.py`) to automatically load module `my_package.my_kernel_extension` any time an IPython kernel starts or restarts.
 
@@ -44,7 +43,7 @@ c.InteractiveShellApp.extensions = [
 ]
 ```
 
-Writing a Python module that can serve as a kernel extension requires implementing a `load_ipython_extension` function and optionally implementing `unload_ipython_extension`. Both functions receive an [`InteractiveShell`](https://ipython.org/ipython-doc/dev/api/generated/IPython.core.interactiveshell.html) instance as their one and only parameter. The loading function typically uses methods on the instance to add features while the unload function cleans them up. For instance, a minimal extension that adds a magic `%%skip` which turns the current cell into a no-op appears below.
+Writing a Python module that can serve as a kernel extension requires implementing a `load_ipython_extension` function and optionally implementing a `unload_ipython_extension` function. Both functions receive an [`InteractiveShell`](https://ipython.org/ipython-doc/dev/api/generated/IPython.core.interactiveshell.html) instance as their one and only parameter. The loading function typically uses methods on the instance to add features while the unload function cleans them up. For instance, a minimal extension that defines skip `%%skip`, a cell magic that turns the current cell into a no-op, appears below.
 
 ```python
 def skip(line, cell=None):
@@ -62,7 +61,7 @@ def unload_ipython_extension(shell):
 
 ## 3. Notebook Extensions
 
-Jupyter Notebook extensions (*nbextensions*) are JavaScript modules that can load on most major web pages comprising the Notebook frontend. Once loaded, they have access to the complete page DOM and frontend Jupyter JavaScript API with which to modify the notebook, dashboard, editor, etc. user experience. As their name suggests, these extensions are exclusive to the Notebook frontend for Jupyter and [typically add features to the notebook authoring portion of the user interface.](https://github.com/ipython-contrib/IPython-notebook-extensions/wiki/Home_3x)
+Jupyter Notebook extensions (*nbextensions*) are JavaScript modules that can load on most major web pages comprising the Notebook frontend. Once loaded, they have access to the complete page DOM and frontend Jupyter JavaScript API with which to modify the user experience. As their name suggests, these extensions are exclusive to the Notebook frontend for Jupyter and [typically add features to the notebook authoring portion of the user interface.](https://github.com/ipython-contrib/IPython-notebook-extensions/wiki/Home_3x)
 
 Today, the recommended way of installing, loading, and unloading extensions requires running a few snippets of code either within an IPython notebook document or in an external Python script.
 
@@ -73,21 +72,21 @@ import IPython
 IPython.html.nbextensions.install_nbextension('https://rawgithub.com/minrk/ipython_extensions/master/nbextensions/gist.js', user=True)
 ```
 
-Once installed, you can load the gist extension by executing the following JavaScript magic in a code cell.
+Once installed, you can load the gist extension by executing the following JavaScript in a code cell.
 
 ```javascript
 %%javascript
 IPython.load_extensions('gist');
 ```
 
-The cell above emits a `<script>` element into the output area of the notebook cell. The code in that element loads the gist JavaScript module from the Notebook server backend. In the case of the gist extension, a button appears in the toolbar for posting the current notebook document as a gist.
+The cell above emits a `<script>` element into the output area of the notebook cell. That scriptloads the gist JavaScript module from the Notebook server backend. In the case of the gist extension, a button appears in the toolbar for posting the current notebook document as a gist.
 
-After you save the notebook, the `<script>` element will persist in it. This script block will execute whenever you reload this particular notebook. To stop this behavior, you can delete the cell and refresh the page.
+After you save the notebook, the `<script>` element will persist in it. This script block will execute whenever you refresh the editor of this particular notebook. To stop this behavior, you can delete the cell and refresh the page.
 
 If you want to load the extension automatically whenever you open any notebook document, you can add it to the notebook configuration section of your profile.
 
 ```python
-from IPython.html.services.config import ConfigManager
+from Jupyter.html.services.config import ConfigManager
 ip = get_ipython()
 cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
 cm.update('notebook', {"load_extensions": {"gist": True}})
@@ -96,7 +95,7 @@ cm.update('notebook', {"load_extensions": {"gist": True}})
 You can stop the extension from loading automatically across notebooks using similar code. Pay attention to the use of `None` instead of `False` as the value required to disable the extension.
 
 ```python
-from IPython.html.services.config import ConfigManager
+from Jupyter.html.services.config import ConfigManager
 ip = get_ipython()
 cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
 # update with None, not False, to disable auto loading
@@ -190,6 +189,50 @@ def load_jupyter_server_extension(nb_app):
     web_app.add_handlers(host_pattern, [(route_pattern, HelloWorldHandler)])
 ```
 
-## A Word on Packaging and Distribution
+## Distributing Extensions
 
-The story on how to package and distribute extensions to Jupyter Notebook is still evolving. You can accomplish 
+Packaging and distributing extensions is a somewhat ad-hoc process at the moment. There is [planning](https://jupyter.hackpad.com/Packaging-crate-PbIgxnC71or) and [discussion](https://github.com/jupyter/notebook/issues/116) in progress to improve the state of affairs. That said, it is possible to share your work with a bit of effort today. For example, the sample `setup.py` below shows how a custom [setuptools](https://pythonhosted.org/setuptools/) command class can install IPython kernel extensions, Jupyter Notebook JavaScript extensions, and Jupyter server extensions.
+
+```python
+import os
+from setuptools import setup
+from setuptools.command.install import install
+
+from Jupyter.notebook.nbextensions import install_nbextension
+from Jupyter.notebook.services.config import ConfigManager
+
+EXT_DIR = os.path.join(os.path.dirname(__file__), 'myext')
+SERVER_EXT_CONFIG = "c.NotebookApp.server_extensions.append('myext.my_handler')"
+
+class InstallCommand(install):
+    def run(self):
+        # Install Python package, possibly containing a kernel extension
+        install.run(self)
+        
+        # Install JavaScript extensions, for notebook, dashboard, and editor screens
+        install_nbextension(EXT_DIR, overwrite=True, user=True)
+        cm = ConfigManager()
+        cm.update('notebook', {"load_extensions": {'myext_js/notebook': True}})
+        cm.update('tree', {"load_extensions": {'myext_js/dashboard': True}})
+        cm.update('edit', {"load_extensions": {'myext_js/editor': True}})
+
+        # Install Notebook server extension
+        fn = os.path.join(cm.profile_dir, 'jupyter_notebook_config.py')
+        with open(fn, 'r+') as fh:
+            lines = fh.read()
+            if SERVER_EXT_CONFIG not in lines:
+                fh.seek(0, 2)
+                fh.write('\n')
+                fh.write(SERVER_EXT_CONFIG)
+
+setup(
+    name='myext',
+    version='0.1',
+    packages=['myext'],
+    cmdclass={
+        'install': InstallCommand
+    }
+)
+```
+
+If the code seems lengthy, consider [jupyter-pip](https://github.com/jdfreder/jupyter-pip) which wraps some of the techniques above in a nice, reusable package. In either case, a user can open a Python notebook, run `pip install` against the root of the project, and have all of the necessary pieces installed for him or her. But not all is roses: Building packages for PyPI, supporting `pip uninstall`, and running the install outside of an active Jupyter Notebook context all require extra work.
