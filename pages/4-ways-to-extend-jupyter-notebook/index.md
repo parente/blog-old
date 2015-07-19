@@ -11,20 +11,18 @@ Date: 2015-07-19
 <a name="caveats"></a>
 ## Caveat Implementor
 
-A few words of caution before you proceed. First, I wrote this post based on what exists in the current master branch of the [jupyter/notebook](https://github.com/jupyter/notebook) project. At the time of this writing, that project is close to reaching its first stable release (Jupyter Notebook v4.0) after the ["Big Split"](https://blog.jupyter.org/2015/04/15/the-big-split/). Before it does, details may change and impact my writing and code samples below.
+A few words of caution before you proceed. First, I wrote this post based on what exists in the current master branch of the [jupyter/notebook](https://github.com/jupyter/notebook) repository. At the time of this writing, that repo is close to reaching its first stable release after the ["Big Split"](https://blog.jupyter.org/2015/04/15/the-big-split/). Before it does, details may change and invalidate the information below.
 
-Second, while all of the extension mechanisms I describe below do exist in the current stable release of the Notebook project (i.e., IPython Notebook v3.2.1), names and packages have changed during the "Big Split". You *will* need to adjust many of my code samples below if you wish to backport them, albeit often in trivial ways (e.g., `notebook.nbextensions` &rarr; `IPython.html.nbextensions`).
+Second, while all of the extension mechanisms I describe in this post do exist in the current stable release of the Notebook project (i.e., IPython Notebook v3.2.1), names and packages have changed during the "Big Split". You *will* need to adjust many of my code samples below if you wish to backport them (e.g., `notebook.nbextensions` &rarr; `IPython.html.nbextensions`).
 
-Third, the story of [extensions for Jupyter is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
+Third, [Jupyter extension architecture is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
 
 <a name="kernels"></a>
 ## 1. Kernels
 
-Kernels are probably the most well-known type of extension to Jupyter Notebook. Kernels provide the Notebook, and [other Jupyter frontends](https://github.com/jupyter/qtconsole), the ability to execute and introspect user code in a [variety of languages](https://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages).
+Kernels are probably the most well-known type of Jupyter extension. Kernels provide the Notebook, and [other Jupyter frontends](https://github.com/jupyter/qtconsole), the ability to execute and introspect user code in a [variety of languages](https://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages).
 
-Installing a kernel amounts to satisfying its dependencies (e.g., [IRKernel requires a working installation of R among other things](https://github.com/IRkernel/IRkernel/blob/master/README.md)) and writing a kernel spec file into the Jupyter user's configuration directory (e.g., `~/.jupyter/kernels/<kernel name>`). Kernel authors usually provide documentation with manual steps to follow, at least, or a language-specific installer, at best.
-
-For reference, the kernel spec for IRKernel appears below.
+Installing a kernel amounts to satisfying its dependencies and placing a kernel spec in your Jupyter configuration directory (e.g., `~/.jupyter/kernels/<kernel name>`). For example, the [IRKernel README](https://github.com/IRkernel/IRkernel/blob/master/README.md)) states instructions for its installation, including its kernel spec which also appears below for reference.
 
 ```json
 {
