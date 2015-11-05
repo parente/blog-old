@@ -1,28 +1,21 @@
 Title: Four Ways to Extend Jupyter Notebook
 Date: 2015-07-19
 
-[Jupyter Notebook](https://try.jupyter.org/) (n&#233;e [IPython Notebook](http://ipython.org)) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a [variety of plug-in points](http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html) that you can use to extend the capabilities of the authoring environment itself. In this post, I'll touch on four of these extension mechanisms and finish off with a word on [packaging and distribution](#pkg-dist):
+[Jupyter Notebook](https://try.jupyter.org/) (n&#233;e [IPython Notebook](http://ipython.org)) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a [variety of plug-in points](http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html) that you can use to [extend the capabilities of the authoring environment itself](http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html). In this post, I'll touch on four of these extension mechanisms and finish off with a word on [packaging and distribution](#pkg-dist):
 
 1. [Kernels](#kernels)
 2. [IPython Kernel Extensions](#ipy-kernel-exts)
 3. [Notebook Extensions](#nb-extensions)
 4. [Notebook Server Extensions](#nb-server-exts)
 
-<a name="caveats"></a>
-## Caveat Implementor
-
-A few words of caution before you proceed. First, I wrote this post based on what exists in the current master branch of the [jupyter/notebook](https://github.com/jupyter/notebook) repository. At the time of this writing, that repo is close to reaching its first stable release after the ["Big Split"](https://blog.jupyter.org/2015/04/15/the-big-split/). Before it does, details may change and invalidate the information below.
-
-Second, while all of the extension mechanisms I describe in this post do exist in the current stable release of the Notebook project (i.e., IPython Notebook v3.2.1), names and packages have changed during the "Big Split". You *will* need to adjust many of my code samples below if you wish to backport them (e.g., `notebook.nbextensions` &rarr; `IPython.html.nbextensions`).
-
-Third, [Jupyter extension architecture is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
+One word of question before you proceed: the [Jupyter extension architecture is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
 
 <a name="kernels"></a>
 ## 1. Kernels
 
 Kernels are probably the most well-known type of Jupyter extension. Kernels provide the Notebook, and [other Jupyter frontends](https://github.com/jupyter/qtconsole), the ability to execute and introspect user code in a [variety of languages](https://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages).
 
-Installing a kernel amounts to satisfying its dependencies and placing a kernel spec in your Jupyter configuration directory (e.g., `~/.jupyter/kernels/<kernel name>`). For example, the [IRKernel README](https://github.com/IRkernel/IRkernel/blob/master/README.md)) states instructions for its installation, including its kernel spec which also appears below for reference.
+Installing a kernel amounts to satisfying its dependencies and placing a kernel spec in your Jupyter configuration directory (e.g., `~/.local/share/jupyter/kernels/<kernel name>`). For example, the [IRKernel README](https://github.com/IRkernel/IRkernel/blob/master/README.md)) states instructions for its installation, including its kernel spec which also appears below for reference.
 
 ```json
 {
@@ -47,7 +40,7 @@ The IPython kernel ships with four magics that allow for the management of exten
 
 The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, you must run the load magic again to re-enable the extension.
 
-The Jupyter configuration system exposes the `InteractiveShellApp.extensions` list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you can add the following lines to the Notebook configuration file in your Jupyter profile (e.g., `~/.jupyter/profile_default/jupyter_notebook_config.py`) to automatically load module `my_package.my_kernel_extension` any time an IPython kernel starts or restarts.
+The Jupyter configuration system exposes the `InteractiveShellApp.extensions` list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you can add the following lines to the Notebook configuration file in your Jupyter configuration directory (e.g., `~/.jupyter/jupyter_notebook_config.py`) to automatically load module `my_package.my_kernel_extension` any time an IPython kernel starts or restarts.
 
 ```python
 c.InteractiveShellApp.extensions = [
@@ -83,7 +76,7 @@ import notebook.nbextensions
 notebook.nbextensions.install_nbextension('https://rawgithub.com/minrk/ipython_extensions/master/nbextensions/gist.js', user=True)
 ```
 
-The code above downloads the JavaScript file and copies it into your Jupyter configuration directory (e.g., `~/.jupyter/nbextensions`). Once installed, you can load the gist extension by executing the following JavaScript in a code cell.
+The code above downloads the JavaScript file and copies it into your Jupyter data directory (e.g., `~/.local/share/jupyter/nbextensions`). Once installed, you can load the gist extension by executing the following JavaScript in a code cell.
 
 ```javascript
 %%javascript
@@ -98,8 +91,7 @@ If you want to load the extension automatically whenever you open *any* notebook
 
 ```python
 from notebook.services.config import ConfigManager
-ip = get_ipython()
-cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
+cm = ConfigManager()
 cm.update('notebook', {"load_extensions": {"gist": True}})
 ```
 
@@ -107,8 +99,7 @@ You can stop the extension from loading automatically across notebooks using sim
 
 ```python
 from notebook.services.config import ConfigManager
-ip = get_ipython()
-cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)
+cm = ConfigManager()
 # update with None, not False, to disable auto loading
 cm.update('notebook', {"load_extensions": {"gist": None}})
 ```
@@ -171,7 +162,7 @@ define([
 
 [Jupyter Notebook server extensions](http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html#server-side-handler) are Python modules that load when the Notebook web server application starts. The only way to load server extensions at present is by way of the Jupyter configuration system. You must specify the extensions to load prior to starting the Jupyter Notebook server itself. Any changes to the list of extensions or the extensions themselves require a restart of the Notebook process to take effect.
 
-For example, you can add the following lines to the Notebook configuration file in your Jupyter profile (e.g., `~/.jupyter/profile_default/jupyter_notebook_config.py`) to automatically load server extension `my_package.my_server_extension` when the Notebook app launches.
+For example, you can add the following lines to the Notebook configuration file in your Jupyter profile (e.g., `~/.jupyter/jupyter_notebook_config.py`) to automatically load server extension `my_package.my_server_extension` when the Notebook app launches.
 
 ```python
 c.NotebookApp.server_extensions = [
@@ -179,7 +170,7 @@ c.NotebookApp.server_extensions = [
 ]
 ```
 
-Creating a Python module that acts as a server extension requires implementing a `load_jupyter_server_extension` function. The function receives an instance of `Jupyter.notebook.notebookapp.NotebookApp` as its sole parameter. The function can use functions and attributes of this instance to customize and extend the server behavior. Most notably, the `web_app` attribute of the `NotebookApp` instance refers to an instance of a [`tornado.web.Application`](http://tornado.readthedocs.org/en/latest/web.html) subclass. You can register new `tornado.web.RequestHandler`s via that instance to extend the backend API of Jupyter Notebook.
+Creating a Python module that acts as a server extension requires implementing a `load_jupyter_server_extension` function. The function receives an instance of `notebook.notebookapp.NotebookApp` as its sole parameter. The function can use functions and attributes of this instance to customize and extend the server behavior. Most notably, the `web_app` attribute of the `NotebookApp` instance refers to an instance of a [`tornado.web.Application`](http://tornado.readthedocs.org/en/latest/web.html) subclass. You can register new `tornado.web.RequestHandler`s via that instance to extend the backend API of Jupyter Notebook.
 
 To demonstrate the concept, an extension that adds a (dumb) "hello world" handler to the Notebook server appears below. (More compelling examples likely involve both Notebook server and frontend extensions working in conjunction.)
 
@@ -213,8 +204,9 @@ import os
 from setuptools import setup
 from setuptools.command.install import install
 
-from Jupyter.notebook.nbextensions import install_nbextension
-from Jupyter.notebook.services.config import ConfigManager
+from notebook.nbextensions import install_nbextension
+from notebook.services.config import ConfigManager
+from jupyter_core.paths import jupyter_config_dir
 
 EXT_DIR = os.path.join(os.path.dirname(__file__), 'myext')
 SERVER_EXT_CONFIG = "c.NotebookApp.server_extensions.append('myext.my_handler')"
@@ -232,7 +224,7 @@ class InstallCommand(install):
         cm.update('edit', {"load_extensions": {'myext_js/editor': True}})
 
         # Install Notebook server extension
-        fn = os.path.join(cm.profile_dir, 'jupyter_notebook_config.py')
+        fn = os.path.join(jupyter_config_dir(), 'jupyter_notebook_config.py')
         with open(fn, 'r+') as fh:
             lines = fh.read()
             if SERVER_EXT_CONFIG not in lines:
@@ -251,3 +243,11 @@ setup(
 ```
 
 If the code seems lengthy, consider [jupyter-pip](https://github.com/jdfreder/jupyter-pip) which wraps some of the techniques above (and others) in a nice, reusable package. No matter which approach you choose, a user can open a Python notebook, run `pip install` against the root of your extension project, and wind up with all of your extension components put in their proper place. But not all is roses: Building packages for PyPI, supporting `pip uninstall`, and running the install outside of an active Jupyter Notebook context all require extra work.
+
+<a name="changelog"></a>
+## Changelog
+
+* 2015-11-04
+    * Updated paths and packages to match what now exists in the stable 4.x line of Jupyter Notebook releases
+    * Linked to official Jupyter Notebook doc about extending the notebook
+    * Removed caveats about 4.0 pre-release and 3.2.x backports
