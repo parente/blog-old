@@ -8,7 +8,7 @@ Date: 2015-07-19
 3. [Notebook Extensions](#nb-extensions)
 4. [Notebook Server Extensions](#nb-server-exts)
 
-One word of question before you proceed: the [Jupyter extension architecture is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
+One word of caution before you proceed: the [Jupyter extension architecture is still evolving](https://github.com/jupyter/notebook/issues/116). Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.
 
 <a name="kernels"></a>
 ## 1. Kernels
