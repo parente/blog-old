@@ -10,8 +10,8 @@
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="${site_root}/feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="${site_root}/feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="${site_root}/static/css/pygments.css" />
-    <link href='http://fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="${site_root}/static/css/bootstrap.min.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="${site_root}/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="${site_root}/static/css/site.css" type="text/css" media="screen" />
@@ -53,8 +53,8 @@
           <h3>Contact</h3>
           <div>
             <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="http://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="http://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
             <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
