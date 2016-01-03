@@ -74,10 +74,11 @@ def save_archive(pages):
     archive_tmpl = TMPL_LOOKUP.get_template('archive.mako')
     html = archive_tmpl.render(
         site_name=SITE_NAME,
-        site_root='.',
+        site_root='..',
         all_pages=pages
     )
-    with file(join(OUT_DIR, "posts.html"), 'w') as f:
+    os.makedirs(join(OUT_DIR, 'posts'))
+    with file(join(OUT_DIR, 'posts', 'index.html'), 'w') as f:
         f.write(html)
 
 
