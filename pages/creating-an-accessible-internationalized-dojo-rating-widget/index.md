@@ -9,7 +9,7 @@ As a developer, you can mimic the techniques used by the Diijit authors to ensur
 
 For reference, the final, working widget appears in the iframe immediately below this paragraph. Use the Tab key to focus on widget. Then use the arrow keys to change its value.
 
-<iframe src="http://static.mindtrove.info/mindtrove/examples/rating-demo.html" style="width: 450px; height: 150px;"></iframe>
+<iframe src="http://s3.amazonaws.com/mindtrove/mindtrove/examples/rating-demo.html" style="width: 450px; height: 150px;"></iframe>
 
 ## Creating a Dev Environment
 

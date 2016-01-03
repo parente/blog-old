@@ -1,4 +1,4 @@
-.PHONY: build clean dev env release
+.PHONY: build clean dev env help release
 
 GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
 
@@ -9,7 +9,7 @@ SITE_NAME:=Parente's Mindtrove
 SITE_DOMAIN:=http://mindtrove.info
 
 help:
-	@cat Makefile
+	@echo 'make clean release'
 
 clean:
 	@rm -rf _output
