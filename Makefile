@@ -26,10 +26,14 @@ build:
 		$(IMAGE) python generate.py
 
 release: build
-	@git checkout gh-pages
-	@mv _output/* .
-	@rm -r _output
-	@git commit -m "Release $(GIT_VERSION)"
+	@cd _output && \
+		git init && \
+		git remote add upstream 'git@github.com:parente/blog.git' && \
+		git fetch --depth=1 upstream gh-pages && \
+		git reset upstream/gh-pages && \
+		git add -A . && \
+		git commit -m "Release $(GIT_VERSION)" && \
+		git push upstream HEAD:gh-pages
 
 dev:
 	@docker run -it --rm  \
