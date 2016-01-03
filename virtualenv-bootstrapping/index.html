@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>virtualenv Bootstrapping - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">virtualenv Bootstrapping</h1>
+    <p class="pageDate">January 02, 2011</p>
+  <p><a href="http://virtualenv.openplans.org/">virtualenv </a>is a tool to create isolated Python environments. <a href="http://pip.openplans.org/">pip</a> installs Python packages. Together, they're awesome.</p>
+<p>In the virtualenv documentation, Ian Bicking gives a recipe for <a href="http://virtualenv.openplans.org/#creating-your-own-bootstrap-scripts"> creating project bootstrap scripts</a> that set up an environment and then perform custom steps to populate it. The bootstrap script is self-contained: it doesn't require the person running it to have virtualenv installed. The downside is that producing the bootstrap script requires running another script that invokes <code>virtualenv.create_bootstrap_script</code> and writing the result to disk.</p>
+<p>If you're willing to treat virtualenv as a pre-requisite, there's an alternative recipe that doesn't require the script-creating-a-script level of indirection. Import the <code>virtualenv</code> module, define the hook functions in its scope, and then execute its <code>main</code> function.</p>
+<p>For example, here's a bootstrap script that creates a virtual environment, installs the HEAD of the Tornado's master branch from GitHub, writes a script that runs a Tornado server with a static file handler pointing to a <code>www</code> directory, makes the run script executable, and dumps a hello world <code>index.html</code> file into the root of the static path.</p>
+<script src="https://gist.github.com/763048.js"> </script>
+
+<p>You can execute this script, giving it a path to where you want the virtual environment to reside. After it completes, you can activate that environment and execute the <code>run_server.py</code> script it generates to start the Tornado server. Visiting <code>http://localhost:8080/static/index.html</code> in your browser shows the hello world page the <code>setup_tornadoenv.py</code> generated.</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">setup_tornadoenv</span><span class="p">.</span><span class="n">py</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_app</span>
+<span class="err">$</span> <span class="n">source</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_app</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="err">$</span> <span class="n">run_server</span><span class="p">.</span><span class="n">py</span> <span class="o">&amp;</span>
+<span class="err">$</span> <span class="n">open</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8080/static/index.html</span>
+</pre></div>
+
+
+<p>Of course, you can reuse the setup script to create additional, isolated environments.</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">deactivate</span>      <span class="err">#</span> <span class="n">get</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">my_app</span> <span class="n">env</span>
+<span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">setup_tornadoenv</span><span class="p">.</span><span class="n">py</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_other_app</span>
+<span class="err">$</span> <span class="p">.</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_other_app</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="err">$</span> <span class="n">run_server</span><span class="p">.</span><span class="n">py</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span> <span class="o">&amp;</span>
+<span class="err">$</span> <span class="n">open</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:9000/static/index.html</span>
+</pre></div>
+
+
+<p>If you install <a href="http://www.doughellmann.com/projects/virtualenvwrapper/">virtualenvwrapper</a>, switching among the separate server environments is even easier.</p>
+<div class="codehilite"><pre><span class="err">$</span> <span class="n">deactivate</span>                  <span class="err">#</span> <span class="n">get</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">my_other_app</span> <span class="n">env</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">virtualenvwrapper</span>
+<span class="err">$</span> <span class="n">export</span> <span class="n">WORKON_HOME</span><span class="o">=~/</span><span class="n">envs</span>   <span class="err">#</span> <span class="n">or</span> <span class="n">add</span> <span class="n">this</span> <span class="n">to</span> <span class="p">.</span><span class="n">bashrc</span> <span class="n">or</span> <span class="p">.</span><span class="n">bash_profile</span>
+<span class="err">$</span> <span class="n">source</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="p">.</span><span class="n">sh</span> <span class="err">#</span> <span class="n">same</span> <span class="n">here</span>
+<span class="err">$</span> <span class="n">workon</span> <span class="n">my_app</span>               <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">my_app</span> <span class="n">env</span>
+<span class="err">$</span> <span class="n">workon</span> <span class="n">my_other_app</span>         <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">other</span>
+<span class="err">$</span> <span class="n">deactivate</span>                  <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">system</span> <span class="n">env</span>
+</pre></div>
+
+
+<p>You can always add arguments to the bootstrap script to increase its flexibility too. Imagine options for what version of Tornado to fetch, the default port number, manging the server under supervisord, etc.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../pyttsx-on-github">pyttsx on GitHub &#187;</a></h3>
+        <div class="excerpt"><p>After many months of no activity, I've moved the <a href="https://github.com/parente/pyttsx">main development branch of pyttsx</a> from Launchpad to GitHub. I originally put the code on Launchpad when I was exploring new version control systems. As I've long since settled on git and GitHub for my other projects, it was about time to move pyttsx there too.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

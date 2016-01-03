@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Validate Your Accessibility - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Validate Your Accessibility</h1>
+    <p class="pageDate">January 16, 2008</p>
+  <p>Eitan <a href="http://monotonous.org/?p=48">committed a new plug-in</a> for Accerciser that makes it dirt simple to find basic accessibility problems. You know, the ones that cause grief for apps like Orca, GOK, On-Board, etc. To use it, run Accerciser, point it at part of a GUI, click validate, and wait for the report.</p>
+<p>The rules in the plug-in aren't the greatest right now. But the plug-in is extensible with new rule sets called <em>schemas</em>. For instance, you could have a 'Desktop' schema to check basic GUI problems, a 'Web' schema to test document accessibility, and an 'Orca' schema to check a program's fitness for Orca scripting. The sky's the limit, and I'm sure Eitan, Will, and company will come up with quite a few useful tests.</p>
+<p>To ward off any fear brought on by the word 'schema,' I should note that they're really just Python modules with simple, three-method classes in them. For example:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">CheckFocusable</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">condition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acc</span><span class="p">):</span>
+    <span class="c"># only test accessibles that have the action interface</span>
+    <span class="k">return</span> <span class="n">acc</span><span class="o">.</span><span class="n">queryAction</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+    <span class="c"># check an accessible after checking its descendants</span>
+    <span class="c"># acc is the accessible</span>
+    <span class="c"># state is a dictionary of whatever you need to store across tests</span>
+    <span class="c"># view logs errors, warnings, etc.</span>
+    <span class="k">pass</span>
+  <span class="k">def</span> <span class="nf">before</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+    <span class="c"># check an accessible before checking its descendants</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">getState</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">STATE_FOCUSABLE</span><span class="p">):</span>
+      <span class="n">view</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;actionable widget is not focusable&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>No more excuses for inaccessible apps now, right?</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../spatial-pulseaudio">Spatial PulseAudio &#187;</a></h3>
+        <div class="excerpt"><p>In his <a href="http://fedoraproject.org/wiki/Interviews/LennartPoettering">interview about Pulse Audio in Fedora 8</a>, Lennart Pottering mentions support for spatial sound as one of his future goals:</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

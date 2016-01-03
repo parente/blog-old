@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Run a Docker Registry Backed by IBM SoftLayer Object Storage - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Run a Docker Registry Backed by IBM SoftLayer Object Storage</h1>
+    <p class="pageDate">June 22, 2014</p>
+  <p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>
+<div class="codehilite"><pre>me@local<span class="nv">$ </span>mkdir -p /mnt/registry
+me@local<span class="nv">$ </span>sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registry
+</pre></div>
+
+
+<p>Such a standalone registry can prove useful, say, in quickly deploying containers on a cloud private network. Of course, for serious applications, you'll want more robust storage than local disk, especially on virtual hosts. Thankfully, the registry project defines an interface for storage drivers and even ships with one for <a href="https://github.com/dotcloud/docker-registry/blob/master/docker_registry/drivers/s3.py">S3</a>. </p>
+<p>In this post, I'll show you how to configure the <a href="https://github.com/bacongobbler/docker-registry-driver-swift">OpenStack Swift registry storage driver</a> so that it works with <a href="https://sldn.softlayer.com/reference/objectstorageapi">IBM SoftLayer Object Storage</a>. At the end of the post, you'll have a registry container running on a SoftLayer VM and persisting Docker repositories in SoftLayer Object Storage. I won't cover adding authentication to your registry, but the result can still prove useful in a secure environment.</p>
+<p>In the first three sections, I'll describe how to setup object storage and deploy a VM using the SoftLayer Control panel. <a href="#build">Skip to building the <code>registry-swift</code> image</a> if you are already familiar with SoftLayer and can't wait to get to the interesting Docker bits.</p>
+<h2>Open the Control Panel</h2>
+<p>Start by visiting the <a href="https://control.softlayer.com/">SoftLayer Control Panel</a> and logging-in using your account credentials. If you don't have a SoftLayer account and want to try the steps in this tutorial, you can get a public cloud instance <a href="https://www.softlayer.com/promo/freeCloud">free for 30 days</a> to run the registry. However, you'll need to pay for object storage.</p>
+<h2>Setup Object Storage</h2>
+<p>If you haven't already, order object storage by clicking the <em>Storage</em> drop down, selecting <em>Object Storage</em>, and then clicking <em>Order Object Storage</em>. Review and accept the storage rates. </p>
+<p>When notified that object storage is available for your account, return to the object storage page and select a data center to host the content of your registry. On the data center page, click the <em>View Credentials</em> link and note the private authentication endpoint URL, username, and API key for your account. You'll need them to configure the Docker registry.</p>
+<p>Finally, click the <em>Add Container</em> link. Give your container the name <em>docker-registry</em> and click OK.</p>
+<h2>Provision a VM</h2>
+<p>Next visit the <em>Devices</em> drop down, select <em>Device List</em>, and click the <em>Order Devices</em> link. Pick an hourly virtual server instance and configure it as follows:</p>
+<ol>
+<li>Select any data center you wish.</li>
+<li>Choose the Ubuntu 14.04 minimal install (64-bit).</li>
+<li>Click <em>Continue Your Order</em>.</li>
+<li>Put the following URL in the <em>Provision scripts</em> URL box: <a href="https://bit.ly/1l2xaWE">https://bit.ly/1l2xaWE</a> (It installs the latest stable version of Docker from the Docker, Inc. apt-get repository when SoftLayer provisions your VM.)</li>
+<li>Choose a public SSH key to add to your VM. (If you don't have one in your account, you can use root password generated when you order your VM for this experiment.)</li>
+<li>Give your server any host and domain name you wish. (You'll be using its public IP address.)</li>
+<li>Read and accept the <em>Terms and Conditions</em>.</li>
+<li>Click <em>Finalize Your Order</em>.</li>
+</ol>
+<p>When your VM is ready, get its public IP address from the <em>Devices &rarr; Device List</em>. If you configured it with a public key, use the corresponding private key to SSH into it as the root user. If not, use the generated root password also shown in the <em>Device List</em> entry for your instance.</p>
+<div class="codehilite"><pre>me@local<span class="nv">$ </span>ssh -i ~/.ssh/mykey.pem root@208.43.1.1
+</pre></div>
+
+
+<div id='build'></div>
+
+<h2>Build a <code>registry-swift</code> Image</h2>
+<p>The official registry container image does not include the Swift storage driver. Nor does it include an option in the sample configuration to override the driver's <code>swift_auth_version</code> from its default value of <code>2</code>. You need both to work with SoftLayer Object Storage. You can get both by building your own image starting from the official registry image.</p>
+<p>On your VM, create a <code>Dockerfile</code> and fill it with the following commands.</p>
+<div class="codehilite"><pre><span class="c"># start from a registry release known to work</span>
+FROM registry:0.7.3
+<span class="c"># get the swift driver for the registry</span>
+RUN pip install docker-registry-driver-swift<span class="o">==</span>0.0.1
+<span class="c"># SoftLayer uses v1 auth and the sample config doesn&#39;t have an option </span>
+<span class="c"># for it so inject one</span>
+RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSION&#39;</span> /docker-registry/config/config_sample.yml
+</pre></div>
+
+
+<p>Build the Dockerfile like so, replacing <code>parente</code> with your Docker username.</p>
+<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker build -t parente/registry-swift:0.7.3 .
+</pre></div>
+
+
+<h2>Run a <code>registry-swift</code> Container</h2>
+<p>With the image in hand, you're ready to launch an instance. Doing so requires that you set quite a few options which I explain after the command below:</p>
+<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker run -it -d <span class="se">\</span>
+    -e <span class="nv">SETTINGS_FLAVOR</span><span class="o">=</span>swift <span class="se">\</span>
+    -e <span class="nv">OS_AUTH_URL</span><span class="o">=</span><span class="s1">&#39;https://dal05.objectstorage.service.networklayer.com/auth/v1.0&#39;</span> <span class="se">\</span>
+    -e <span class="nv">OS_AUTH_VERSION</span><span class="o">=</span>1 <span class="se">\</span>
+    -e <span class="nv">OS_USERNAME</span><span class="o">=</span><span class="s1">&#39;my_master_account:my_account&#39;</span> <span class="se">\</span>
+    -e <span class="nv">OS_PASSWORD</span><span class="o">=</span><span class="s1">&#39;my_api_key&#39;</span> <span class="se">\</span>
+    -e <span class="nv">OS_CONTAINER</span><span class="o">=</span><span class="s1">&#39;docker-registry&#39;</span> <span class="se">\</span>
+    -e <span class="nv">GUNICORN_WORKERS</span><span class="o">=</span>8 <span class="se">\</span>
+    -p 127.0.0.1:5000:5000 <span class="se">\</span>
+    parente/registry-swift:0.7.3
+</pre></div>
+
+
+<ul>
+<li>Set <code>SETTINGS_FLAVOR=swift</code> to use the Swift storage driver. </li>
+<li>Set <code>OS_AUTH_URL</code> to the private object storage authentication endpoint you noted earlier.</li>
+<li>Set <code>OS_AUTH_VERSION=1</code> to match the version used by SoftLayer.</li>
+<li>Set <code>OS_USERNAME</code> to the object storage username you noted earlier.</li>
+<li>Set <code>OS_PASSWORD</code> to the object Ssorage API key you noted earlier.`</li>
+<li>Set <code>OS_CONTAINER=docker-registry</code> to the name of the object storage container you created earlier.</li>
+<li>Optionally, set <code>GUNICORN_WORKERS</code> to the number of Flask workers you want the registry to run, overriding the default of <code>4</code>.</li>
+<li>Set the interface and port on which the registry should listen. Above, I've set it to listen on localhost only for demo purposes. You could, for example, set it to listen on the private IP of the VM (i.e., <code>-p 10.108.66.125:5000:5000</code>) or even all interfaces to allow public access (i.e., <code>-p 5000:5000</code>).</li>
+<li>Finally, remember to change the <code>parente</code> to match the username you used when building your image. </li>
+</ul>
+<h2>Push to Test</h2>
+<p>With the registry running, you can now test it by pushing something to it. Since you have the registry image you just built on hand, you can use that. First, tag it with the registry IP and port as a prefix, again replacing <code>parente</code> with your username.</p>
+<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker tag parente/registry-swift:0.7.3 127.0.0.1:5000/parente/registry-swift:0.7.3
+</pre></div>
+
+
+<p>Now push it.</p>
+<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker push 127.0.0.1:5000/parente/registry-swift:0.7.3
+</pre></div>
+
+
+<p>If all goes well, you should should see the results of the push in the <code>docker-registry</code> container in the <em>Object Storage</em> control panel. Because the registry stores all Docker repository data and metadata in the storage layer, you can kill, restart, and migrate your registry Docker container at will. </p>
+<h2>Going Further</h2>
+<p>Since the registry runs in a Docker container, you can easily run multiple instances for your many projects, each one configured to persist in a separate object storage container. You might also try running multiple instances configured with the same storage container name, say for better scalability, though I have not tested what happens in concurrent overwrite scenarios in such a configuration. (Please let me know if you do.) Finally, you can front your registry with a web proxy supporting basic auth to enable select users to push to your registry.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../whispers-of-test-failures">Whispers of Test Failures &#187;</a></h3>
+        <div class="excerpt"><p>Yesterday, I learned that support for the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">speech synthesis portion of the Web Speech API spec</a> landed in Chrome stable. I also learned that I'm behind the curve given that the <a href="http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API">HTML5 Rocks Speech Synthesis tutorial</a> was published nearly four months ago. I immediately set out to rectify this situation by having my browser whisper my frontend test failures to me.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

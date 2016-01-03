@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>pass on OSX - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">pass on OSX</h1>
+    <p class="pageDate">January 08, 2014</p>
+  <p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>
+<div class="codehilite"><pre>desktop<span class="nv">$ </span>brew update
+desktop<span class="nv">$ </span>brew install pass
+
+<span class="c"># create a key, answer all prompts</span>
+desktop<span class="nv">$ </span>gpg2 --gen-key
+
+<span class="c"># init password store using email from key</span>
+desktop<span class="nv">$ </span>pass init parente@cs.unc.edu
+
+<span class="c"># add passwords</span>
+desktop<span class="nv">$ </span>pass insert Home/wifi
+desktop<span class="nv">$ </span>pass insert Home/rpi
+desktop<span class="nv">$ </span>pass insert Webfaction/panel
+
+<span class="c"># make it a git repo</span>
+desktop<span class="nv">$ </span>pass git init
+
+<span class="c"># export keys for laptop</span>
+desktop<span class="nv">$ </span>gpg2 --export parente@cs.unc.edu &gt; /tmp/key.pub
+desktop<span class="nv">$ </span>gpg2 --export-secret-key parente@cs.unc.edu &gt; /tmp/key
+
+<span class="c"># import keys on laptop</span>
+laptop<span class="nv">$ </span>scp desktop:/tmp/key* /tmp
+laptop<span class="nv">$ </span>gpg2 --import /tmp/key.pub
+laptop<span class="nv">$ </span>gpg2 --import /tmp/key
+
+<span class="c"># trust keys on laptop</span>
+laptop<span class="nv">$ </span>gpg --edit-key parente@cs.unc.edu
+...
+gpg&gt; trust
+...
+  <span class="nv">5</span> <span class="o">=</span> I trust ultimately
+  <span class="nv">m</span> <span class="o">=</span> back to the main menu
+
+Your decision? 5
+Do you really want to <span class="nb">set </span>this key to ultimate trust? <span class="o">(</span>y/N<span class="o">)</span> y
+...
+gpg&gt; quit
+
+<span class="c"># git clone to laptop</span>
+laptop<span class="nv">$ </span>git clone desktop/.password-store ~/.password-store
+</pre></div>
+
+
+<p><em>Update 2015-02-08</em>: If you're using <a href="https://gpgtools.org/">GPG Tools</a> for Mac, the password prompt appears in a GUI dialog. If you prefer a curses command line prompt, add <code>export PINENTRY_USER_DATA="USE_CURSES=1"</code> to your interactive shell startup script.</p>
+<p><em>Update 2014-09-03</em>: I added the missing step of assigning ultimate trust to the imported key on the laptop.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../watch-vagrant-changes">Watch Vagrant Changes &#187;</a></h3>
+        <div class="excerpt"><p><a href="http://vagrantup.com">Vagrant</a> is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type <code>vagrant up</code> and <code>vagrant ssh</code> in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient <code>/vagrant</code> project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

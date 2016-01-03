@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>scp Backward - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">scp Backward</h1>
+    <p class="pageDate">January 10, 2011</p>
+  <p>I get into this situation all the time:</p>
+<ol>
+<li>ssh into a remote box</li>
+<li>Look around for a file</li>
+<li>Want to copy the file back to my local box</li>
+</ol>
+<p>Maybe I'm missing some magic everyone else knows, but at this point I usually:</p>
+<ol>
+<li><em>Grumble</em></li>
+<li>Run pwd on the remote box</li>
+<li>Copy the path to the clipboard</li>
+<li>Open another console</li>
+<li>scp the pasted path to my local box</li>
+</ol>
+<p>or:</p>
+<ol>
+<li><em>Grumble</em></li>
+<li>Make sure I'm running sshd locally</li>
+<li>Figure out the IP address of my local box</li>
+<li>scp the file to my local box</li>
+</ol>
+<p>Both suck. Here's my latest solution. As long as I have sshd running on the local machine and this script on the remote machine:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nv">RIP</span><span class="o">=</span><span class="k">${</span><span class="nv">SSH_CLIENT</span><span class="p">%% *</span><span class="k">}</span>
+scp <span class="nv">$@</span> <span class="nv">$RIP</span>:
+</pre></div>
+
+
+<p>... I can do the following:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>ssh foobar.com
+<span class="nv">$ </span><span class="nb">cd </span>some/place
+<span class="nv">$ </span>ls <span class="c"># looking ...</span>
+<span class="nv">$ </span><span class="nb">cd </span>some/other/place
+<span class="nv">$ </span>ls <span class="c"># looking ... etc.</span>
+<span class="nv">$ </span>rscp -r some_file_or_dir
+</pre></div>
+
+
+<p>... to copy <code>some_file_or_dir</code> into my home dir on my local box.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../virtualenv-bootstrapping">virtualenv Bootstrapping &#187;</a></h3>
+        <div class="excerpt"><p><a href="http://virtualenv.openplans.org/">virtualenv </a>is a tool to create isolated Python environments. <a href="http://pip.openplans.org/">pip</a> installs Python packages. Together, they're awesome.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

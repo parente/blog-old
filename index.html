@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Four Ways to Extend Jupyter Notebook - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="./feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="./static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="./static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="./">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="./">Latest</a>
+          <a href="./posts.html">Posts</a>
+          <a href="./about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Four Ways to Extend Jupyter Notebook</h1>
+    <p class="pageDate">July 19, 2015</p>
+  <p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>
+<ol>
+<li><a href="#kernels">Kernels</a></li>
+<li><a href="#ipy-kernel-exts">IPython Kernel Extensions</a></li>
+<li><a href="#nb-extensions">Notebook Extensions</a></li>
+<li><a href="#nb-server-exts">Notebook Server Extensions</a></li>
+</ol>
+<p>One word of caution before you proceed: the <a href="https://github.com/jupyter/notebook/issues/116">Jupyter extension architecture is still evolving</a>. Not all of the APIs and techniques I mention in this post are well-documented or considered stable yet.</p>
+<p><a name="kernels"></a></p>
+<h2>1. Kernels</h2>
+<p>Kernels are probably the most well-known type of Jupyter extension. Kernels provide the Notebook, and <a href="https://github.com/jupyter/qtconsole">other Jupyter frontends</a>, the ability to execute and introspect user code in a <a href="https://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages">variety of languages</a>.</p>
+<p>Installing a kernel amounts to satisfying its dependencies and placing a kernel spec in your Jupyter configuration directory (e.g., <code>~/.local/share/jupyter/kernels/&lt;kernel name&gt;</code>). For example, the <a href="https://github.com/IRkernel/IRkernel/blob/master/README.md">IRKernel README</a>) states instructions for its installation, including its kernel spec which also appears below for reference.</p>
+<div class="codehilite"><pre><span class="p">{</span>
+    <span class="nt">&quot;argv&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;-e&quot;</span><span class="p">,</span> <span class="s2">&quot;IRkernel::main()&quot;</span><span class="p">,</span> <span class="s2">&quot;--args&quot;</span><span class="p">,</span> <span class="s2">&quot;{connection_file}&quot;</span><span class="p">],</span>
+    <span class="nt">&quot;display_name&quot;</span><span class="p">:</span><span class="s2">&quot;R&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Creating new kernels can be as simple as implementing <a href="http://jupyter-client.readthedocs.org/en/latest/wrapperkernels.html">a Python <code>ipykernel.kernelbase.Kernel</code> subclass</a> or as complex as <a href="http://jupyter-client.readthedocs.org/en/latest/kernels.html">implementing a kernel program in your language of choice</a> that talks <a href="http://jupyter-client.readthedocs.org/en/latest/messaging.html">the Jupyter protocol over ZeroMQ</a>. The <a href="http://jupyter-client.readthedocs.org/en/latest/">jupyter_client documentation</a>, <a href="http://andrew.gibiansky.com/blog/ipython/ipython-kernels/">experienced kernel authors</a>, and the source of existing community contributed kernels all serve as great references in this task. </p>
+<p><a name="ipy-kernel-exts"></a></p>
+<h2>2. IPython Kernel Extensions</h2>
+<p><a href="http://ipython.readthedocs.org/en/master/config/extensions/index.html">IPython Kernel extensions</a> are Python modules that can modify the interactive shell environment within an IPython kernel. Such extensions can register <a href="http://ipython.readthedocs.org/en/master/interactive/reference.html#defining-magics">magics</a>, define variables, and generally modify the user namespace to provide new features for use within code cells. Kernel extensions are not exclusive to the Jupyter Notebook frontend, but many <a href="https://github.com/ipython/ipython/wiki/Extensions-Index">community contributed extensions</a> do target its browser-powered display system in particular.</p>
+<p>The IPython kernel ships with four magics that allow for the management of extensions from within Jupyter Notebook (or other Jupyter interfaces).</p>
+<ol>
+<li><code>%install_ext &lt;URL|path&gt;</code> installs a Python module as an extension (<a href="https://github.com/ipython/ipython/pull/8601">deprecated</a>)</li>
+<li><code>%load_ext &lt;name&gt;</code> imports the extension module and invokes its load function</li>
+<li><code>%reload_ext &lt;name&gt;</code> invokes the extension module unload function, re-imports the extension module itself, and then invokes its load function </li>
+<li><code>%unload_ext &lt;name&gt;</code> invokes the extension module unload function and drops the module reference</li>
+</ol>
+<p>The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, you must run the load magic again to re-enable the extension.</p>
+<p>The Jupyter configuration system exposes the <code>InteractiveShellApp.extensions</code> list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you can add the following lines to the Notebook configuration file in your Jupyter configuration directory (e.g., <code>~/.jupyter/jupyter_notebook_config.py</code>) to automatically load module <code>my_package.my_kernel_extension</code> any time an IPython kernel starts or restarts.</p>
+<div class="codehilite"><pre><span class="n">c</span><span class="o">.</span><span class="n">InteractiveShellApp</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;my_package.my_kernel_extension&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p>Writing a Python module that can serve as a kernel extension requires implementing a <code>load_ipython_extension</code> function and optionally implementing a <code>unload_ipython_extension</code> function. Both functions receive an <a href="https://ipython.org/ipython-doc/dev/api/generated/IPython.core.interactiveshell.html"><code>InteractiveShell</code></a> instance as their one and only parameter. The loading function typically uses methods on the instance to add features while the unload function cleans them up. For instance, a minimal extension that defines skip <code>%%skip</code>, a cell magic that turns the current cell into a no-op, appears below.</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">skip</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Skips execution of the current line/cell.&#39;&#39;&#39;</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">load_ipython_extension</span><span class="p">(</span><span class="n">shell</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Registers the skip magic when the extension loads.&#39;&#39;&#39;</span>
+    <span class="n">shell</span><span class="o">.</span><span class="n">register_magic_function</span><span class="p">(</span><span class="n">skip</span><span class="p">,</span> <span class="s">&#39;line_cell&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">unload_ipython_extension</span><span class="p">(</span><span class="n">shell</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Unregisters the skip magic when the extension unloads.&#39;&#39;&#39;</span>
+    <span class="k">del</span> <span class="n">shell</span><span class="o">.</span><span class="n">magics_manager</span><span class="o">.</span><span class="n">magics</span><span class="p">[</span><span class="s">&#39;cell&#39;</span><span class="p">][</span><span class="s">&#39;skip&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p><a name="nb-extensions"></a></p>
+<h2>3. Notebook Extensions</h2>
+<p>Jupyter Notebook extensions (<em>nbextensions</em>) are JavaScript modules that can load on most major views constituting the Notebook frontend. Once loaded, they have access to the complete page DOM and frontend Jupyter JavaScript API with which to modify the user experience. As their name suggests, these extensions are exclusive to the Notebook frontend for Jupyter and <a href="https://github.com/ipython-contrib/IPython-notebook-extensions/wiki/Home_3x">typically add features to the notebook authoring user interface.</a></p>
+<p>Today, the recommended way of installing, loading, and unloading extensions requires running a few snippets of code either within a notebook associated with an IPython kernel or in an external Python script. To install, for example, <a href="https://github.com/minrk/ipython_extensions">minrk's gist nbextension</a>, you can execute the following code in a notebook.</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">notebook.nbextensions</span>
+<span class="n">notebook</span><span class="o">.</span><span class="n">nbextensions</span><span class="o">.</span><span class="n">install_nbextension</span><span class="p">(</span><span class="s">&#39;https://rawgithub.com/minrk/ipython_extensions/master/nbextensions/gist.js&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The code above downloads the JavaScript file and copies it into your Jupyter data directory (e.g., <code>~/.local/share/jupyter/nbextensions</code>). Once installed, you can load the gist extension by executing the following JavaScript in a code cell.</p>
+<div class="codehilite"><pre><span class="o">%%</span><span class="nx">javascript</span>
+<span class="nx">Jupyter</span><span class="p">.</span><span class="nx">utils</span><span class="p">.</span><span class="nx">load_extensions</span><span class="p">(</span><span class="s1">&#39;gist&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The cell above emits a <code>&lt;script&gt;</code> element into the output area of the notebook cell. That script loads the <code>gist.js</code> JavaScript module from the Notebook server backend. On load, the gist extension adds a button appears to the toolbar which you can click to post the current notebook document as a gist.</p>
+<p>After you save the notebook, the <code>&lt;script&gt;</code> element will persist in it. This script block will execute whenever you (but <a href="http://jupyter-notebook.readthedocs.org/en/latest/security.html#our-security-model">not necessarily others</a>) open this particular notebook document. To stop this behavior, you can delete the cell and refresh the page.</p>
+<p>If you want to load the extension automatically whenever you open <em>any</em> notebook document, you must add the extension to the notebook configuration section of your Jupyter profile. You can do so with the following code.</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">notebook.services.config</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">()</span>
+<span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;gist&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+</pre></div>
+
+
+<p>You can stop the extension from loading automatically across notebooks using similar code. Pay attention to the use of <code>None</code> instead of <code>False</code> as the value that disables the extension.</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">notebook.services.config</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">()</span>
+<span class="c"># update with None, not False, to disable auto loading</span>
+<span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;gist&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}})</span>
+</pre></div>
+
+
+<p>Take note of the first parameter value in the <code>ConfigManager.update</code> invocation. It associates the extension with one of the primary Jupyter Notebook views, in this case the notebook editor view. While most extensions, like gist, operate on the notebook view, it is possible to write and load extensions against other views such as the text editor (<code>edit</code>) and dashboard (<code>tree</code>), or all views (<code>common</code>).</p>
+<p>To write a new extension, you must implement your logic in a JavaScript file conforming to the <a href="https://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD specification</a> so that Jupyter can load it using <a href="http://requirejs.org/">RequireJS</a>. You should define and export a <code>load_ipython_extension</code> function in your module so that Jupyter can invoke it after initializing its own components. Within that function, you are free to manipulate the DOM of the page, invoke Jupyter JavaScript APIs, listen for Jupyter events, load other modules, and so on.</p>
+<p>As an example, here is an extension that registers a command-mode hotkey to show a dialog of notebook cell counts.</p>
+<div class="codehilite"><pre><span class="nx">define</span><span class="p">([</span>
+    <span class="s1">&#39;base/js/namespace&#39;</span>
+<span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Jupyter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">exports</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="c1">// Show counts of cell types</span>
+    <span class="kd">var</span> <span class="nx">show_stats</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Get counts of each cell type</span>
+        <span class="kd">var</span> <span class="nx">cells</span> <span class="o">=</span> <span class="nx">Jupyter</span><span class="p">.</span><span class="nx">notebook</span><span class="p">.</span><span class="nx">get_cells</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">hist</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">cells</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">ct</span> <span class="o">=</span> <span class="nx">cells</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">cell_type</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">hist</span><span class="p">[</span><span class="nx">ct</span><span class="p">]</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">hist</span><span class="p">[</span><span class="nx">ct</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">hist</span><span class="p">[</span><span class="nx">ct</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Build paragraphs of cell type and count</span>
+        <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">ct</span> <span class="k">in</span> <span class="nx">hist</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">ct</span><span class="o">+</span><span class="s1">&#39;: &#39;</span><span class="o">+</span><span class="nx">hist</span><span class="p">[</span><span class="nx">ct</span><span class="p">]).</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Show a modal dialog with the stats</span>
+        <span class="nx">Jupyter</span><span class="p">.</span><span class="nx">dialog</span><span class="p">.</span><span class="nx">modal</span><span class="p">({</span>
+            <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Notebook Stats&quot;</span><span class="p">,</span>
+            <span class="nx">body</span><span class="o">:</span> <span class="nx">body</span><span class="p">,</span>
+            <span class="nx">buttons</span> <span class="o">:</span> <span class="p">{</span>
+                <span class="s2">&quot;OK&quot;</span><span class="o">:</span> <span class="p">{}</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="c1">// Wait for notification that the app is ready</span>
+    <span class="nx">exports</span><span class="p">.</span><span class="nx">load_ipython_extension</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Then register command mode hotkey &quot;s&quot; to show the dialog</span>
+        <span class="nx">Jupyter</span><span class="p">.</span><span class="nx">keyboard_manager</span><span class="p">.</span><span class="nx">command_shortcuts</span><span class="p">.</span><span class="nx">add_shortcut</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="nx">show_stats</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="nx">exports</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p><a name="nb-server-exts"></a></p>
+<h2>4. Notebook Server Extensions</h2>
+<p><a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html#server-side-handler">Jupyter Notebook server extensions</a> are Python modules that load when the Notebook web server application starts. The only way to load server extensions at present is by way of the Jupyter configuration system. You must specify the extensions to load prior to starting the Jupyter Notebook server itself. Any changes to the list of extensions or the extensions themselves require a restart of the Notebook process to take effect.</p>
+<p>For example, you can add the following lines to the Notebook configuration file in your Jupyter profile (e.g., <code>~/.jupyter/jupyter_notebook_config.py</code>) to automatically load server extension <code>my_package.my_server_extension</code> when the Notebook app launches.</p>
+<div class="codehilite"><pre><span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">server_extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;my_package.my_server_extension&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+
+<p>Creating a Python module that acts as a server extension requires implementing a <code>load_jupyter_server_extension</code> function. The function receives an instance of <code>notebook.notebookapp.NotebookApp</code> as its sole parameter. The function can use functions and attributes of this instance to customize and extend the server behavior. Most notably, the <code>web_app</code> attribute of the <code>NotebookApp</code> instance refers to an instance of a <a href="http://tornado.readthedocs.org/en/latest/web.html"><code>tornado.web.Application</code></a> subclass. You can register new <code>tornado.web.RequestHandler</code>s via that instance to extend the backend API of Jupyter Notebook.</p>
+<p>To demonstrate the concept, an extension that adds a (dumb) "hello world" handler to the Notebook server appears below. (More compelling examples likely involve both Notebook server and frontend extensions working in conjunction.)</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">notebook.utils</span> <span class="kn">import</span> <span class="n">url_path_join</span>
+<span class="kn">from</span> <span class="nn">notebook.base.handlers</span> <span class="kn">import</span> <span class="n">IPythonHandler</span>
+
+<span class="k">class</span> <span class="nc">HelloWorldHandler</span><span class="p">(</span><span class="n">IPythonHandler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="s">&#39;Hello, world!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">load_jupyter_server_extension</span><span class="p">(</span><span class="n">nb_app</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Register a hello world handler.</span>
+
+<span class="sd">    Based on https://github.com/Carreau/jupyter-book/blob/master/extensions/server_ext.py</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">web_app</span> <span class="o">=</span> <span class="n">nb_app</span><span class="o">.</span><span class="n">web_app</span>
+    <span class="n">host_pattern</span> <span class="o">=</span> <span class="s">&#39;.*$&#39;</span>
+    <span class="n">route_pattern</span> <span class="o">=</span> <span class="n">url_path_join</span><span class="p">(</span><span class="n">web_app</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;base_url&#39;</span><span class="p">],</span> <span class="s">&#39;/hello&#39;</span><span class="p">)</span>
+    <span class="n">web_app</span><span class="o">.</span><span class="n">add_handlers</span><span class="p">(</span><span class="n">host_pattern</span><span class="p">,</span> <span class="p">[(</span><span class="n">route_pattern</span><span class="p">,</span> <span class="n">HelloWorldHandler</span><span class="p">)])</span>
+</pre></div>
+
+
+<p><a name="pkg-dist"></a></p>
+<h2>A Final Word: Packaging and Distribution</h2>
+<p>Packaging and distributing extensions is a somewhat ad-hoc process at the moment. <a href="https://jupyter.hackpad.com/Packaging-crate-PbIgxnC71or">Planning</a> and <a href="https://github.com/jupyter/notebook/issues/116">discussion</a> are in progress to improve the state of affairs. That said, it is possible to share your work with a bit of effort today. For example, the sample <code>setup.py</code> below shows how a custom <a href="https://pythonhosted.org/setuptools/">setuptools</a> command class can install IPython kernel extensions, Jupyter Notebook JavaScript extensions, and Jupyter server extensions.</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">setuptools.command.install</span> <span class="kn">import</span> <span class="n">install</span>
+
+<span class="kn">from</span> <span class="nn">notebook.nbextensions</span> <span class="kn">import</span> <span class="n">install_nbextension</span>
+<span class="kn">from</span> <span class="nn">notebook.services.config</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<span class="kn">from</span> <span class="nn">jupyter_core.paths</span> <span class="kn">import</span> <span class="n">jupyter_config_dir</span>
+
+<span class="n">EXT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;myext&#39;</span><span class="p">)</span>
+<span class="n">SERVER_EXT_CONFIG</span> <span class="o">=</span> <span class="s">&quot;c.NotebookApp.server_extensions.append(&#39;myext.my_handler&#39;)&quot;</span>
+
+<span class="k">class</span> <span class="nc">InstallCommand</span><span class="p">(</span><span class="n">install</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Install Python package, possibly containing a kernel extension</span>
+        <span class="n">install</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Install JavaScript extensions, for notebook, dashboard, and editor screens</span>
+        <span class="n">install_nbextension</span><span class="p">(</span><span class="n">EXT_DIR</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">()</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/notebook&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;tree&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/dashboard&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;edit&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/editor&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+
+        <span class="c"># Install Notebook server extension</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jupyter_config_dir</span><span class="p">(),</span> <span class="s">&#39;jupyter_notebook_config.py&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s">&#39;r+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">SERVER_EXT_CONFIG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+                <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">SERVER_EXT_CONFIG</span><span class="p">)</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s">&#39;myext&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s">&#39;0.1&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;myext&#39;</span><span class="p">],</span>
+    <span class="n">cmdclass</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">&#39;install&#39;</span><span class="p">:</span> <span class="n">InstallCommand</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>If the code seems lengthy, consider <a href="https://github.com/jdfreder/jupyter-pip">jupyter-pip</a> which wraps some of the techniques above (and others) in a nice, reusable package. No matter which approach you choose, a user can open a Python notebook, run <code>pip install</code> against the root of your extension project, and wind up with all of your extension components put in their proper place. But not all is roses: Building packages for PyPI, supporting <code>pip uninstall</code>, and running the install outside of an active Jupyter Notebook context all require extra work.</p>
+<p><a name="changelog"></a></p>
+<h2>Changelog</h2>
+<ul>
+<li>2015-11-04<ul>
+<li>Updated paths and packages to match what now exists in the stable 4.x line of Jupyter Notebook releases</li>
+<li>Linked to official Jupyter Notebook doc about extending the notebook</li>
+<li>Removed caveats about 4.0 pre-release and 3.2.x backports</li>
+</ul>
+</li>
+</ul>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="./control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry &#187;</a></h3>
+        <div class="excerpt"><p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="./4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="./control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="./exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="./my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="./posts.html">See all posts &#187;</a></li>
+            <li><a href="./feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

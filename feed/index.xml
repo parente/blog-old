@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>Parente's Mindtrove</title>
+    <link>http://mindtrove.info</link>
+    <description>Blog of Peter Parente</description>
+    <pubDate>Sun, 03 Jan 2016 04:25:05 GMT</pubDate>
+    <generator>custom</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Four Ways to Extend Jupyter Notebook</title>
+      <link>http://mindtrove.info/4-ways-to-extend-jupyter-notebook/</link>
+      <pubDate>Sun, 19 Jul 2015 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/4-ways-to-extend-jupyter-notebook/</guid>
+      <description>Four Ways to Extend Jupyter Notebook</description>
+      <content:encoded><![CDATA[<p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Control Read/Write Access to Your Private Docker Registry</title>
+      <link>http://mindtrove.info/control-read-write-access-docker-private-registry/</link>
+      <pubDate>Sat, 07 Feb 2015 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/control-read-write-access-docker-private-registry/</guid>
+      <description>Control Read/Write Access to Your Private Docker Registry</description>
+      <content:encoded><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Exploration of Airline On-Time Performance</title>
+      <link>http://mindtrove.info/exploration-of-airline-on-time-performance/</link>
+      <pubDate>Tue, 21 Oct 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/exploration-of-airline-on-time-performance/</guid>
+      <description>Exploration of Airline On-Time Performance</description>
+      <content:encoded><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content:encoded>
+    </item>
+    <item>
+      <title>This is My Blog on Docker + IPython</title>
+      <link>http://mindtrove.info/my-blog-on-docker-ipython/</link>
+      <pubDate>Sun, 13 Jul 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/my-blog-on-docker-ipython/</guid>
+      <description>This is My Blog on Docker + IPython</description>
+      <content:encoded><![CDATA[<p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Run a Docker Registry Backed by IBM SoftLayer Object Storage</title>
+      <link>http://mindtrove.info/docker-registry-softlayer-object-storage/</link>
+      <pubDate>Sun, 22 Jun 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/docker-registry-softlayer-object-storage/</guid>
+      <description>Run a Docker Registry Backed by IBM SoftLayer Object Storage</description>
+      <content:encoded><![CDATA[<p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Whispers of Test Failures</title>
+      <link>http://mindtrove.info/whispers-of-test-failures/</link>
+      <pubDate>Sat, 19 Apr 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/whispers-of-test-failures/</guid>
+      <description>Whispers of Test Failures</description>
+      <content:encoded><![CDATA[<p>Yesterday, I learned that support for the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">speech synthesis portion of the Web Speech API spec</a> landed in Chrome stable. I also learned that I'm behind the curve given that the <a href="http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API">HTML5 Rocks Speech Synthesis tutorial</a> was published nearly four months ago. I immediately set out to rectify this situation by having my browser whisper my frontend test failures to me.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>A reveal.js Docker Base Image with ONBUILD</title>
+      <link>http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/</link>
+      <pubDate>Thu, 20 Feb 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/</guid>
+      <description>A reveal.js Docker Base Image with ONBUILD</description>
+      <content:encoded><![CDATA[<p>Docker 0.8 introduced the <code>ONBUILD</code> instruction for Dockerfiles. I'll admit, when I read <a href="http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/">the release announcement</a>, I glossed right over this new feature. Now that I've had time to <a href="http://docs.docker.io/en/latest/reference/builder/#onbuild">read more about it</a>, I can see its potential for creating build environments.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>pass on OSX</title>
+      <link>http://mindtrove.info/password-store-osx/</link>
+      <pubDate>Wed, 08 Jan 2014 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/password-store-osx/</guid>
+      <description>pass on OSX</description>
+      <content:encoded><![CDATA[<p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Watch Vagrant Changes</title>
+      <link>http://mindtrove.info/watch-vagrant-changes/</link>
+      <pubDate>Thu, 07 Nov 2013 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/watch-vagrant-changes/</guid>
+      <description>Watch Vagrant Changes</description>
+      <content:encoded><![CDATA[<p><a href="http://vagrantup.com">Vagrant</a> is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type <code>vagrant up</code> and <code>vagrant ssh</code> in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient <code>/vagrant</code> project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Two Years</title>
+      <link>http://mindtrove.info/two-years/</link>
+      <pubDate>Tue, 07 May 2013 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/two-years/</guid>
+      <description>Two Years</description>
+      <content:encoded><![CDATA[<p>I'm alive and kicking. You wouldn't know it looking at this blog. Or my Twitter account. Or my (deleted) Facebook account. But, yep, I'm still here.</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

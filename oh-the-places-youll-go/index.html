@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Oh! The Places You'll Go! - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Oh! The Places You'll Go!</h1>
+    <p class="pageDate">June 17, 2007</p>
+  <p>For those who read this, I'm not longer working on GNOME accessibility projects for IBM. I've been transfered to the <a href="http://www.youtube.com/watch?v=ckGfhlZW0BY">QEDWiki project</a>, and may or may not have accessibility duties in the long run, but possibly some in the short term.</p>
+<p>Nevertheless, I'm writing up some final documentation on LSR in hope that someone will find it useful:</p>
+<ol>
+<li>A <a href="http://www.gnome.org/~parente/lsr/pguide/">patterns document</a> stating ways to solve different problems using the existing Perk scripting sytem.</li>
+<li>A <a href="http://www.gnome.org/~parente/lsr/retro">LSR in retrospect document</a> starting what I would change, if I were starting over again today.</li>
+</ol>
+<p>I may work on making the latter changes myself in my spare time. I can see some usefulness is having a basic accessibility engine which I can use to script certain desktop actions or speech enable specific applications. For instance, maybe I want to listen to changes in a particular window (e.g. console with tail -f running, gaim chat window). Maybe I want some pre-recorded macros that perform a specific set of actions across applications that do not make their models public through dbus or another API. Or maybe I want a small toolbox window to augment an application with functions that aren't immediately available in its toolbar.</p>
+<p>I still plan on contributing to GNOME accessibility. I have some patches outstanding for pygtk that will allow widgets drawn with pycairo to become visible to AT-SPI clients (e.g. Orca, Accerciser, GOK). I just have to find time to work on them.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../yes-this-too-shall-pass">Yes, This Too Shall Pass &#187;</a></h3>
+        <div class="excerpt"><p>Yesterday, IBM decided to change strategies with respect to GNOME accessibility: http://www-03.ibm.com/developerworks/blogs/page/schwer. Under this new plan, IBM is no longer supporting development of LSR, accerciser, pyatspi, AT-SPI::Collection, or Firefox/AT-SPI accessibility. These projects will not vanish, but the news does have an impact on each.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Error Handlers in dojo.Deferred Chains - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Error Handlers in dojo.Deferred Chains</h1>
+    <p class="pageDate">February 06, 2011</p>
+  <p><a href="http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/">Starting in 1.5</a>, Dojo's <a href="http://dojotoolkit.org/api/1.5/dojo/Deferred">Deferred class</a> exposes a <code>then()</code> method that accepts three arguments: a success handler for <code>callback()</code>, an error handler for <code>errback</code>, and a progress handler for <code>progress()</code> updates. One interesting feature of the <code>dojo.Deferred</code> implementation is the ability of a callback handler to return a new deferred which becomes the target of the next handler scheduled on the original deferred.</p>
+<p>Consider these two snippets. The first shows chaining on a single deferred. The second shows chaining with a new deferred returned within the chain.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d1</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<span class="nx">d1</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// scheduled on the same deferred as the first</span>
+    <span class="c1">// runs if the first handler completes without an exception</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second success&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">d2</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<span class="nx">d2</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// scheduled on deferred from anotherDeferredReturningFunction</span>
+    <span class="c1">// runs when the second deferred&#39;s callback is invoked</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second success&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2>Try #1: Error handlers everywhere</h2>
+
+<p>I recently wrote some code in which my deferred callback handlers returned new deferreds for chaining, but where any deferred in the chain might have its <code>errback()</code> invoked. I wanted my handler chain to cease firing after the first occurrence of an error with one and only one handler invoked for that error. I naively started with the following recipe:</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first error&#39;</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">yetAnotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second error&#39;</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;third success&#39;</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;third error&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>To my surprise, when the very first deferred's <code>errback()</code> was invoked, the console output declared:</p>
+<pre>
+  first error
+  second success
+  third success
+</pre>
+
+<p>Likewise, when the second deferred's <code>errback</code> was invoked, the console output was:</p>
+<pre>
+  first success
+  second error
+  third success
+</pre>
+
+<p>I quickly realized my mistake: my error handlers did not return new deferreds. Therefore, each additional <code>then()</code> call in my chain registered handlers to be invoked by the success or failure of the previous set in the chain.</p>
+<h2>Try #2: Error handlers throwing errors</h2>
+
+<p>I next tried the following approach:</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first error&#39;</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">yetAnotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second error&#39;</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;third success&#39;</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;third error&#39;</span><span class="p">);</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>This code showed improvement, but still did not have my desired behavior. An <code>errback()</code> on the initial deferred produced the following output:</p>
+<pre>
+  first error
+  second error
+  third error
+</pre>
+
+<p>An <code>errback()</code> on the second showed the following output:</p>
+<pre>
+  first success
+  second error
+  third error
+</pre>
+
+<p>After a little more thinking, I realized the same problem plaguing my first approach was in effect here. My error handlers were still not returning new deferreds. The chained handlers were still operating on the success or failure conditions of their predecessors.</p>
+<h2>Solution: One terminal error handler</h2>
+
+<p>Finally, I hit upon a pattern with the behavior I wanted:</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;second success&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">yetAnotherDeferredReturningFunction</span><span class="p">();</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;third success&#39;</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;any error&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>A <code>errback()</code> on the first deferred now resulted in the following output:</p>
+<pre>
+  any error
+</pre>
+
+<p>An <code>errback()</code> on the second produced in the following:</p>
+<pre>
+  first success
+  any error
+</pre>
+
+<h3>Why does it work?</h3>
+
+<p>Any error early in the chain falls through the chain until it reaches an error handler. Placing the error handler at the end of the chain guarantees it and it alone will fire after any <code>errback()</code> in the chain.</p>
+<h2>Try it yourself</h2>
+
+<p>I created a easy-to-run jsFiddle that demonstrates the second and third patterns mentioned in this post. Let me know if you find any other interesting behaviors.</p>
+<iframe style="width: 100%; height: 300px; border: 1px solid gray; margin-top: 1em" src="http://jsfiddle.net/parente/Azh4t/embedded/"></iframe>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../handlerbag-on-github">handlerbag on GitHub &#187;</a></h3>
+        <div class="excerpt"><p>I recently pushed for a small utility of mine called <a href="http://github.com/parente/handlerbag">handlerbag</a> to github. The code defines a tiny controller for managing a bag of <a href="http://tornadoweb.org/">Tornado</a> web server handlers. The controller supports auth using Google OpenID, dynamic loading and unloading of handlers, and simple persistence of handler configuration using anydbm.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

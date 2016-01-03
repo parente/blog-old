@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>A reveal.js Docker Base Image with ONBUILD - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">A reveal.js Docker Base Image with ONBUILD</h1>
+    <p class="pageDate">February 20, 2014</p>
+  <p>Docker 0.8 introduced the <code>ONBUILD</code> instruction for Dockerfiles. I'll admit, when I read <a href="http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/">the release announcement</a>, I glossed right over this new feature. Now that I've had time to <a href="http://docs.docker.io/en/latest/reference/builder/#onbuild">read more about it</a>, I can see its potential for creating build environments.</p>
+<p>Let me show you by containerizing reveal.js.</p>
+<h2>The Base Image</h2>
+<p><a href="http://lab.hakim.se/reveal-js/#/">Reveal.js</a> bills itself as "a framework for easily creating beautiful presentations using HTML." Most reveal.js features work just fine when we load the presentation directly from the filesystem. But some features, like Markdown support, require that we load the presentation from a running web server. A Docker container can tie everything up in one tidy package that we can move and run anywhere.</p>
+<p>We could write a Dockerfile that installs NodeJS, downloads reveal.js, installs its npm dependencies, and inserts our Markdown slides into the container on build. We could then copy and build this Dockerfile everywhere we want to develop or run a slideshow server. Or we could keep cramming new markdown files into a single container by rebuilding or <code>scp</code>ing them in a backdoor. Or we could build a generic image that, when run, requires us to volume mount our slides from the host or another container.</p>
+<p><code>ONBUILD</code> introduces a new possibility. With it, we can build a base image that completely configures reveal.js and the web server, but delays insertion of the actual slide content until a child Dockerfile build. The key snippet from the Dockerfile appears below:</p>
+<div class="codehilite"><pre>FROM ubuntu:13.10
+MAINTAINER Peter Parente &lt;parente@cs.unc.edu&gt;
+
+<span class="c"># elided dependency setup, then ...</span>
+
+ONBUILD ADD slides.md /revealjs/md/
+
+<span class="c"># elided final setup</span>
+</pre></div>
+
+
+<p>We can build the base image once and store it in the Docker registry via <code>docker push</code>, or setup a trusted build. (I've <a href="https://index.docker.io/u/parente/revealjs/">done the latter</a>, which shows the full Dockerfile, if you're interested).</p>
+<h2>The Slideshow Image</h2>
+<p>Later, when we have a new slideshow, we can put a one-line Dockerfile:</p>
+<div class="codehilite"><pre>FROM parente/revealjs
+</pre></div>
+
+
+<p>in the same folder as our <code>slides.md</code>:</p>
+<div class="codehilite"><pre><span class="cp"># Docker + reveal.js</span>
+
+<span class="cp">### A reveal.js Docker Base Image with ONBUILD</span>
+
+<span class="o">---</span>
+
+<span class="cp">## Write more slides</span>
+</pre></div>
+
+
+<p>and do a build:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>docker build -t slideshow .
+</pre></div>
+
+
+<p>During this build, Docker executes the delayed <code>ONBUILD ADD slides.md /revealjs/md/</code> instruction. It pulls our local <code>slides.md</code> file into the child image. The result is a portable Docker image that can run our slideshow server anywhere Docker runs.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>docker run -d -P slideshow
+</pre></div>
+
+
+<p>And of course all the standard <code>docker run</code> options still apply: a fixed port, container naming, running in the foreground, etc.</p>
+<h2>A Development Story</h2>
+<p>The build and run steps above are perfect for producing a completed slideshow container. Cycling between build and run while developing the slides is less than ideal, however.</p>
+<p>Mixing techniques can alleviate this pain. During development, we can volume mount the slides from the host into a running instance of the base image. This setup lets us make changes to the <code>slides.md</code> on the host, refresh the browser, and see the impact immediately, without tearing down, rebuilding, and re-running the container.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>docker run -d -P -v <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/revealjs/md parente/revealjs
+</pre></div>
+
+
+<p>When we're satisfied with our work, we can build the final, fully contained image for migration and deployment.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>docker build -t slideshow .
+</pre></div>
+
+
+<p>For the gritty details, see <a href="https://github.com/parente/dockerfiles/tree/master/revealjs">the source</a> or the <a href="https://index.docker.io/u/parente/revealjs/">parente/revealjs repository</a>.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../password-store-osx">pass on OSX &#187;</a></h3>
+        <div class="excerpt"><p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

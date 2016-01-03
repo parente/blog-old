@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Rich Audio MUDs - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Rich Audio MUDs</h1>
+    <p class="pageDate">May 29, 2008</p>
+  <p>Gary has mentioned that sound adventure games like <a href="http://www.cs.unc.edu/Research/assist/et/2005/SoundsLikeFun.html">Descent into Madness</a> and <a href="http://www.cs.unc.edu/Research/assist/et/projects/RPG/TheLastCrusade.htm">The Last Crusade</a> have served as effective rewards in some local schools. Kids with visual impairments work hard in order to earn time playing them.</p>
+<p>I've been brainstorming a bit about open-ended multi-user dungeons (MUDs) with rich sound and speech. Gary thinks it would be beneficial to use the MUD for educational purposes, not just as a reward after the work is done. I tend to agree, as long as its easy for teachers, older students, parents, and so on to translate lessons into in-game puzzles and adventures.</p>
+<p>Here are some ideas I think could go into such a system to make it fun and rewarding for the kids, and an interesting platform for games.</p>
+<ul>
+<li>Rooms and items. A simple setup including the entire dungeon, rooms with arbitrary connections, items in rooms, and users in rooms can should account for a large number of adventure game designs.</li>
+<li>A basic command set. Take, drop, give, use, go, and a few other very simple commands can be supported everywhere to let the user navigate and interact with the environment.</li>
+<li>An extensible parser. Items can define additional supported commands, even to the extent where the become...</li>
+<li>In-world games. To go beyond exploring rooms, picking up items, and using items, items and rooms themselves can become full games. Imagine a puzzle game as an item or a room where everyone is participating in a guessing game.</li>
+<li>Other input methods. Items can reconfigure the keyboard to support simpler methods of interaction. For example, an multiple choice game might require only use of the arrow keys instead of requiring the user to enter full sentences. A game might enable other devices too (e.g., DDR pad).</li>
+<li>A rich audio client. Most MUD clients are text-only. When used with a screen reader, the game experience is entirely spoken. With a custom client, the game logic can provide responses the client renders as speech and sound in any number of streams.</li>
+<li>A client/server configuration over XMPP. The dungeon lives on a server, though not necessarily the same machine as the XMPP server. Instead, it's just another XMPP client with a well known JID. A bot of sorts. The rooms and items can be objects managed by that bot, or even become other bots themselves. The dungeon can exist across multiple machines.</li>
+<li>Collaboration. Rooms in the dungeon are like chat rooms where some text entered in the client is broadcast to everyone, and other commands are addressed to items in rooms. Going beyond simple text, clients could implement XMPP Jingle to support voice chat.</li>
+</ul>
+<p>Is anyone working on a similar project? Heard of a similar project?</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../maze-day-2008">Maze Day 2008 &#187;</a></h3>
+        <div class="excerpt"><p>About once a year, K-12 kids with disabilities from all over North Carolina (and beyond) travel to UNC-Chapel Hill to take part in <a href="http://wwwx.cs.unc.edu/~gb/wp/blog/2008/01/22/maze-day-2008/">Maze Day</a>. Throughout the day, the kids, their teachers, and their parents wander Sitterson Hall to try out the numerous games, applications, activities, and demos designed to help them learn and have fun at the same time.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

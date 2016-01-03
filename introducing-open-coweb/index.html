@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Introducing the OpenCoweb Project - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Introducing the OpenCoweb Project</h1>
+    <p class="pageDate">April 25, 2011</p>
+  <p>I've been part of a project at IBM since 2007, exploring what our team calls <em>cooperative web</em> concepts: multi-user interaction and audio/video conferencing within web applications. In January, IBM approved our team's proposal to release a portion of this work as the <a href="http://opencoweb.org">Open Cooperative Web Framework</a>, or OpenCoweb for short. This release features a JavaScript API for adding lock-free, concurrent editing to new or existing web applications. The keystone in the framework is an <a href="http://en.wikipedia.org/wiki/Operational_transformation">operational transformation</a> (OT) algorithm that guarantees all users converge to the same shared state.</p>
+<h2>Applying OT</h2>
+
+<p>Operational transformation is most often associated with collaborative text editors in which all users can make changes to the document at the same time. While text-editing was the original embodiment of OT, and is certainly still a great application of the technique, operational transformation can prove useful in other domains. Consider some sample cooperative web applications in which:
+  <ul>
+    <li>a team of software developers can triage bugs together (think: real-time cooperative GitHub issue tracker)</li>
+    <li>a realtor and potential out-of-state buyer can review properties of interest together</li>
+    <li>friends can plan and adjust a vacation route, landmarks to visit, and trip todo list as a group</li>
+    <li>co-workers can update a shared mind-map during brainstorming sessions</li>
+  </ul></p>
+<p>All of these applications require some form of consistency-maintenance to ensure remote instances do not get out-of-sync. OT can fill this role without the need for pessimistic locks or sluggish server acknowledgements that can hamper cooperation. For example, OT can allow both the realtor and buyer to simultaneously create and sort a list of interesting properties to visit without forced turn-taking or "click-to-edit" controls.</p>
+<p>The OpenCoweb framework enables OT in any application domain as long as the application adheres to a few simple rules. For example, the triage app noted above would need to indicate the assignment of a label to a bug as an "insert" type event and the removal of a label as a "delete". In return, the framework algorithm would guarantee all users end up seeing the same set of labels on the bug, even in the face of simultaneous, conflicting label changes by multiple users.</p>
+<h2>Design and implementation</h2>
+
+<p>From the outset, we attempted to design OpenCoweb to be a small, unobtrusive framework. The JavaScript API exists as a set of modules in <a href="http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition">AMD format</a> for cross-toolkit compatibility. An application uses the API to join cooperative sessions and transmit events while the framework worries about transforming events for convergence and inbound/outbound event delivery.</p>
+<p>The two server implementations, one in Java using <a href="http://cometd.org">CometD</a> and the other in Python on <a href="http://tornadoweb.org">Tornado</a>, are simple event relays that work out-of-the-box or can be extended to dictate access control, provide additional services, and so on. The OpenCoweb protocol between the framework JavaScript and server of choice is defined as an extension to <a href="http://cometd.org/documentation/bayeux/spec">Bayeux</a> with either a comet long-polling technique or a WebSocket providing the transport underneath. Again, a web application developer need not worry about these details in most cases. Nevertheless, the framework can support new server implementations (e.g. on <a href="http://nodejs.org/">Node</a>) and even other protocols (e.g., <a href="http://socket.io/">socket.io</a>) if so desired.</p>
+<h2>For more information</h2>
+
+<p>The <a href="http://opencoweb.org">project home page</a>, <a href="http://opencoweb.org/ocwdocs">developer documentation</a>, and <a href="http://github.com/opencoweb/coweb">README on GitHub</a> have plenty of additional details about OpenCoweb. I believe the <a href="http://opencoweb.org/ocwdocs/intro/openg.html">treatment of OT in our docs</a> is very accessible for those seeking a gentle introduction to the topic. At the same time, I think our framework is well suited to those wanting to reap the benefits of OT without worrying much about its specifics, as evidenced by <a href="http://opencoweb.org/ocwdocs/tutorial/shopping.html">our step-by-step tutorial</a>.</p>
+<p>If you'd like to get involved, subscribe to our <a href="https://groups.google.com/group/opencoweb"> our Google Group</a>, join our <a href="http://webchat.freenode.net?randomnick=1&channels=coweb&uio=d4">#coweb channel on Freenode</a>, or fork our code and send <a href="http://github.com/opencoweb/coweb">pull requests on GitHub</a>.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../til-virtualenv-supervisord">Activating a virtualenv in supervisord &#187;</a></h3>
+        <div class="excerpt"><p>Here's a little script I started using today to activate a virtualenv, run a command in it, then deactivate the environment.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Python Weak References - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Python Weak References</h1>
+    <p class="pageDate">April 30, 2008</p>
+  <p>The weakref module in the Python standard library is a useful tool for creating Python references without impeding object destruction. This tutorial covers the basics of weak references, and introduces a Proxy class enabling weak references to method objects.</p>
+<h2>Hefty, hefty, hefty</h2>
+<p>Strong references are pointers to objects that have an effect on their reference counts, and hence their lifetime and destruction. Strong references are what you see all the time when you assign an object to a variable:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</pre></div>
+
+
+<p>In this case, the list object has two strong references to it stored in a and b. The list will not be destroyed until both references are released:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">b</span>
+</pre></div>
+
+
+<p>In this case, it is hard to tell exactly when the list object is destroyed. A class with a verbose <strong>del</strong> method provides a better example:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="bp">None</span>
+       <span class="k">print</span> <span class="s">&#39;created&#39;</span>
+
+     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">print</span> <span class="s">&#39;destroyed&#39;</span>
+
+     <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span>
+
+     <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span>
+</pre></div>
+
+
+<p>Again, if we create two strong references to a single instance of Foo, we can now see that it is not destroyed until both references are discarded:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">b</span>
+<span class="n">destroyed</span>
+</pre></div>
+
+
+<h2>Wimpy, wimpy, wimpy</h2>
+<p>Weak references, on the other hand, have no effect on the reference count for an object. The existence of a weak reference never impedes object destruction. That is, if an object has only weak references, it will be destroyed.</p>
+<p>To create a weak reference to an object, you use the weakref.ref function. The call requires a strong reference to an object as the first parameter and returns a weak reference to that object:</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">weakref</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+
+<p>A temporary strong reference can be created from a weak reference by calling it:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">()</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="bp">None</span>
+</pre></div>
+
+
+<p>Notice that when we delete the one and only strong reference to our Foo object, it is immediately destroyed:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="n">destroyed</span>
+</pre></div>
+
+
+<p>If we try to call our weak reference after the object has been destroyed, we get None in its place:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="p">()</span> <span class="ow">is</span> <span class="bp">None</span>
+<span class="bp">True</span>
+</pre></div>
+
+
+<p>As a more transparent alternative to weakref.ref, we can use weakref.proxy. This call requires a strong reference to an object as its first argument and returns a weak reference proxy. The proxy behaves just like a strong reference, but throws an exception when used after the target is dead:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="s">&#39;fish&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fish</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="n">destroyed</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="err">?</span>
+<span class="ne">ReferenceError</span><span class="p">:</span> <span class="n">weakly</span><span class="o">-</span><span class="n">referenced</span> <span class="nb">object</span> <span class="n">no</span> <span class="n">longer</span> <span class="n">exists</span>
+</pre></div>
+
+
+<h2>Cyclic references</h2>
+<p>A need for weak references arises when objects have strong references forming a cycle. In this case, object a has a reference to b and vice versa:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">b</span>
+</pre></div>
+
+
+<p>The destructor methods on a and b are never called and the objects continue to live until the interpreter exits. This example may seem contrived, but it is representative of patterns having a bidirectional relationship. If a parent GUI widget has a reference to a child widget while the child has a reference to its container parent, a cyclic reference exists. A node in a doubly linked list has a cyclic relationship. Even a node in a singly linked list may be part of a cycle that impedes proper object destruction:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">b</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">c</span>
+</pre></div>
+
+
+<p>A solution to this problem is to store weak references:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+
+
+<p>With this implementation, the two objects are destroyed when strong references a and b are deleted:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="n">destroyed</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">b</span>
+<span class="n">destroyed</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">c</span>
+<span class="n">destroyed</span>
+</pre></div>
+
+
+<h2>Dead-on-arrival</h2>
+<p>The <a href="http://docs.python.org/lib/module-weakref.html">weakref module</a> cannot create weak references to all objects. For instance, passing a Python list, tuple, dictionary, numeric, string, or None will raise a TypeError exception. This limitation and response is reasonable. However, sometimes creation of a weak references fails silently:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="n">created</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">)</span> <span class="c"># store creates a weak reference</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="bp">None</span>
+</pre></div>
+
+
+<p>Shouldn't the variable a hold a reference to the bound method show on the instance in b? No. The reason for this seemingly strange behavior is that bound methods are created on demand when accessed on an instance. In this code, the bound method b.show is created and passed to the method Foo.store. This method stores a weak reference to b.show in the instance variable a.obj. Once the store method ends, there is no longer a strong reference to the bound method b.show and so it is immediately destroyed. In a sense, the weak reference in a.obj is dead-on-arrival.</p>
+<h2>Extending weak references</h2>
+<p>Even though the weakref module cannot create weak references to bound methods, you can create a weak reference proxy class that works for bound methods as well as other objects. The following code from the Linux Screen Reader project accomplishes exactly this goal. When a bound method is passed to the constructor of the Proxy class, it creates a weak reference to the instance and strong references to its class and function definition. Later, when the method is called, it creates a strong method just in time. For all other objects, it acts just like weakref.proxy:</p>
+<script src="https://gist.github.com/parente/7077748.js"></script>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../validate-your-accessibility">Validate Your Accessibility &#187;</a></h3>
+        <div class="excerpt"><p>Eitan <a href="http://monotonous.org/?p=48">committed a new plug-in</a> for Accerciser that makes it dirt simple to find basic accessibility problems. You know, the ones that cause grief for apps like Orca, GOK, On-Board, etc. To use it, run Accerciser, point it at part of a GUI, click validate, and wait for the report.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

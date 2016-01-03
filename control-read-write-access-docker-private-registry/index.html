@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Control Read/Write Access to Your Private Docker Registry - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Control Read/Write Access to Your Private Docker Registry</h1>
+    <p class="pageDate">February 07, 2015</p>
+  <p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>
+<p>Recently, we needed to grant some users pull-only access to our registry while retaining full push-pull access ourselves. I could not locate a recipe for such a setup on the web, and struggled a bit to find the appropriate incantation in nginx. In the end, I landed on a solution using <a href="http://nginx.org/en/docs/http/ngx_http_auth_request_module.html">subrequests</a> and <a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html">conditional status codes</a> to grant some users read-write access, others read-only access, and anonymous users no access at all. The trick is to determine which HTTP methods to allow based on a portion of the authenticated username.</p>
+<p>I've posted a <a href="https://gist.github.com/parente/c8900ec8877c9afd38e5">complete nginx.conf</a> implementing this scheme. You can grab it and go, or keep reading for an explanation of the configuration and an outline of how to use it.</p>
+<h2>Understanding It</h2>
+<p>The following snippets show the sections of the <code>nginx.conf</code> file used to implement the authorization mechanism.</p>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/gist-embed/2.0/gist-embed.min.js"></script>
+
+<div data-gist-id="c8900ec8877c9afd38e5" data-gist-line="27-36"></div>
+
+<p>The snippet above enables basic auth over all <code>docker-registry</code> upstream endpoints by default. It authenticates users based on credentials in the <code>/etc/users/registry_users</code> file created with the <a href="http://httpd.apache.org/docs/2.4/programs/htpasswd.html">htpasswd</a> utility. It then delegates to the <code>/_auth</code> location for further checks.</p>
+<div data-gist-id="c8900ec8877c9afd38e5" data-gist-line="37-49"></div>
+
+<p>The <code>/_auth</code> location tests the value of the <code>$remote_user</code> (i.e., the authenticated username) and the <code>$request_method</code>.</p>
+<ol>
+<li>If the username starts with <code>admin</code> or <code>admin-</code>, the subrequest handler responds with a status code of 200. This response allows any client request to proceed to the registry via the original handler (<code>location /</code>). A match on this condition effectively grants <strong>full read-write access</strong> to the registry.</li>
+<li>If the username does not start with the <code>admin</code> prefix, but the HTTP request method is <code>GET</code> or <code>HEAD</code>, the subrequest handler responds with 200 status. This response allows the client request to proceed to the upstream registry. A match on this condition effectively grants <strong>read-only access</strong> to the registry.</li>
+<li>In any other case, the subrequest handler responds with a <code>403 Forbidden</code>. The original request handler aborts further processing and returns the 403 response to the client. A match on this condition <strong>prohibits the client request</strong> from reaching the registry. In effect, this condition prevents all anonymous user access and prevents anything but <code>GET</code> and <code>HEAD</code> access (i.e., read-only access) by non-admin users.</li>
+</ol>
+<div data-gist-id="c8900ec8877c9afd38e5" data-gist-line="51-58"></div>
+
+<p>The Docker client requires the ability to <code>POST</code> to the <code>/v1/users</code> endpoint during login. The above location definition protects <code>/v1/users</code> with basic authentication, but allows any authenticated user to <code>POST</code> here to complete the Docker login process.</p>
+<h2>Using It</h2>
+<p>To use this config, follow these general steps:</p>
+<ol>
+<li>Grab the <a href="https://gist.github.com/parente/c8900ec8877c9afd38e5">complete config template</a>.</li>
+<li>Modify the <code>server_name</code> value at least.</li>
+<li>Pull the <a href="https://registry.hub.docker.com/u/library/registry/">registry</a> and <a href="https://registry.hub.docker.com/_/nginx/">nginx</a> images from Docker Hub.</li>
+<li>Use <code>htpasswd</code> to create a users file.</li>
+<li>Run a registry container and link the configured nginx container to it.</li>
+</ol>
+<p>A simple deployment might look like something like the following. Of course, you'll want to configure <a href="docker-registry-softlayer-object-storage/">more robust storage</a> for the registry if you start to use it in earnest.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>docker pull registry:0.9.1
+<span class="nv">$ </span>docker pull nginx:2.7
+
+<span class="nv">$ </span>htpasswd -c registry_users janedoe
+New password: ******
+Re-type new password: ******
+Adding password <span class="k">for </span>user janedoe
+
+<span class="nv">$ </span>htpasswd registry_users admin-parente
+New password: ******
+Re-type new password: ******
+Adding password <span class="k">for </span>user admin-parente
+
+<span class="nv">$ </span>docker run -itd <span class="se">\</span>
+    --user www-data <span class="se">\</span>
+    --name registry <span class="se">\</span>
+    --volume /tmp <span class="se">\</span>
+    -e <span class="nv">SETTINGS_FLAVOR</span><span class="o">=</span><span class="nb">local</span> <span class="se">\</span>
+    -e <span class="nv">GUNICORN_WORKERS</span><span class="o">=</span>4 <span class="se">\</span>
+    registry:0.9.1
+
+<span class="nv">$ </span>docker run -itd <span class="se">\</span>
+    -p 443:443 <span class="se">\</span>
+    --name proxy <span class="se">\</span>
+    --link registry:registry <span class="se">\</span>
+    -v /host/path/to/nginx.conf:/etc/nginx.conf <span class="se">\</span>
+    -v /host/path/to/registry_users:/etc/nginx/registry_users <span class="se">\</span>
+    -v /host/path/to/ssl_cert:/etc/nginx/server.crt <span class="se">\</span>
+    -v /host/path/to/ssl_key:/etc/nginx/server.key <span class="se">\</span>
+    nginx:1.7
+</pre></div>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance &#187;</a></h3>
+        <div class="excerpt"><p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

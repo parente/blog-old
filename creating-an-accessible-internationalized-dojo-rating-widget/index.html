@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Creating an Accessible Dojo Rating Widget - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Creating an Accessible Dojo Rating Widget</h1>
+    <p class="pageDate">August 28, 2009</p>
+  <p>The widgets in the <a href="http://dojotoolkit.org/">Dojo toolkit</a>, called Dijits, support keyboard navigation, remain visible in high-contrast mode, contain <a href="http://www.w3.org/TR/wai-aria/">WAI-ARIA</a> markup for assistive technologies, and enable internationalization. This combination of techniques makes Dijits accessible to a wide range of users with disabilities and native locales.</p>
+<p>As a developer, you can mimic the techniques used by the Diijit authors to ensure your own widgets are usable by as many people as possible. This tutorial instructs you on how to create such a Dojo widget. The rating widget developed here supports mouse and keyboard input, can be used with CSS turned off, reports its value and bounds via WAI-ARIA to assistive technologies, and has text that can be translated.</p>
+<p>For reference, the final, working widget appears in the iframe immediately below this paragraph. Use the Tab key to focus on widget. Then use the arrow keys to change its value.</p>
+<iframe src="http://static.mindtrove.info/mindtrove/examples/rating-demo.html" style="width: 450px; height: 150px;"></iframe>
+
+<h2>Creating a Dev Environment</h2>
+<p>First, we need to create our development environment. In a web accessible location, create a project folder. Create subdirectories named examples, images, nls, and templates. These will hold the example page for the widget, images used by the widget, translations of the widget strings, and the widget template respectively. Under nls make another folder called es which will hold a sample Spanish translation for the widget.</p>
+<p>The final layout of the folders on disk should be the following:</p>
+<div class="codehilite"><pre><span class="n">project</span><span class="o">/</span>
+  <span class="o">-</span> <span class="n">examples</span><span class="o">/</span>
+  <span class="o">-</span> <span class="n">templates</span><span class="o">/</span>
+  <span class="o">-</span> <span class="n">nls</span><span class="o">/</span>
+    <span class="o">-</span> <span class="n">es</span><span class="o">/</span>
+</pre></div>
+
+
+<h2>Creating a Test Page</h2>
+<p>Now create a file named rating-demo.html in the project/examples/ folder with the content below. This file is the page you will use to test the rating widget. The header of this page includes Dojo from a CDN, registers the info.mindtrove code module, and imports the rating widget. The header also defines styles which the rating widget will use to draw lit and unlit stars in the rating widget. The body of the page has a span tag with declarative markup for the Dojo parser that creates a rating widget with a maximum value of five on page load.</p>
+<div class="codehilite"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Rating Widget Demo<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;http://o.aolcdn.com/dojo/1.5/dojo/resources/dojo.css&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;style</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+      body {
+          font-family: sans-serif;
+      }
+      .ratingOffIcon {
+          background-image: url(&#39;../images/gray-star.png&#39;);
+          background-repeat: no-repeat;
+          width: 32px;
+          height: 32px;
+      }
+      .ratingOnIcon {
+          background-image: url(&#39;../images/red-star.png&#39;);
+          background-repeat: no-repeat;
+          width: 32px;
+          height: 32px;
+       }
+    <span class="nt">&lt;/style&gt;</span>
+      <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+        djConfig={
+          parseOnLoad: true,
+          isDebug: false,
+          baseUrl: &quot;../../&quot;,
+          modulePaths: {&#39;info.mindtrove&#39;: &quot;mindtrove&quot;}
+        };
+    <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://o.aolcdn.com/dojo/1.5/dojo/dojo.xd.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+      dojo.require(&quot;info.mindtrove.Rating&quot;);
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;label&gt;</span>Rate this tutorial:
+      <span class="nt">&lt;span</span> <span class="na">dojoType=</span><span class="s">&quot;info.mindtrove.Rating&quot;</span> <span class="na">maximumValue=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li&gt;</span>Tab to focus on the widget<span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span>Up/right to increase<span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span>Down/left to decrease<span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span>Home to set minimum value<span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span>End to set maximum value<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<h2>Writing the Language Bundles</h2>
+<p>Now create a file named rating.js in project/nls/. This file will contain the default translation of human readable text in the rating widget. Insert the following bundle object definition into the file:</p>
+<div class="codehilite"><pre><span class="p">{</span>
+  <span class="nx">starsSingular</span><span class="o">:</span> <span class="s1">&#39;${0} star&#39;</span><span class="p">,</span>
+  <span class="nx">starsPlural</span><span class="o">:</span> <span class="s1">&#39;${0} stars&#39;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The widget will replace the variables, ${0}, at runtime with a number of stars. The variable is part of the template so that the position of the number with respect to the noun can change depending on the language. (If the strings contained more than one replaceable segment of text, you would use named variables like ${numberOfStars} instead of positional ones to support arbitrary orderings.)</p>
+<p>Create another message bundle file named rating.js in the project/nls/es folder and insert the text below. You'll use the Spanish translation in this file to test the internationalization of the rating widget later.</p>
+<div class="codehilite"><pre><span class="p">{</span>
+  <span class="nx">starsSingular</span><span class="o">:</span> <span class="s1">&#39;${0} estrella&#39;</span><span class="p">,</span>
+  <span class="nx">starsPlural</span><span class="o">:</span> <span class="s1">&#39;${0} estrellas&#39;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Next create a file named <em>Rating.html</em> in <em>project/templates/</em>. This file serves as the starting template for your widget. When Dojo parses the test page, it replaces the <em>span</em> element having attribute <em>dojoType="info.mindtrove.Rating"</em> with the content of the template. Insert the HTML below into the template file:</p>
+
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="nx">span</span> <span class="nx">dojoAttachPoint</span><span class="o">=</span><span class="s2">&quot;box&quot;</span>
+     <span class="nx">tabindex</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+     <span class="nx">role</span><span class="o">=</span><span class="s2">&quot;slider&quot;</span>
+     <span class="nx">aria</span><span class="o">-</span><span class="nx">valuetext</span><span class="o">=</span><span class="s2">&quot;${currentText}&quot;</span>
+     <span class="nx">aria</span><span class="o">-</span><span class="nx">valuemin</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+     <span class="nx">aria</span><span class="o">-</span><span class="nx">valuemax</span><span class="o">=</span><span class="s2">&quot;${maximumValue}&quot;</span>
+     <span class="nx">aria</span><span class="o">-</span><span class="nx">valuenow</span><span class="o">=</span><span class="s2">&quot;${currentValue}&quot;</span><span class="o">&gt;&lt;</span><span class="err">/span&gt;</span>
+</pre></div>
+
+
+<p>The rating widget template contains just one <em>span</em> element with quite a few attributes. The purpose of each of these attributes is given below:</p>
+
+<dl>
+  <dt>dojoAttachPoint="box"</dt>
+  <dd>Includes a reference to the <em>span</em> element under the variable name <em>box</em> in the JavaScript widget instance.</dd>
+  <dt>tabindex="0"</dt>
+  <dd>Tells the browser to include the widget in the <em>Tab</em> key cycle so that it can receive keyboard focus.</dd>
+  <dt>role="slider"</dt>
+  <dd>Used by assistive technologies as a hint about how users can interact with the control.</dd>
+  <dt>aria-valuenow="${currentValue}"</dt>
+  <dd>Used by assistive technologies as the current value of the widget.</dd>
+  <dt>aria-valuemin="0"</dt>
+  <dd>A hint to assistive technologies about the minimum value allowed by the widget.</dd>
+  <dt>aria-valuemax="${maximumValue}"</dt>
+  <dd>A hint to assistive technologies about the maximum value allowed by the widget.</dd>
+  <dt>aria-valuetext="${currentText}"</dt>
+  <dd>Used by assistive technologies as a human readable label for the current value.</dd>
+</dl>
+
+<p>Some of the attributes values are template variables of the form <em>${x}</em> where <em>x</em> is the name of an instance variable in the rating widget JavaScript class. Dojo replaces these placeholders when it renders the template into the page. For example, Dojo replaces <em>${maximumValue}</em> with the value of <em>this.maximumValue</em> in the JavaScript class at the time of rendering.</p>
+
+<h2>Writing the Widget Class</h2>
+
+<p>Now create a file named <em>Rating.js</em> in the <em>project/</em> folder. Add the following lines at the top of the file to define this module and import other modules the widget will use.</p>
+
+<div class="codehilite"><pre><span class="nx">dojo</span><span class="p">.</span><span class="nx">provide</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">);</span>
+<span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dijit._Widget&#39;</span><span class="p">);</span>
+<span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dijit._Templated&#39;</span><span class="p">);</span>
+<span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dojo.string&#39;</span><span class="p">);</span>
+<span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dojo.i18n&#39;</span><span class="p">);</span>
+<span class="nx">dojo</span><span class="p">.</span><span class="nx">requireLocalization</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Under these lines, define an empty shell for the <em>Rating</em> class as shown below. This class derives from the base classes <em>_Widget</em> and <em>_Templated</em> so that it will follow the standard Dijit lifecycle for initialization and destruction.</p>
+
+<div class="codehilite"><pre><span class="nx">dojo</span><span class="p">.</span><span class="nx">declare</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">dijit</span><span class="p">.</span><span class="nx">_Widget</span><span class="p">,</span> <span class="nx">dijit</span><span class="p">.</span><span class="nx">_Templated</span><span class="p">],</span> <span class="p">{</span>
+  <span class="c1">// properties and methods will go here</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h3>Defining the Widget Properties</h3>
+
+<p>Next define the public properties of the widget and their default values by adding the following code inside the class definition:</p>
+
+<div class="codehilite"><pre>    <span class="c1">// maximum rating value</span>
+    <span class="nx">maximumValue</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="c1">// initial value</span>
+    <span class="nx">currentValue</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="c1">// CSS class name to apply to an unlit star</span>
+    <span class="nx">offIcon</span><span class="o">:</span> <span class="s1">&#39;ratingOffIcon&#39;</span><span class="p">,</span>
+    <span class="c1">// CSS class name to apply to a lit star</span>
+    <span class="nx">onIcon</span><span class="o">:</span> <span class="s1">&#39;ratingOnIcon&#39;</span><span class="p">,</span>
+</pre></div>
+
+
+<p>The property values provide defaults for the attributes set on the <em>span</em> element representing the rating widget in your test page. For example, you did not specify the initial value, so it defaults to zero according to these properties.</p>
+
+<h3>Addressing the Template</h3>
+
+<p>Add the following line under the last property in the class to connect the widget class with its template file:</p>
+
+<div class="codehilite"><pre><span class="nx">templatePath</span><span class="o">:</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">moduleUrl</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;templates/Rating.html&#39;</span><span class="p">),</span>
+</pre></div>
+
+
+<p>The <em>_Templated</em> base classes uses the <em>templatePath</em> variable to locate the template file for this widget. The parameters to the <em>dojo.moduleUrl</em> function are the name of the module containing the widget and the relative path from the module root to the template.</p>
+
+<h3>Loading the Message Bundle</h3>
+
+<p>Continue by adding a method named <em>constructor</em> to the class. Dojo invokes this method when instantiating your class, but after all of the base class constructors run. The code in this method stores a reference to the message bundle object for the user's locale in an instance variable.</p>
+
+<div class="codehilite"><pre>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">labels</span> <span class="o">=</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">getLocalization</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+</pre></div>
+
+
+<h3>Rendering the Template</h3>
+
+<p>Next define a <em>postMixInProperties</em> method in the class. Dojo invokes this method after setting the widget properties to the values specified in the declarative widget markup and just before rendering the widget template for the first time. All of the variables used in the template must be defined as instance variables before this method returns else Dojo will raise an exception. As it happens, all of the variables in the rating widget template are defined by the public properties of the class except for <em>currentText</em>. This method defines that missing instance variable by loading the translated value description from the active message bundle and interpolating the current rating value integer. Because the current text changes at runtime, the rating widget factors this logic out into a separate, reusable method named <em>_getDescription</em>.</p>
+
+<div class="codehilite"><pre>    <span class="nx">postMixInProperties</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">currentText</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getDescription</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="nx">_getDescription</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">labels</span><span class="p">.</span><span class="nx">starsSingular</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">labels</span><span class="p">.</span><span class="nx">starsPlural</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">string</span><span class="p">.</span><span class="nx">substitute</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">]);</span>
+    <span class="p">},</span>
+</pre></div>
+
+
+<h3>Inserting the Stars</h3>
+
+<p>Add another method called <em>postCreate</em>. Dojo invokes this method after rendering the template and inserting it into the DOM. The code in this method creates the initial set of stars in the widget as a set of <em>span</em> elements with CSS background images. The code applies CSS classes to these nodes according to the initial widget value: the <em>onIcon</em> class if less the the current value or <em>offIcon</em> class if greater than or equal to the current value.</p>
+
+<p>The code creates an additional <em>span</em> node per star containing a text representation of the star: (*) if the star is on or ( ) if the star is off. These span nodes are hidden by default with CSS, but will appear if the user disables stylesheets. Finally, this method attaches <em>onclick</em> handlers to each star for mouse interaction and connects a <em>onkeypress</em> listener to the parent widget node for keyboard support.</p>
+
+<div class="codehilite"><pre>    <span class="nx">postCreate</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// build stars using DOM methods</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// create span to hold star image</span>
+            <span class="kd">var</span> <span class="nx">span</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+            <span class="c1">// style it to display properly</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;display&#39;</span> <span class="o">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;cursor&#39;</span> <span class="o">:</span> <span class="s1">&#39;pointer&#39;</span><span class="p">});</span>
+            <span class="c1">// listen for mouse clicks on the span with the value it</span>
+            <span class="c1">// represents in the closure</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="s1">&#39;onclick&#39;</span><span class="p">,</span>
+                         <span class="nx">dojo</span><span class="p">.</span><span class="nx">hitch</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onClick</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+            <span class="c1">// create a text node that will go in the span if styles are turned</span>
+            <span class="c1">// off for accessibility</span>
+            <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">style</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;display&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">});</span>
+            <span class="nx">span</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+            <span class="c1">// show the correct star and text</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">offIcon</span><span class="p">);</span>
+                <span class="nx">text</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;( )&#39;</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onIcon</span><span class="p">);</span>
+                <span class="nx">text</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;(*)&#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">span</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// add keyboard handler</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">,</span> <span class="s1">&#39;onkeypress&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onKeyDown</span><span class="p">);</span>
+    <span class="p">},</span>
+</pre></div>
+
+
+<h3>Updating the User Interface</h3>
+
+<p>Now create an <em>_update</em> method. This method refreshes the star icons and WAI-ARIA properties as the user changes the rating value. The method swaps the star on and off CSS classes depending on the current value. It uses the <em>dijit.setWaiState</em> functions to set the current numeric value and human readable description of the value on the widget for assistive technologies.</p>
+
+<div class="codehilite"><pre>    <span class="nx">_update</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// update visuals</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="nx">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">,</span><span class="nx">c</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">span</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">c</span><span class="p">];</span>
+            <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">span</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// turn stars off if greater than or equal to current</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onIcon</span><span class="p">);</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">offIcon</span><span class="p">)</span>
+                <span class="nx">text</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;( )&#39;</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="c1">// turn stars on if less than current</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">offIcon</span><span class="p">);</span>
+                <span class="nx">dojo</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">span</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onIcon</span><span class="p">);</span>
+                <span class="nx">text</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;(*)&#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// update aria</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">currentText</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getDescription</span><span class="p">();</span>
+        <span class="nx">dijit</span><span class="p">.</span><span class="nx">setWaiState</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">,</span> <span class="s1">&#39;valuenow&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">);</span>
+        <span class="nx">dijit</span><span class="p">.</span><span class="nx">setWaiState</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">,</span> <span class="s1">&#39;valuetext&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentText</span><span class="p">);</span>
+    <span class="p">},</span>
+</pre></div>
+
+
+<h3>Listening for Events</h3>
+
+<p>Finally, define the <em>_onClick</em> and <em>_onKeyDown</em> event handlers. The mouse handler updates the current value to match the star clicked and then refreshes the user interface. The keyboard handler watches for presses of the arrow keys, the <em>Home</em> key, and the <em>End</em> key. When the user presses one of these keys, it updates the current value appropriately and refreshes the UI.</p>
+
+<div class="codehilite"><pre>    <span class="nx">_onClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_update</span><span class="p">();</span>
+    <span class="p">},</span>
+
+    <span class="nx">_onKeyDown</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">UP_ARROW</span><span class="o">:</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">RIGHT_ARROW</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">);</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">stopEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">DOWN_ARROW</span><span class="o">:</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">LEFT_ARROW</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">stopEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">HOME</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">stopEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">END</span><span class="o">:</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">;</span>
+            <span class="nx">dojo</span><span class="p">.</span><span class="nx">stopEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// refresh the display</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_update</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<h2>Testing the Widget</h2>
+
+<p>The widget is now ready for testing. This tutorial assumes you will use Firefox 3 because it currently has excellent support for WAI-ARIA and works well with various assistive technologies. Visit the test page you created earlier in Firefox to start using the rating widget.</p>
+
+<h3>Mouse and Keboard Interaction</h3>
+
+<p>Click a star to change the current rating value. Alternatively, give the widget keyboard focus by tabbing to it and then use <em>Right/Up Arrow</em> to increase the value or <em>Down/Left Arrow</em> to decrease it. Press <em>Home</em> to set the rating to the minimum value and <em>End</em> to set it to its maximum.</p>
+
+<p>In Firefox, but not necessarily other browsers, hover the mouse pointer over the widget to see the human readable description in a popup.</p>
+
+<h3>No Stylesheets</h3>
+
+<p>Disable CSS by selecting <em>View &gt; Page Style &gt; No Style</em> in Firefox. Notice that the star graphics disappear, but are replaced by a text equivalent for the widget. The widget still responds to mouse and keyboard input as before.</p>
+
+<h3>NVDA or Orca Speech</h3>
+
+<p>If you're running Windows, grab a copy of the <a href="http://www.nvda-project.org">NVDA screen reader</a> and run it to test your WAI-ARIA markup. Alternatively, download an evaluation version of <a href="http://www.freedomscientific.com/fs_products/software_jaws.asp">JAWS</a> or <a href="http://www.gwmicro.com/Window-Eyes/">WindowEyes</a> for Windows. If you're running the GNOME desktop, run the <a href="http://live.gnome.org/Orca">Orca screen reader</a> instead. (Sorry Mac users: you're currently out of luck as <a href="http://accessgarage.wordpress.com/2008/08/21/firefox-and-os-xs-voiceover-reading-the-magic-8-ball/">VoiceOver does not support WAI-ARIA markup yet</a>.)</p>
+
+<p>After starting your screen reader of choice, switch to Firefox and tab into the rating widget test page. When the gadget receives focus, your screen reader announces its label and value. Use the arrow keys to change the rating value. The screen reader reports the new value.</p>
+
+<p>WAI-ARIA is a relatively new standard. Assistive technologies and browser vendors are still working hard to define best practices for exposing and reporting accessibility metadata. In the meantime, there are some <a href="http://www.paciellogroup.com/blog/?p=68">discrepancies</a> in its treatment. For example, Orca reads the <em>aria-valuenow</em> property on the rating widget as a floating point number instead of announcing the <em>aria-textnow</em> value. NVDA, on the other hand, speaks both the <em>title</em> and <em>aria-textnow</em> values even though they are equivalent.</p>
+
+<h3>Spanish Locale</h3>
+
+<p>Open another tab in Firefox by selecting <em>File &gt; New Tab</em>. Enter <em>about:config</em> in the URL bar. Locate the property named <em>general.useragent.locale</em> and change its value to <em>es</em>. This change forces Firefox to report the locale as <em>es</em> to Dojo as it would for Spanish users.</p>
+
+<p>Switch back to the tab showing the test page and refresh it. Hover the mouse over the widget to see the Spanish description or listen to it in your screen reader. The description now includes the word <em>estrella(s)</em> instead of <em>star(s)</em>.</p>
+
+<p>After testing, don't forget to change the Firefox locale back to its default using <em>about:config</em> again.</p>
+
+<h2>Source Code</h2>
+
+<p>The source code for the completed widget and an example page including it are <a href="https://github.com/parente/dojo-a11y-rating">available on GitHub</a>.</p>
+
+<h2>References</h2>
+
+<ul>
+        <li><a href="http://www.w3.org/TR/wai-aria/">WAI-ARIA 1.0 Specification</a></li>
+        <li><a href="http://dojotoolkit.org/reference-guide/">The Dojo Reference Guide</a></li>
+        <li><a href="http://wiki.codetalks.org/wiki/index.php/Set_of_ARIA_Test_Cases">Code Talks WAI-ARIA test cases</a></li>
+</ul>
+
+<h2>Changelog</h2>
+
+<ul>
+        <li>10/14/09: Updated to Dojo 1.3.2 for Safari 4 / IE8 support. Removed strange minimum value and fixed at zero.</li>
+  <li>12/21/10: Updated to use Dojo 1.5 from CDN. Point to GitHub for complete code.</li>
+</ul>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../gtkbuilderglade-on-ironpython">GtkBuilder/Glade on IronPython &#187;</a></h3>
+        <div class="excerpt"><p>Thanks to Stephane for his answer to my query about <a href="http://blog.reblochon.org/2009/08/gtkbuilder-on-ironpython.html">using GtkBuilder in IronPython</a>. It turns out his <a href="http://gitorious.org/gtk-sharp-beans">Gtk#Beans</a> package provides the magic sauce that is currently missing from ~~gtk# trunk~~ the current stable release.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>

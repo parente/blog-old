@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow">
+    
+  <title>Spatial PulseAudio - Parente's Mindtrove</title>
+
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
+    <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
+    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50187496-1', 'mindtrove.info');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header id="siteTitle">
+        <h1><a href="../">Parente's Mindtrove</a></h1>
+        <nav>
+          <a href="../">Latest</a>
+          <a href="../posts.html">Posts</a>
+          <a href="../about">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Body -->
+      <article id="mainColumn">
+        
+  <h1 class="pageTitle">Spatial PulseAudio</h1>
+    <p class="pageDate">January 01, 2008</p>
+  <p>In his <a href="http://fedoraproject.org/wiki/Interviews/LennartPoettering">interview about Pulse Audio in Fedora 8</a>, Lennart Pottering mentions support for spatial sound as one of his future goals:</p>
+
+<blockquote>Spatial event sounds: click on a button on the left side of your screen, and the event sound comes out of your left speaker. Click on one on the right side of your screen, and the event sound comes of of the right speaker. It's earcandy, but I think this could actually be quite useful, but only if we get better quality event sounds, than we have right now.</blockquote>
+
+<p>While spatialized event sounds may be 'earcandy' as Lennart admits, there are other benefits of using 3D audio over mono sounds in certain applications. One interesting use concerns the separation of concurrent sound streams such that a user can distinguish and 'pick out' one of many. The theory of <em>auditory scene analysis</em> (<a href="http://www.amazon.com/Auditory-Scene-Analysis-Perceptual-Organization/dp/0262521954">Bregman, 1990</a>) says (among many other things) that we humans can better segregate different sound sources and select one for attentive processing if the acoustic and semantic properties of streams from distinct sources differ along certain dimensions while certain properties within a stream remain constant over time.</p>
+
+<p>For instance, say I make two audio recordings of the same person speaking two different utterances. In one recording, the person says 'What a lovely bunch of coconuts.' In the other, 'That dog certainly has fleas.' If I mix these two recordings into a mono track with the two utterances starting at exactly the same time, you will have a hard time determining and understanding the two independent phrases. If I create a stereo sound, with one phrase played in the left speaker and another in the right, you'll have a much easier time identifying the original phrases. (But you'll likely have to listen to the sound more than once before you can repeat both phrases: another tenet of auditory scene analysis.) Better still, if I apply a head related transfer function (<a href="http://en.wikipedia.org/wiki/Head-related_transfer_function">HRTF</a>) to each recording such that the two utterances appear to come from the left and right side of you head in a 3D space, your task becomes even easier.</p>
+
+<p>In other words, spatialized sounds aid segregation and selection of independent streams of speech and sound. In fact, research (<a href="http://citeseer.ist.psu.edu/700855.html">McGookin, 2004</a>) suggests that spatialization alone is sufficient to aid recognition of information encoded in properties of concurrent musical sounds (<a href="http://en.wikipedia.org/wiki/Earcon">earcons</a>).</p>
+
+<p>Applying the concept of distinguishable sound streams to screen readers is an interesting endeavor. (Or, at least, <a href="/clique">I think so</a>.) Screen readers currently rely on a single, serial stream of speech and sound to describe the multitasking, high-bandwidth graphical desktop. In a single stream design, reports of peripheral information outside the application focus are either non-existent, delayed, or interruptions, and can be easily missed. For instance, if a screen reader is busy reading an email when the user receives an instant message in another application, the screen reader has to decide whether to keep reading the email or announce the new message in some manner. If the screen reader interjects, the user might confuse the instant message content with that of the email or become annoyed with the interruption. If the screen reader decides to wait for the email reading to finish, the late announcement about the chat message runs the risk of being stale.</p>
+
+<p>Worse yet, any single-stream announcement of the new message can be inadvertantly interrupted at any time by the next user command. In such a situation, unless the user tabs around looking for the new instant message or the chat program is set to play a sound every time a message is received (which still doesn't indicate which of potentially many chats has the new message), the user may never learn of the existence of the new message.</p>
+
+<p>Concurrent streams provide an answer to this peripheral awareness problem, but only if the screen reader can present them in a way that avoids masking other simultaneous streams. And this is exactly where the ability to spatialize sound helps. Without interrupting or modifying the stream of speech reading the email, another stream can pipe up and announce the new chat message with a sound, speech, or both according to the verbosity settings of the user (<em>Zing!</em> or 'Message from Harvey' or 'Harvey says "Hey! Stop reading your email and answer me! This is important!"'). As long as these streams are spatially separated <a href="http://www.icad.org/websiteV2.0/Conferences/ICAD2003/paper/46%20Brungart.pdf">according to some simple rules</a>, the user will be able to effectively distinguish them, ignore one, listen to one, and switch attention back and forth between them.</p>
+
+<p>Instant messaging is just one example of a modern desktop application that begs for concurrent streams in screen readers. Just from looking at my GNOME desktop I see a system monitor, the clock applet, my network status, a popup balloon, and a log monitor all updating in the background while I write this post. Of course, a user can't cope with all of these event sources reporting at once. But that's where the interesting design problems start: how do we construct a usable multi-stream auditory display?</p>
+
+<p>An open source library supporting spatial sound is a fundamental building-block for this investigation (and I'm certain, others). I hope Lennart pursues it.</p>
+
+      </article>
+
+      <!-- Meta -->
+      
+    <div class="footerSection" id="pageMeta">
+        <h3>Another Read: <a href="../android-speech-synth-where-are-you">Android Speech Synth (Where Are You?) &#187;</a></h3>
+        <div class="excerpt"><p>I took a peek at the <a href="http://code.google.com/android/reference/packages.html">Google Android class hierarchy</a> today. As far as UI goes, it looks like there's great support for 2D/3D visuals. There's some APIs for doing MIDI and sampled sound output. There's even a class for doing speech reco.</p></div>
+    </div>
+
+
+      <div class="row footerSection" id="siteMeta">
+        <div class="col-md-4" id="contact">
+          <h3>Contact</h3>
+          <div>
+            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+          </div>
+        </div>
+
+        <div class="col-md-5" id="latest">
+          <h3>Latest</h3>
+          <ul>
+            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
+            <li><a href="../control-read-write-access-docker-private-registry">Control Read/Write Access to Your Private Docker Registry</a></li>
+            <li><a href="../exploration-of-airline-on-time-performance">Exploration of Airline On-Time Performance</a></li>
+            <li><a href="../my-blog-on-docker-ipython">This is My Blog on Docker + IPython</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3" id="other">
+          <h3>More</h3>
+          <ul>
+            <li><a href="../posts.html">See all posts &#187;</a></li>
+            <li><a href="../feed/index.xml">Subscribe to posts &#187;</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="siteFooter" class="footerSection">
+        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+      </footer>
+    </div>
+  </body>
+</html>
