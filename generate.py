@@ -74,7 +74,7 @@ def save_archive(pages):
     archive_tmpl = TMPL_LOOKUP.get_template('archive.mako')
     html = archive_tmpl.render(
         site_name=SITE_NAME,
-        site_root=SITE_ROOT,
+        site_root='.',
         all_pages=pages
     )
     with file(join(OUT_DIR, "posts.html"), 'w') as f:
@@ -84,9 +84,19 @@ def save_archive(pages):
 def save_latest(pages):
     '''Save the latest page as the index page.'''
     page = pages[0]
-    in_tree = join(OUT_DIR, page['slug'])
+    tmpl_name = page.get('template', 'page.mako')
+    page_tmpl = TMPL_LOOKUP.get_template(tmpl_name)
+    html = page_tmpl.render(
+        site_name=SITE_NAME,
+        site_root='.',
+        page=page,
+        all_pages=pages
+    )
+    in_tree = page['src']
     print 'Saving', in_tree, 'as latest'
     copyinto(in_tree, OUT_DIR)
+    with file(join(OUT_DIR, 'index.html'), 'w') as f:
+        f.write(html)
 
 
 def save_html(pages):
@@ -96,7 +106,7 @@ def save_html(pages):
         page_tmpl = TMPL_LOOKUP.get_template(tmpl_name)
         html = page_tmpl.render(
             site_name=SITE_NAME,
-            site_root=SITE_ROOT,
+            site_root='..',
             page=page,
             all_pages=pages
         )

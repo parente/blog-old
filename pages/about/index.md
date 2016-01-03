@@ -6,7 +6,7 @@ I am, in no particular order:
 * a software developer in [IBM's Emerging Technology](http://www-01.ibm.com/software/ebusiness/jstart/) group,
 * newly interested in data science and cloud computing,
 * perpetually interested in human-computer interaction, especially visualization and accessibility,
-* a [recipient of a Ph.D.](/clique) from the [Computer Science Department at UNC - Chapel Hill](http://cs.unc.edu/),
+* a [recipient of a Ph.D.](../clique) from the [Computer Science Department at UNC - Chapel Hill](http://cs.unc.edu/),
 * an [open-source hobbyist](http://github.com/parente),
 * a husband to a [wonderful woman](http://www.facebook.com/jackie.parente),
 * a father to a beautiful daughter, and
