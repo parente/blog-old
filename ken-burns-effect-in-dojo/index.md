@@ -7,5 +7,5 @@ I saw a reference to the <a href="http://www.gruppo4.com/~tobia/cross-slide.shtm
 The BSD code for the widget and demo below are in [a gist on GitHub](https://gist.github.com/parente/3b58ccdf99016c05071e).
 
 <div class="centered">
-<iframe src="http://static.mindtrove.info/mindtrove/examples/kenburns-demo.html" style="width: 450px; height: 400px"></iframe>
+<iframe src="http://s3.amazonaws.com/mindtrove/mindtrove/examples/kenburns-demo.html" style="width: 450px; height: 400px"></iframe>
 </div>
