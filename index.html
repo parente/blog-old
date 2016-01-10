@@ -75,7 +75,7 @@
 <li><code>%unload_ext &lt;name&gt;</code> invokes the extension module unload function and drops the module reference</li>
 </ol>
 <p>The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, you must run the load magic again to re-enable the extension.</p>
-<p>The Jupyter configuration system exposes the <code>InteractiveShellApp.extensions</code> list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you can add the following lines to the Notebook configuration file in your Jupyter configuration directory (e.g., <code>~/.jupyter/jupyter_notebook_config.py</code>) to automatically load module <code>my_package.my_kernel_extension</code> any time an IPython kernel starts or restarts.</p>
+<p>The IPython configuration system exposes the <code>InteractiveShellApp.extensions</code> list trait to automate the loading of kernel extensions. For example, you can add the following lines to your IPython configuration file (e.g., <code>~/.ipython/profile_default/ipython_config.py</code>) to automatically load module <code>my_package.my_kernel_extension</code> any time an IPython kernel starts or restarts.</p>
 <div class="codehilite"><pre><span class="n">c</span><span class="o">.</span><span class="n">InteractiveShellApp</span><span class="o">.</span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s">&#39;my_package.my_kernel_extension&#39;</span>
 <span class="p">]</span>
@@ -223,28 +223,30 @@
 <span class="kn">from</span> <span class="nn">jupyter_core.paths</span> <span class="kn">import</span> <span class="n">jupyter_config_dir</span>
 
 <span class="n">EXT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;myext&#39;</span><span class="p">)</span>
-<span class="n">SERVER_EXT_CONFIG</span> <span class="o">=</span> <span class="s">&quot;c.NotebookApp.server_extensions.append(&#39;myext.my_handler&#39;)&quot;</span>
 
 <span class="k">class</span> <span class="nc">InstallCommand</span><span class="p">(</span><span class="n">install</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># Install Python package, possibly containing a kernel extension</span>
+        <span class="c"># Install Python package</span>
         <span class="n">install</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c"># Install JavaScript extensions, for notebook, dashboard, and editor screens</span>
+        <span class="c"># Install JavaScript extensions to ~/.local/jupyter/</span>
         <span class="n">install_nbextension</span><span class="p">(</span><span class="n">EXT_DIR</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">()</span>
-        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/notebook&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
-        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;tree&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/dashboard&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
-        <span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;edit&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/editor&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
 
-        <span class="c"># Install Notebook server extension</span>
-        <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jupyter_config_dir</span><span class="p">(),</span> <span class="s">&#39;jupyter_notebook_config.py&#39;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s">&#39;r+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">SERVER_EXT_CONFIG</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-                <span class="n">fh</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-                <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
-                <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">SERVER_EXT_CONFIG</span><span class="p">)</span>
+        <span class="c"># Activate the JS extensions on the notebook, tree, and edit screens</span>
+        <span class="n">js_cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">()</span>
+        <span class="n">js_cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/notebook&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+        <span class="n">js_cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;tree&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/dashboard&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+        <span class="n">js_cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;edit&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;myext_js/editor&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+
+        <span class="c"># Activate the Python server extension</span>
+        <span class="n">server_cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">config_dir</span><span class="o">=</span><span class="n">jupyter_config_dir</span><span class="p">())</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">server_cm</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;jupyter_notebook_config&#39;</span><span class="p">)</span>
+        <span class="n">server_extensions</span> <span class="o">=</span> <span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">&#39;NotebookApp&#39;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s">&#39;server_extensions&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">server_extensions</span><span class="p">:</span>
+            <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;NotebookApp&#39;</span><span class="p">][</span><span class="s">&#39;server_extensions&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span><span class="s">&#39;myext.my_handler&#39;</span><span class="p">]</span>
+            <span class="n">server_cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;jupyter_notebook_config&#39;</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span>
 
 <span class="n">setup</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s">&#39;myext&#39;</span><span class="p">,</span>
@@ -261,6 +263,11 @@
 <p><a name="changelog"></a></p>
 <h2>Changelog</h2>
 <ul>
+<li>2016-01-09<ul>
+<li>Corrected information about loading IPython kernel extensions automatically</li>
+<li>Improved the code for installing and activating extensions to match current best practices </li>
+</ul>
+</li>
 <li>2015-11-04<ul>
 <li>Updated paths and packages to match what now exists in the stable 4.x line of Jupyter Notebook releases</li>
 <li>Linked to official Jupyter Notebook doc about extending the notebook</li>

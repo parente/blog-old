@@ -40,7 +40,7 @@ The IPython kernel ships with four magics that allow for the management of exten
 
 The load, reload, and unload magics act solely on the kernel associated with the notebook in which they appear. Every time that kernel restarts, you must run the load magic again to re-enable the extension.
 
-The Jupyter configuration system exposes the `InteractiveShellApp.extensions` list trait to automate the loading of kernel extensions. Adding a module name to the list causes Jupyter to automatically load that extension whenever an IPython kernel starts. For example, you can add the following lines to the Notebook configuration file in your Jupyter configuration directory (e.g., `~/.jupyter/jupyter_notebook_config.py`) to automatically load module `my_package.my_kernel_extension` any time an IPython kernel starts or restarts.
+The IPython configuration system exposes the `InteractiveShellApp.extensions` list trait to automate the loading of kernel extensions. For example, you can add the following lines to your IPython configuration file (e.g., `~/.ipython/profile_default/ipython_config.py`) to automatically load module `my_package.my_kernel_extension` any time an IPython kernel starts or restarts.
 
 ```python
 c.InteractiveShellApp.extensions = [
@@ -209,28 +209,30 @@ from notebook.services.config import ConfigManager
 from jupyter_core.paths import jupyter_config_dir
 
 EXT_DIR = os.path.join(os.path.dirname(__file__), 'myext')
-SERVER_EXT_CONFIG = "c.NotebookApp.server_extensions.append('myext.my_handler')"
 
 class InstallCommand(install):
     def run(self):
-        # Install Python package, possibly containing a kernel extension
+        # Install Python package
         install.run(self)
         
-        # Install JavaScript extensions, for notebook, dashboard, and editor screens
+        # Install JavaScript extensions to ~/.local/jupyter/
         install_nbextension(EXT_DIR, overwrite=True, user=True)
-        cm = ConfigManager()
-        cm.update('notebook', {"load_extensions": {'myext_js/notebook': True}})
-        cm.update('tree', {"load_extensions": {'myext_js/dashboard': True}})
-        cm.update('edit', {"load_extensions": {'myext_js/editor': True}})
 
-        # Install Notebook server extension
-        fn = os.path.join(jupyter_config_dir(), 'jupyter_notebook_config.py')
-        with open(fn, 'r+') as fh:
-            lines = fh.read()
-            if SERVER_EXT_CONFIG not in lines:
-                fh.seek(0, 2)
-                fh.write('\n')
-                fh.write(SERVER_EXT_CONFIG)
+        # Activate the JS extensions on the notebook, tree, and edit screens
+        js_cm = ConfigManager()
+        js_cm.update('notebook', {"load_extensions": {'myext_js/notebook': True}})
+        js_cm.update('tree', {"load_extensions": {'myext_js/dashboard': True}})
+        js_cm.update('edit', {"load_extensions": {'myext_js/editor': True}})
+
+        # Activate the Python server extension
+        server_cm = ConfigManager(config_dir=jupyter_config_dir())
+        cfg = server_cm.get('jupyter_notebook_config')
+        server_extensions = (cfg.setdefault('NotebookApp', {})
+            .setdefault('server_extensions', [])
+        )
+        if extension not in server_extensions:
+            cfg['NotebookApp']['server_extensions'] += ['myext.my_handler']
+            server_cm.update('jupyter_notebook_config', cfg)
 
 setup(
     name='myext',
@@ -247,6 +249,9 @@ If the code seems lengthy, consider [jupyter-pip](https://github.com/jdfreder/ju
 <a name="changelog"></a>
 ## Changelog
 
+* 2016-01-09
+    * Corrected information about loading IPython kernel extensions automatically
+    * Improved the code for installing and activating extensions to match current best practices 
 * 2015-11-04
     * Updated paths and packages to match what now exists in the stable 4.x line of Jupyter Notebook releases
     * Linked to official Jupyter Notebook doc about extending the notebook
