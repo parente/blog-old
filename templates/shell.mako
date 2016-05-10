@@ -71,7 +71,7 @@
         <div class="col-md-3" id="other">
           <h3>More</h3>
           <ul>
-            <li><a href="${site_root}/posts.html">See all posts &#187;</a></li>
+            <li><a href="${site_root}/posts/">See all posts &#187;</a></li>
             <li><a href="${site_root}/feed/index.xml">Subscribe to posts &#187;</a></li>
           </ul>
         </div>
