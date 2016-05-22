@@ -1,3 +1,7 @@
+.anchor-link {
+    display: none;
+}
+
 .text_cell .prompt {
     display: none;
 }

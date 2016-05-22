@@ -131,23 +131,24 @@ def org_pages(pages):
 
 class IPythonNotebookParser(object):
     @classmethod
-    def render(cls, path):
+    def execute(cls, path, page):
         ipynb = join(path, 'index.ipynb')
+        if not os.path.isfile(ipynb):
+            return
         with file(ipynb) as f:
             print 'Processing', path, 'as ipynb'
             text = f.read()
 
-        d = cls._get_metadata(text)
-        d['html'] = cls._nbconvert_to_html(ipynb)
-        d['src'] = path
-        d['slug'] = os.path.basename(path)
+        page.update(cls._get_metadata(text))
+        page['html'] = cls._nbconvert_to_html(ipynb)
+        page['src'] = path
+        page['slug'] = os.path.basename(path)
         # more specific template which includes additional css
-        d['template'] = 'notebook.mako'
-        return d
+        page['template'] = 'notebook.mako'
 
     @classmethod
     def _nbconvert_to_html(cls, ipynb):
-        rv = subprocess.Popen(['ipython', 'nbconvert', '--to', 'html', '--template', 'basic', ipynb, '--stdout'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        rv = subprocess.Popen(['jupyter', 'nbconvert', '--to', 'html', '--template', 'basic', ipynb, '--stdout'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
         stdout, stderr = rv.communicate()
         if rv.returncode == 0:
             return stdout
@@ -178,27 +179,30 @@ class IPythonNotebookParser(object):
                 return MarkdownParser.md.convert(''.join(excerpt))
         return ''
 
+
 class MarkdownParser(object):
     md = markdown.Markdown(extensions=['meta', 'fenced_code', 'codehilite'], output_format='xhtml5')
 
     @classmethod
-    def render(cls, path):
-        with file(join(path, 'index.md')) as f:
+    def execute(cls, path, page):
+        fn = join(path, 'index.md')
+        if not os.path.isfile(fn):
+            return
+        with file(fn) as f:
             print 'Processing', path, 'as md'
             text = f.read()
         html = cls.md.convert(text)
         meta = cls.md.Meta
         for key, value in meta.iteritems():
             meta[key] = ''.join(value)
-        d = {}
-        d.update(meta)
-        d['html'] = html
-        d['excerpt'] = cls._build_excerpt(text)
-        d['src'] = path
-        d['slug'] = os.path.basename(path)
-        if 'date' in d:
-            d['date'] = datetime.strptime(d['date'], '%Y-%m-%d')
-        return d
+        
+        page.update(meta)
+        page['html'] = html
+        page['excerpt'] = cls._build_excerpt(text)
+        page['src'] = path
+        page['slug'] = os.path.basename(path)
+        if 'date' in page:
+            page['date'] = datetime.strptime(page['date'], '%Y-%m-%d')
 
     @classmethod
     def _build_excerpt(cls, text):
@@ -224,16 +228,12 @@ class MarkdownParser(object):
 def load_pages():
     '''Parse data and metadata for all pages.'''
     pages = []
-    renderers = [MarkdownParser, IPythonNotebookParser]
+    handlers = [MarkdownParser, IPythonNotebookParser]
     for path in glob.glob(join(PAGES_DIR, '*')):
-        page = None
-        for renderer in renderers:
-            try:
-                page = renderer.render(path)
-                break
-            except IOError:
-                pass
-        if page is None:
+        page = {}
+        for handler in handlers:
+            handler.execute(path, page)
+        if not page:
             raise RuntimeError('Could not handle ' + path)
         pages.append(page)
     return pages
