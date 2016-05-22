@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%block name="header">
       <title>${site_name}</title>
     </%block>
@@ -12,8 +13,8 @@
     <link rel="stylesheet" type="text/css" href="${site_root}/static/css/pygments.css" />
     <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="${site_root}/static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${site_root}/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="${site_root}/static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -52,10 +53,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
