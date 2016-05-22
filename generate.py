@@ -1,9 +1,11 @@
 '''Renders my blog.'''
 from os.path import join
 from datetime import datetime
+from subprocess import call, check_call
 import mako.template
 import mako.lookup
 import markdown
+import yaml
 import glob
 import shutil
 import os
@@ -121,7 +123,10 @@ def save_html(pages):
 
 def org_pages(pages):
     '''Sort pages newest to oldest.'''
-    pages.sort(key=lambda page: page.get('date', datetime(1, 1, 1)), reverse=True)
+    for page in pages:
+        if 'date' in page:
+            page['date'] = datetime.strptime(page['date'], '%Y-%m-%d')
+    pages.sort(key=lambda page: page.get('date', datetime(1900, 1, 1)), reverse=True)
     for i, page in enumerate(pages):
         try:
             page['next'] = pages[i+1]
@@ -129,17 +134,40 @@ def org_pages(pages):
             pass
 
 
+class YamlParser(object):
+    @classmethod
+    def execute(cls, path, page):
+        '''Parses yaml as page metadata.'''
+        fn = join(path, page.get('filename', 'index.yml'))
+        if not os.path.isfile(fn) or not fn.endswith('.yml'):
+            return
+        with file(fn) as f:
+            print 'Processing', path, 'as YAML'
+            page.update(yaml.load(f.read()))
+
+    
+class GitFetcher(object):
+    @classmethod
+    def execute(cls, path, page):
+        '''Clone a gist into the path.'''
+        if 'git_url' in page:
+            check_call(['git', 'init'], cwd=path)
+            call(['git', 'remote', 'add', 'origin', page['git_url']], cwd=path)
+            check_call(['git', 'fetch', 'origin'], cwd=path)
+            check_call(['git', 'reset', '--hard', 'origin/master'], cwd=path)
+
+
 class IPythonNotebookParser(object):
     @classmethod
     def execute(cls, path, page):
-        ipynb = join(path, 'index.ipynb')
-        if not os.path.isfile(ipynb):
+        ipynb = join(path, page.get('filename', 'index.ipynb'))
+        if not os.path.isfile(ipynb) or not ipynb.endswith('.ipynb'):
             return
         with file(ipynb) as f:
-            print 'Processing', path, 'as ipynb'
+            print 'Processing', path, 'as a Jupyter Notebook'
             text = f.read()
 
-        page.update(cls._get_metadata(text))
+        cls._get_metadata(text, page)
         page['html'] = cls._nbconvert_to_html(ipynb)
         page['src'] = path
         page['slug'] = os.path.basename(path)
@@ -156,12 +184,13 @@ class IPythonNotebookParser(object):
             raise RuntimeError(stderr)
 
     @classmethod
-    def _get_metadata(cls, text):
+    def _get_metadata(cls, text, page):
         doc = json.loads(text)
-        title = doc['metadata']['title']
-        date = doc['metadata'].get('date', '1-1-1')
-        date = datetime.strptime(date, '%Y-%m-%d')
-        return dict(title=title, date=date, excerpt=cls._build_excerpt(doc))
+        if 'title' not in page and 'title' in doc['metadata']:
+            page['title'] = doc['metadata']['title']
+        if 'date' not in page and 'date' in doc['metadata']:
+            page['date'] = doc['metadata']['date']
+        page['excerpt'] = cls._build_excerpt(doc)
 
     @classmethod
     def _build_excerpt(cls, doc):
@@ -185,11 +214,11 @@ class MarkdownParser(object):
 
     @classmethod
     def execute(cls, path, page):
-        fn = join(path, 'index.md')
-        if not os.path.isfile(fn):
+        fn = join(path, page.get('filename', 'index.md'))
+        if not os.path.isfile(fn) or not fn.endswith('.md'):
             return
         with file(fn) as f:
-            print 'Processing', path, 'as md'
+            print 'Processing', path, 'as Markdown'
             text = f.read()
         html = cls.md.convert(text)
         meta = cls.md.Meta
@@ -201,8 +230,6 @@ class MarkdownParser(object):
         page['excerpt'] = cls._build_excerpt(text)
         page['src'] = path
         page['slug'] = os.path.basename(path)
-        if 'date' in page:
-            page['date'] = datetime.strptime(page['date'], '%Y-%m-%d')
 
     @classmethod
     def _build_excerpt(cls, text):
@@ -228,13 +255,15 @@ class MarkdownParser(object):
 def load_pages():
     '''Parse data and metadata for all pages.'''
     pages = []
-    handlers = [MarkdownParser, IPythonNotebookParser]
+    handlers = [YamlParser, GitFetcher, MarkdownParser, IPythonNotebookParser]
     for path in glob.glob(join(PAGES_DIR, '*')):
         page = {}
         for handler in handlers:
             handler.execute(path, page)
-        if not page:
-            raise RuntimeError('Could not handle ' + path)
+        if 'skip' in page:
+            continue
+        elif 'html' not in page:
+            raise RuntimeError('Nothing rendered HTML for ' + path)
         pages.append(page)
     return pages
 
