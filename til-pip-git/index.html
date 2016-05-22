@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>pip Install From a Git Repo - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -45,24 +46,24 @@
   <h1 class="pageTitle">pip Install From a Git Repo</h1>
     <p class="pageDate">December 28, 2010</p>
   <p><a href="http://pip.openplans.org/">pip</a> installs Python packages. It knows about PyPI, various source control systems, and even local setup.py files. For example, to install Tornado HEAD from GitHub:</p>
-<div class="codehilite"><pre><span class="gp">$</span> sudo pip install -e git+https://github.com/facebook/tornado.git#egg<span class="o">=</span>Tornado
+<div class="codehilite"><pre><span></span><span class="gp">$</span> sudo pip install -e git+https://github.com/facebook/tornado.git#egg<span class="o">=</span>Tornado
 </pre></div>
 
 
 <p>To install Tornado 1.1 from PyPI:</p>
-<div class="codehilite"><pre><span class="gp">$</span> sudo pip install Tornado
+<div class="codehilite"><pre><span></span><span class="gp">$</span> sudo pip install Tornado
 </pre></div>
 
 
 <p>To install Tornado from a local clone of the source:</p>
-<div class="codehilite"><pre><span class="gp">$</span> <span class="nb">cd </span>tornado
+<div class="codehilite"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> tornado
 <span class="gp">$</span> sudo pip install -e .
 </pre></div>
 
 
 <p>This last one really just symlinks the source folder into site-packages like the distutils develop option.</p>
 <p>Uninstall is easy too and seems to be based on simple pattern matching.</p>
-<div class="codehilite"><pre><span class="gp">$</span> sudo pip uninstall tornado
+<div class="codehilite"><pre><span></span><span class="gp">$</span> sudo pip uninstall tornado
 </pre></div>
 
       </article>
@@ -79,10 +80,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -107,7 +108,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

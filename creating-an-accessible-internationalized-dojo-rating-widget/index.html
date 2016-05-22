@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>Creating an Accessible Dojo Rating Widget - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -52,17 +53,17 @@
 <h2>Creating a Dev Environment</h2>
 <p>First, we need to create our development environment. In a web accessible location, create a project folder. Create subdirectories named examples, images, nls, and templates. These will hold the example page for the widget, images used by the widget, translations of the widget strings, and the widget template respectively. Under nls make another folder called es which will hold a sample Spanish translation for the widget.</p>
 <p>The final layout of the folders on disk should be the following:</p>
-<div class="codehilite"><pre><span class="n">project</span><span class="o">/</span>
-  <span class="o">-</span> <span class="n">examples</span><span class="o">/</span>
-  <span class="o">-</span> <span class="n">templates</span><span class="o">/</span>
-  <span class="o">-</span> <span class="n">nls</span><span class="o">/</span>
-    <span class="o">-</span> <span class="n">es</span><span class="o">/</span>
+<div class="codehilite"><pre><span></span>project/
+  - examples/
+  - templates/
+  - nls/
+    - es/
 </pre></div>
 
 
 <h2>Creating a Test Page</h2>
 <p>Now create a file named rating-demo.html in the project/examples/ folder with the content below. This file is the page you will use to test the rating widget. The header of this page includes Dojo from a CDN, registers the info.mindtrove code module, and imports the rating widget. The header also defines styles which the rating widget will use to draw lit and unlit stars in the rating widget. The body of the page has a span tag with declarative markup for the Dojo parser that creates a rating widget with a maximum value of five on page load.</p>
-<div class="codehilite"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="codehilite"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="nt">/&gt;</span>
@@ -116,7 +117,7 @@
 
 <h2>Writing the Language Bundles</h2>
 <p>Now create a file named rating.js in project/nls/. This file will contain the default translation of human readable text in the rating widget. Insert the following bundle object definition into the file:</p>
-<div class="codehilite"><pre><span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nx">starsSingular</span><span class="o">:</span> <span class="s1">&#39;${0} star&#39;</span><span class="p">,</span>
   <span class="nx">starsPlural</span><span class="o">:</span> <span class="s1">&#39;${0} stars&#39;</span>
 <span class="p">}</span>
@@ -125,7 +126,7 @@
 
 <p>The widget will replace the variables, ${0}, at runtime with a number of stars. The variable is part of the template so that the position of the number with respect to the noun can change depending on the language. (If the strings contained more than one replaceable segment of text, you would use named variables like ${numberOfStars} instead of positional ones to support arbitrary orderings.)</p>
 <p>Create another message bundle file named rating.js in the project/nls/es folder and insert the text below. You'll use the Spanish translation in this file to test the internationalization of the rating widget later.</p>
-<div class="codehilite"><pre><span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
   <span class="nx">starsSingular</span><span class="o">:</span> <span class="s1">&#39;${0} estrella&#39;</span><span class="p">,</span>
   <span class="nx">starsPlural</span><span class="o">:</span> <span class="s1">&#39;${0} estrellas&#39;</span>
 <span class="p">}</span>
@@ -134,7 +135,7 @@
 
 <p>Next create a file named <em>Rating.html</em> in <em>project/templates/</em>. This file serves as the starting template for your widget. When Dojo parses the test page, it replaces the <em>span</em> element having attribute <em>dojoType="info.mindtrove.Rating"</em> with the content of the template. Insert the HTML below into the template file:</p>
 
-<div class="codehilite"><pre><span class="o">&lt;</span><span class="nx">span</span> <span class="nx">dojoAttachPoint</span><span class="o">=</span><span class="s2">&quot;box&quot;</span>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="nx">span</span> <span class="nx">dojoAttachPoint</span><span class="o">=</span><span class="s2">&quot;box&quot;</span>
      <span class="nx">tabindex</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
      <span class="nx">role</span><span class="o">=</span><span class="s2">&quot;slider&quot;</span>
      <span class="nx">aria</span><span class="o">-</span><span class="nx">valuetext</span><span class="o">=</span><span class="s2">&quot;${currentText}&quot;</span>
@@ -169,7 +170,7 @@
 
 <p>Now create a file named <em>Rating.js</em> in the <em>project/</em> folder. Add the following lines at the top of the file to define this module and import other modules the widget will use.</p>
 
-<div class="codehilite"><pre><span class="nx">dojo</span><span class="p">.</span><span class="nx">provide</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="nx">dojo</span><span class="p">.</span><span class="nx">provide</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">);</span>
 <span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dijit._Widget&#39;</span><span class="p">);</span>
 <span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dijit._Templated&#39;</span><span class="p">);</span>
 <span class="nx">dojo</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;dojo.string&#39;</span><span class="p">);</span>
@@ -180,7 +181,7 @@
 
 <p>Under these lines, define an empty shell for the <em>Rating</em> class as shown below. This class derives from the base classes <em>_Widget</em> and <em>_Templated</em> so that it will follow the standard Dijit lifecycle for initialization and destruction.</p>
 
-<div class="codehilite"><pre><span class="nx">dojo</span><span class="p">.</span><span class="nx">declare</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">dijit</span><span class="p">.</span><span class="nx">_Widget</span><span class="p">,</span> <span class="nx">dijit</span><span class="p">.</span><span class="nx">_Templated</span><span class="p">],</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="nx">dojo</span><span class="p">.</span><span class="nx">declare</span><span class="p">(</span><span class="s1">&#39;info.mindtrove.Rating&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">dijit</span><span class="p">.</span><span class="nx">_Widget</span><span class="p">,</span> <span class="nx">dijit</span><span class="p">.</span><span class="nx">_Templated</span><span class="p">],</span> <span class="p">{</span>
   <span class="c1">// properties and methods will go here</span>
 <span class="p">};</span>
 </pre></div>
@@ -190,7 +191,7 @@
 
 <p>Next define the public properties of the widget and their default values by adding the following code inside the class definition:</p>
 
-<div class="codehilite"><pre>    <span class="c1">// maximum rating value</span>
+<div class="codehilite"><pre><span></span>    <span class="c1">// maximum rating value</span>
     <span class="nx">maximumValue</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
     <span class="c1">// initial value</span>
     <span class="nx">currentValue</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -207,7 +208,7 @@
 
 <p>Add the following line under the last property in the class to connect the widget class with its template file:</p>
 
-<div class="codehilite"><pre><span class="nx">templatePath</span><span class="o">:</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">moduleUrl</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;templates/Rating.html&#39;</span><span class="p">),</span>
+<div class="codehilite"><pre><span></span><span class="nx">templatePath</span><span class="o">:</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">moduleUrl</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;templates/Rating.html&#39;</span><span class="p">),</span>
 </pre></div>
 
 
@@ -217,7 +218,7 @@
 
 <p>Continue by adding a method named <em>constructor</em> to the class. Dojo invokes this method when instantiating your class, but after all of the base class constructors run. The code in this method stores a reference to the message bundle object for the user's locale in an instance variable.</p>
 
-<div class="codehilite"><pre>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">labels</span> <span class="o">=</span> <span class="nx">dojo</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">getLocalization</span><span class="p">(</span><span class="s1">&#39;info.mindtrove&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">);</span>
     <span class="p">},</span>
 </pre></div>
@@ -227,7 +228,7 @@
 
 <p>Next define a <em>postMixInProperties</em> method in the class. Dojo invokes this method after setting the widget properties to the values specified in the declarative widget markup and just before rendering the widget template for the first time. All of the variables used in the template must be defined as instance variables before this method returns else Dojo will raise an exception. As it happens, all of the variables in the rating widget template are defined by the public properties of the class except for <em>currentText</em>. This method defines that missing instance variable by loading the translated value description from the active message bundle and interpolating the current rating value integer. Because the current text changes at runtime, the rating widget factors this logic out into a separate, reusable method named <em>_getDescription</em>.</p>
 
-<div class="codehilite"><pre>    <span class="nx">postMixInProperties</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span>    <span class="nx">postMixInProperties</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">currentText</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getDescription</span><span class="p">();</span>
     <span class="p">},</span>
     <span class="nx">_getDescription</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -247,7 +248,7 @@
 
 <p>The code creates an additional <em>span</em> node per star containing a text representation of the star: (*) if the star is on or ( ) if the star is off. These span nodes are hidden by default with CSS, but will appear if the user disables stylesheets. Finally, this method attaches <em>onclick</em> handlers to each star for mouse interaction and connects a <em>onkeypress</em> listener to the parent widget node for keyboard support.</p>
 
-<div class="codehilite"><pre>    <span class="nx">postCreate</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span>    <span class="nx">postCreate</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// build stars using DOM methods</span>
         <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// create span to hold star image</span>
@@ -284,7 +285,7 @@
 
 <p>Now create an <em>_update</em> method. This method refreshes the star icons and WAI-ARIA properties as the user changes the rating value. The method swaps the star on and off CSS classes depending on the current value. It uses the <em>dijit.setWaiState</em> functions to set the current numeric value and human readable description of the value on the widget for assistive technologies.</p>
 
-<div class="codehilite"><pre>    <span class="nx">_update</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span>    <span class="nx">_update</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// update visuals</span>
         <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="nx">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maximumValue</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">,</span><span class="nx">c</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">span</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">box</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">c</span><span class="p">];</span>
@@ -313,7 +314,7 @@
 
 <p>Finally, define the <em>_onClick</em> and <em>_onKeyDown</em> event handlers. The mouse handler updates the current value to match the star clicked and then refreshes the user interface. The keyboard handler watches for presses of the arrow keys, the <em>Home</em> key, and the <em>End</em> key. When the user presses one of these keys, it updates the current value appropriately and refreshes the UI.</p>
 
-<div class="codehilite"><pre>    <span class="nx">_onClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span>    <span class="nx">_onClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">currentValue</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_update</span><span class="p">();</span>
     <span class="p">},</span>
@@ -410,10 +411,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -438,7 +439,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

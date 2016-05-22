@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>A reveal.js Docker Base Image with ONBUILD - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -50,42 +51,42 @@
 <p><a href="http://lab.hakim.se/reveal-js/#/">Reveal.js</a> bills itself as "a framework for easily creating beautiful presentations using HTML." Most reveal.js features work just fine when we load the presentation directly from the filesystem. But some features, like Markdown support, require that we load the presentation from a running web server. A Docker container can tie everything up in one tidy package that we can move and run anywhere.</p>
 <p>We could write a Dockerfile that installs NodeJS, downloads reveal.js, installs its npm dependencies, and inserts our Markdown slides into the container on build. We could then copy and build this Dockerfile everywhere we want to develop or run a slideshow server. Or we could keep cramming new markdown files into a single container by rebuilding or <code>scp</code>ing them in a backdoor. Or we could build a generic image that, when run, requires us to volume mount our slides from the host or another container.</p>
 <p><code>ONBUILD</code> introduces a new possibility. With it, we can build a base image that completely configures reveal.js and the web server, but delays insertion of the actual slide content until a child Dockerfile build. The key snippet from the Dockerfile appears below:</p>
-<div class="codehilite"><pre>FROM ubuntu:13.10
+<div class="codehilite"><pre><span></span>FROM ubuntu:13.10
 MAINTAINER Peter Parente &lt;parente@cs.unc.edu&gt;
 
-<span class="c"># elided dependency setup, then ...</span>
+<span class="c1"># elided dependency setup, then ...</span>
 
 ONBUILD ADD slides.md /revealjs/md/
 
-<span class="c"># elided final setup</span>
+<span class="c1"># elided final setup</span>
 </pre></div>
 
 
 <p>We can build the base image once and store it in the Docker registry via <code>docker push</code>, or setup a trusted build. (I've <a href="https://index.docker.io/u/parente/revealjs/">done the latter</a>, which shows the full Dockerfile, if you're interested).</p>
 <h2>The Slideshow Image</h2>
 <p>Later, when we have a new slideshow, we can put a one-line Dockerfile:</p>
-<div class="codehilite"><pre>FROM parente/revealjs
+<div class="codehilite"><pre><span></span>FROM parente/revealjs
 </pre></div>
 
 
 <p>in the same folder as our <code>slides.md</code>:</p>
-<div class="codehilite"><pre><span class="cp"># Docker + reveal.js</span>
+<div class="codehilite"><pre><span></span># Docker + reveal.js
 
-<span class="cp">### A reveal.js Docker Base Image with ONBUILD</span>
+### A reveal.js Docker Base Image with ONBUILD
 
-<span class="o">---</span>
+---
 
-<span class="cp">## Write more slides</span>
+## Write more slides
 </pre></div>
 
 
 <p>and do a build:</p>
-<div class="codehilite"><pre><span class="nv">$ </span>docker build -t slideshow .
+<div class="codehilite"><pre><span></span>$ docker build -t slideshow .
 </pre></div>
 
 
 <p>During this build, Docker executes the delayed <code>ONBUILD ADD slides.md /revealjs/md/</code> instruction. It pulls our local <code>slides.md</code> file into the child image. The result is a portable Docker image that can run our slideshow server anywhere Docker runs.</p>
-<div class="codehilite"><pre><span class="nv">$ </span>docker run -d -P slideshow
+<div class="codehilite"><pre><span></span>$ docker run -d -P slideshow
 </pre></div>
 
 
@@ -93,12 +94,12 @@ ONBUILD ADD slides.md /revealjs/md/
 <h2>A Development Story</h2>
 <p>The build and run steps above are perfect for producing a completed slideshow container. Cycling between build and run while developing the slides is less than ideal, however.</p>
 <p>Mixing techniques can alleviate this pain. During development, we can volume mount the slides from the host into a running instance of the base image. This setup lets us make changes to the <code>slides.md</code> on the host, refresh the browser, and see the impact immediately, without tearing down, rebuilding, and re-running the container.</p>
-<div class="codehilite"><pre><span class="nv">$ </span>docker run -d -P -v <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/revealjs/md parente/revealjs
+<div class="codehilite"><pre><span></span>$ docker run -d -P -v <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/revealjs/md parente/revealjs
 </pre></div>
 
 
 <p>When we're satisfied with our work, we can build the final, fully contained image for migration and deployment.</p>
-<div class="codehilite"><pre><span class="nv">$ </span>docker build -t slideshow .
+<div class="codehilite"><pre><span></span>$ docker build -t slideshow .
 </pre></div>
 
 
@@ -118,10 +119,10 @@ ONBUILD ADD slides.md /revealjs/md/
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -146,7 +147,7 @@ ONBUILD ADD slides.md /revealjs/md/
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

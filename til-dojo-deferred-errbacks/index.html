@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>Error Handlers in dojo.Deferred Chains - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -46,7 +47,7 @@
     <p class="pageDate">February 06, 2011</p>
   <p><a href="http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/">Starting in 1.5</a>, Dojo's <a href="http://dojotoolkit.org/api/1.5/dojo/Deferred">Deferred class</a> exposes a <code>then()</code> method that accepts three arguments: a success handler for <code>callback()</code>, an error handler for <code>errback</code>, and a progress handler for <code>progress()</code> updates. One interesting feature of the <code>dojo.Deferred</code> implementation is the ability of a callback handler to return a new deferred which becomes the target of the next handler scheduled on the original deferred.</p>
 <p>Consider these two snippets. The first shows chaining on a single deferred. The second shows chaining with a new deferred returned within the chain.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d1</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">d1</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
 <span class="nx">d1</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -70,7 +71,7 @@
 <h2>Try #1: Error handlers everywhere</h2>
 
 <p>I recently wrote some code in which my deferred callback handlers returned new deferreds for chaining, but where any deferred in the chain might have its <code>errback()</code> invoked. I wanted my handler chain to cease firing after the first occurrence of an error with one and only one handler invoked for that error. I naively started with the following recipe:</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
 <span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
     <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
@@ -107,7 +108,7 @@
 <h2>Try #2: Error handlers throwing errors</h2>
 
 <p>I next tried the following approach:</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
 <span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
     <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
@@ -147,7 +148,7 @@
 <h2>Solution: One terminal error handler</h2>
 
 <p>Finally, I hit upon a pattern with the behavior I wanted:</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">functionReturningADeferred</span><span class="p">();</span>
 <span class="nx">d</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;first success&#39;</span><span class="p">);</span>
     <span class="k">return</span> <span class="nx">anotherDeferredReturningFunction</span><span class="p">();</span>
@@ -195,10 +196,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -223,7 +224,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

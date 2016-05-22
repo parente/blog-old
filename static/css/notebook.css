@@ -1,3 +1,7 @@
+.anchor-link {
+    display: none;
+}
+
 .text_cell .prompt {
     display: none;
 }
@@ -52,6 +56,11 @@
     max-width: 100%;
 }
 
+.output_html {
+    overflow-x: auto;
+}
+
 .output_html .dataframe {
-    font-family: monospace;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    font-size: 13px;
 }

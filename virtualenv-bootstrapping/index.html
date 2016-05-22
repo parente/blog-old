@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>virtualenv Bootstrapping - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -51,30 +52,30 @@
 <script src="https://gist.github.com/763048.js"> </script>
 
 <p>You can execute this script, giving it a path to where you want the virtual environment to reside. After it completes, you can activate that environment and execute the <code>run_server.py</code> script it generates to start the Tornado server. Visiting <code>http://localhost:8080/static/index.html</code> in your browser shows the hello world page the <code>setup_tornadoenv.py</code> generated.</p>
-<div class="codehilite"><pre><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">setup_tornadoenv</span><span class="p">.</span><span class="n">py</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_app</span>
-<span class="err">$</span> <span class="n">source</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_app</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="err">$</span> <span class="n">run_server</span><span class="p">.</span><span class="n">py</span> <span class="o">&amp;</span>
-<span class="err">$</span> <span class="n">open</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:8080/static/index.html</span>
+<div class="codehilite"><pre><span></span>$ ./setup_tornadoenv.py ~/envs/my_app
+$ <span class="nb">source</span> ~/envs/my_app/bin/activate
+$ run_server.py <span class="p">&amp;</span>
+$ open http://localhost:8080/static/index.html
 </pre></div>
 
 
 <p>Of course, you can reuse the setup script to create additional, isolated environments.</p>
-<div class="codehilite"><pre><span class="err">$</span> <span class="n">deactivate</span>      <span class="err">#</span> <span class="n">get</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">my_app</span> <span class="n">env</span>
-<span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">setup_tornadoenv</span><span class="p">.</span><span class="n">py</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_other_app</span>
-<span class="err">$</span> <span class="p">.</span> <span class="o">~/</span><span class="n">envs</span><span class="o">/</span><span class="n">my_other_app</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">activate</span>
-<span class="err">$</span> <span class="n">run_server</span><span class="p">.</span><span class="n">py</span> <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">9000</span> <span class="o">&amp;</span>
-<span class="err">$</span> <span class="n">open</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:9000/static/index.html</span>
+<div class="codehilite"><pre><span></span>$ deactivate      <span class="c1"># get out of the my_app env</span>
+$ ./setup_tornadoenv.py ~/envs/my_other_app
+$ . ~/envs/my_other_app/bin/activate
+$ run_server.py --port<span class="o">=</span><span class="m">9000</span> <span class="p">&amp;</span>
+$ open http://localhost:9000/static/index.html
 </pre></div>
 
 
 <p>If you install <a href="http://www.doughellmann.com/projects/virtualenvwrapper/">virtualenvwrapper</a>, switching among the separate server environments is even easier.</p>
-<div class="codehilite"><pre><span class="err">$</span> <span class="n">deactivate</span>                  <span class="err">#</span> <span class="n">get</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">my_other_app</span> <span class="n">env</span>
-<span class="err">$</span> <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">virtualenvwrapper</span>
-<span class="err">$</span> <span class="n">export</span> <span class="n">WORKON_HOME</span><span class="o">=~/</span><span class="n">envs</span>   <span class="err">#</span> <span class="n">or</span> <span class="n">add</span> <span class="n">this</span> <span class="n">to</span> <span class="p">.</span><span class="n">bashrc</span> <span class="n">or</span> <span class="p">.</span><span class="n">bash_profile</span>
-<span class="err">$</span> <span class="n">source</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="p">.</span><span class="n">sh</span> <span class="err">#</span> <span class="n">same</span> <span class="n">here</span>
-<span class="err">$</span> <span class="n">workon</span> <span class="n">my_app</span>               <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">my_app</span> <span class="n">env</span>
-<span class="err">$</span> <span class="n">workon</span> <span class="n">my_other_app</span>         <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">other</span>
-<span class="err">$</span> <span class="n">deactivate</span>                  <span class="err">#</span> <span class="n">now</span> <span class="n">in</span> <span class="n">the</span> <span class="n">system</span> <span class="n">env</span>
+<div class="codehilite"><pre><span></span>$ deactivate                  <span class="c1"># get out of the my_other_app env</span>
+$ sudo pip install virtualenvwrapper
+$ <span class="nb">export</span> <span class="nv">WORKON_HOME</span><span class="o">=</span>~/envs   <span class="c1"># or add this to .bashrc or .bash_profile</span>
+$ <span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh <span class="c1"># same here</span>
+$ workon my_app               <span class="c1"># now in the my_app env</span>
+$ workon my_other_app         <span class="c1"># now in the other</span>
+$ deactivate                  <span class="c1"># now in the system env</span>
 </pre></div>
 
 
@@ -94,10 +95,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -122,7 +123,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

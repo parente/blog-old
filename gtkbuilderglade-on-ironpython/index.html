@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>GtkBuilder/Glade on IronPython - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -46,33 +47,33 @@
     <p class="pageDate">August 28, 2009</p>
   <p>Thanks to Stephane for his answer to my query about <a href="http://blog.reblochon.org/2009/08/gtkbuilder-on-ironpython.html">using GtkBuilder in IronPython</a>. It turns out his <a href="http://gitorious.org/gtk-sharp-beans">Gtk#Beans</a> package provides the magic sauce that is currently missing from ~~gtk# trunk~~ the current stable release.</p>
 <p>For completeness, here's the code I sent him that accomplishes the same thing using the older Glade.XML object for those that are interested. It answers a <a href="http://lists.ironpython.com/pipermail/users-ironpython.com/2005-August/000968.html">long standing mailing list question</a> about using Glade.XML.Autoconnect in IronPython.</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">clr</span>
-<span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s">&#39;gtk-sharp&#39;</span><span class="p">)</span>
-<span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s">&#39;glade-sharp&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">clr</span>
+<span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s1">&#39;gtk-sharp&#39;</span><span class="p">)</span>
+<span class="n">clr</span><span class="o">.</span><span class="n">AddReference</span><span class="p">(</span><span class="s1">&#39;glade-sharp&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">Gtk</span>
 <span class="kn">import</span> <span class="nn">Glade</span>
 
 <span class="k">def</span> <span class="nf">PyGladeAutoconnect</span><span class="p">(</span><span class="n">gxml</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="n">handler_name</span><span class="p">,</span> <span class="n">event_obj</span><span class="p">,</span> <span class="n">signal_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">frag</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">frag</span> <span class="ow">in</span> <span class="n">signal_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">)])</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">frag</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">frag</span> <span class="ow">in</span> <span class="n">signal_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)])</span>
         <span class="n">event</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">event_obj</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">event</span> <span class="o">+=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">handler_name</span><span class="p">)</span>
 
-    <span class="c"># add all widgets</span>
-    <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">gxml</span><span class="o">.</span><span class="n">GetWidgetPrefix</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+    <span class="c1"># add all widgets</span>
+    <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">gxml</span><span class="o">.</span><span class="n">GetWidgetPrefix</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">gxml</span><span class="o">.</span><span class="n">GetWidgetName</span><span class="p">(</span><span class="n">widget</span><span class="p">),</span> <span class="n">widget</span><span class="p">)</span>
-    <span class="c"># connect all signals</span>
+    <span class="c1"># connect all signals</span>
     <span class="n">gxml</span><span class="o">.</span><span class="n">SignalAutoconnectFull</span><span class="p">(</span><span class="n">_connect</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">Application</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">gxml</span> <span class="o">=</span> <span class="n">Glade</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="s">&quot;test.glade&quot;</span><span class="p">,</span> <span class="s">&quot;window1&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">gxml</span> <span class="o">=</span> <span class="n">Glade</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="s2">&quot;test.glade&quot;</span><span class="p">,</span> <span class="s2">&quot;window1&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">PyGladeAutoconnect</span><span class="p">(</span><span class="n">gxml</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-        <span class="c"># window1 comes from glade file</span>
+        <span class="c1"># window1 comes from glade file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window1</span><span class="o">.</span><span class="n">ShowAll</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">onWindowDelete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="c"># connected via glade file definition</span>
+        <span class="c1"># connected via glade file definition</span>
         <span class="n">Gtk</span><span class="o">.</span><span class="n">Application</span><span class="o">.</span><span class="n">Quit</span><span class="p">()</span>
 
 <span class="n">Gtk</span><span class="o">.</span><span class="n">Application</span><span class="o">.</span><span class="n">Init</span><span class="p">()</span>
@@ -94,10 +95,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -122,7 +123,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

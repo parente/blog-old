@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>Watch Vagrant Changes - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -47,7 +48,7 @@
   <p><a href="http://vagrantup.com">Vagrant</a> is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type <code>vagrant up</code> and <code>vagrant ssh</code> in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient <code>/vagrant</code> project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.</p>
 <p>One gotcha I've found using Vagrant and VirtualBox occurs when I use tools that watch the filesystem like <a href="https://github.com/isaacs/node-supervisor">node-supervisor</a> and <a href="https://github.com/pmuellr/wr">wr</a>. These utils are handy when I want my test suite to execute, or my static code to compile, or my web app server to restart each time I make changes to my code base. Unfortunately, they fail to monitor the VirtualBox mounted <code>/vagrant</code> folder effectively, undoubtedly because of some VirtualBox shared folder magic.</p>
 <p>For instance, when I do the following in the VM:</p>
-<div class="codehilite"><pre><span class="gp">vagrant@vm:~$</span> npm install -g wr
+<div class="codehilite"><pre><span></span><span class="gp">vagrant@vm:~$</span> npm install -g wr
 <span class="gp">vagrant@vm:~$</span> mkdir /vagrant/tmp
 <span class="gp">vagrant@vm:~$</span> touch /vagrant/tmp/foo
 <span class="gp">vagrant@vm:~$</span> wr <span class="s2">&quot;echo CHANGED&quot;</span> /vagrant/tmp
@@ -58,19 +59,19 @@
 <p>and then edit the <code>foo</code> file on my Mac, nothing happens. Occasionally, I'll see "CHANGED" printed, but it's entirely unpredictable.</p>
 <p>An idea struck me the other day about how to overcome this problem: watch the filesystem outside the VM and get the command to run inside using SSH. It sounds nasty but the cost is minimal: a one-time setup and a minor addition to the command I want to run.</p>
 <p>First, I install my watch utility on my Mac and save a copy of my project Vagrant SSH config file.</p>
-<div class="codehilite"><pre><span class="gp">parente@mac:~/myproject$</span> npm install -g wr
+<div class="codehilite"><pre><span></span><span class="gp">parente@mac:~/myproject$</span> npm install -g wr
 <span class="gp">parente@mac:~/myproject$</span> vagrant ssh-config &gt; .ssh-config
 </pre></div>
 
 
 <p>Then, I run my watch tool on my Mac with an <code>ssh</code> command to run on change. Typically I hide this in whatever the project is using for automation (e.g., bash script, Makefile).</p>
-<div class="codehilite"><pre><span class="gp">parente@mac:~/myproject$</span> wr <span class="s2">&quot;ssh -F .ssh-config default ls -l /vagrant/tmp&quot;</span> .
+<div class="codehilite"><pre><span></span><span class="gp">parente@mac:~/myproject$</span> wr <span class="s2">&quot;ssh -F .ssh-config default ls -l /vagrant/tmp&quot;</span> .
 <span class="go">21:09:36 wr: watching 3 files, running &#39;ssh -F .ssh-config default ls -l /vagrant/tmp&#39;</span>
 </pre></div>
 
 
 <p>Finally, when I make a code change on my Mac, I see <code>wr</code> ssh into my VM and execute my command immediately, as desired.</p>
-<div class="codehilite"><pre><span class="go">21:11:16 wr: file changed</span>
+<div class="codehilite"><pre><span></span><span class="go">21:11:16 wr: file changed</span>
 
 <span class="go">21:11:16 wr: running &#39;ssh -F .ssh-config default ls -l /vagrant/tmp&#39;</span>
 
@@ -82,7 +83,7 @@
 
 <p>The same trick works whether I want to run <code>make build</code> or <code>mocha</code> or <code>fab deploy</code> within my VM.</p>
 <p>There can be a slight delay as SSH reconnects on each change. But even this minor annoyance can be overcome by enabling SSH connection sharing and keeping a second secure shell connected to the VM.</p>
-<div class="codehilite"><pre><span class="gp">parente@mac:~/myproject$</span> <span class="nb">echo</span> <span class="s2">&quot;\nControlMaster auto\nControlPath /tmp/ssh_mux_%h_%p_%r&quot;</span> &gt;&gt; ~/.ssh/config
+<div class="codehilite"><pre><span></span><span class="gp">parente@mac:~/myproject$</span> <span class="nb">echo</span> <span class="s2">&quot;\nControlMaster auto\nControlPath /tmp/ssh_mux_%h_%p_%r&quot;</span> &gt;&gt; ~/.ssh/config
 <span class="gp">parente@mac:~/myproject$</span> vagrant ssh
 <span class="gp">vagrant@tottbox:~$</span>
 </pre></div>
@@ -104,10 +105,10 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -132,7 +133,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

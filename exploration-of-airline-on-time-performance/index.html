@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   
   <title>Exploration of Airline On-Time Performance - Parente's Mindtrove</title>
@@ -12,10 +13,10 @@
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -54,31 +55,27 @@
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity.</p>
-<hr />
+<hr>
 <p>In this notebook, we explore a sample of data from the U.S. Department of Transportation (US-DOT) Research and Innovative Technology Administration (RITA) <a href="http://www.rita.dot.gov/bts/about/">Bureau of Transportation Statistics</a> (BTS). The data comes from the <a href="http://www.transtats.bts.gov/Fields.asp?Table_ID=236">On-Time Performance</a> table:</p>
-<blockquote>
-<p>This table contains on-time arrival data for non-stop domestic flights by major air carriers, and provides such additional items as departure and arrival delays, origin and destination airports, flight numbers, scheduled and actual departure and arrival times, cancelled or diverted flights, taxi-out and taxi-in times, air time, and non-stop distance.</p>
+<blockquote><p>This table contains on-time arrival data for non-stop domestic flights by major air carriers, and provides such additional items as departure and arrival delays, origin and destination airports, flight numbers, scheduled and actual departure and arrival times, cancelled or diverted flights, taxi-out and taxi-in times, air time, and non-stop distance.</p>
 </blockquote>
-<h2 id="questions">Questions</h2>
-<p>For the purposes of this notebook, I have captured a subset of the table in a <a href="https://cloudant.com">Cloudant</a> database. We will start by connecting to the database and simply looking at the available data. Once we understand the content, we will try to answer the following questions about flights during the month of June, 2014:</p>
-<ol style="list-style-type: decimal">
+<h2 id="Questions">Questions<a class="anchor-link" href="#Questions">&#182;</a></h2><p>For the purposes of this notebook, I have captured a subset of the table in a <a href="https://cloudant.com">Cloudant</a> database. We will start by connecting to the database and simply looking at the available data. Once we understand the content, we will try to answer the following questions about flights during the month of June, 2014:</p>
+<ol>
 <li>What is the distribution of departure delays of at least 15 minutes by state? Arrival delays?</li>
 <li>Is there a tendency of flights from one state to another to experience a delay of 15 minutes or more on the arriving end?</li>
 <li>How did arrival delay in minutes vary day-by-day?</li>
 </ol>
-<h2 id="connect-to-cloudant">Connect to Cloudant</h2>
-<p>To get to the data, we can use a <a href="https://cloudant.com/python/">Cloudant client for Python</a>. We'll can install the official client by shelling out to <code>bash</code> and running a <code>pip</code> command right here.</p>
+<h2 id="Connect-to-Cloudant">Connect to Cloudant<a class="anchor-link" href="#Connect-to-Cloudant">&#182;</a></h2><p>To get to the data, we can use a <a href="https://cloudant.com/python/">Cloudant client for Python</a>. We'll can install the official client by shelling out to <code>bash</code> and running a <code>pip</code> command right here.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">!</span>pip install cloudant
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install cloudant
 </pre></div>
 
 </div>
@@ -91,13 +88,11 @@ In&nbsp;[1]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Requirement already satisfied (use --upgrade to upgrade): cloudant in /usr/local/lib/python2.7/dist-packages
+<pre>Requirement already satisfied (use --upgrade to upgrade): cloudant in /usr/local/lib/python2.7/dist-packages
 Requirement already satisfied (use --upgrade to upgrade): requests-futures==0.9.4 in /usr/local/lib/python2.7/dist-packages (from cloudant)
 Requirement already satisfied (use --upgrade to upgrade): requests&gt;=1.2.0 in /usr/lib/python2.7/dist-packages (from requests-futures==0.9.4-&gt;cloudant)
 Requirement already satisfied (use --upgrade to upgrade): futures&gt;=2.1.3 in /usr/local/lib/python2.7/dist-packages (from requests-futures==0.9.4-&gt;cloudant)
 Cleaning up...
-
 </pre>
 </div>
 </div>
@@ -112,17 +107,16 @@ Cleaning up...
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we'll import the <code>cloudant</code> package we just installed and use it to connect to the read-only <code>rita_transtats_2014_06</code> database in the <code>parente</code> user account.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">cloudant</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cloudant</span>
 </pre></div>
 
 </div>
@@ -132,12 +126,10 @@ In&nbsp;[2]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">account</span> <span class="o">=</span> <span class="n">cloudant</span><span class="o">.</span><span class="n">Account</span><span class="p">(</span><span class="s">&#39;parente&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="n">cloudant</span><span class="o">.</span><span class="n">Account</span><span class="p">(</span><span class="s1">&#39;parente&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -147,12 +139,10 @@ In&nbsp;[3]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">database</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="s">&#39;rita_transtats_2014_06&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">database</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="s1">&#39;rita_transtats_2014_06&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -166,17 +156,16 @@ In&nbsp;[4]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>cloudant</code> package builds on the popular Python <a href="http://docs.python-requests.org/en/latest/">requests</a> package. Almost every object that comes back from the API is a subclass of a <code>requests</code> class. This means we can perform a HTTP GET against the database and get the JSON body of the response with a couple method calls.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[5]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -187,23 +176,20 @@ In&nbsp;[5]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[5]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-{u&apos;compact_running&apos;: False,
- u&apos;db_name&apos;: u&apos;rita_transtats_2014_06&apos;,
- u&apos;disk_format_version&apos;: 5,
- u&apos;disk_size&apos;: 160707408,
- u&apos;doc_count&apos;: 502500,
- u&apos;doc_del_count&apos;: 0,
- u&apos;instance_start_time&apos;: u&apos;0&apos;,
- u&apos;other&apos;: {u&apos;data_size&apos;: 265247850},
- u&apos;purge_seq&apos;: 0,
- u&apos;update_seq&apos;: u&apos;502516-g1AAAADveJzLYWBgYMlgTmGQT0lKzi9KdUhJMtJLykxPyilN1UvOyS9NScwr0ctLLckBKmRKZEiy____f1YSA-PrcKJ1JTkAyaR6qMZX84nWmMcCJBkagBRQ736w5mgSNR-AaIbYvDgLACDLUQs&apos;}
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>{u&#39;compact_running&#39;: False,
+ u&#39;db_name&#39;: u&#39;rita_transtats_2014_06&#39;,
+ u&#39;disk_format_version&#39;: 5,
+ u&#39;disk_size&#39;: 160707408,
+ u&#39;doc_count&#39;: 502500,
+ u&#39;doc_del_count&#39;: 0,
+ u&#39;instance_start_time&#39;: u&#39;0&#39;,
+ u&#39;other&#39;: {u&#39;data_size&#39;: 265247850},
+ u&#39;purge_seq&#39;: 0,
+ u&#39;update_seq&#39;: u&#39;502516-g1AAAADveJzLYWBgYMlgTmGQT0lKzi9KdUhJMtJLykxPyilN1UvOyS9NScwr0ctLLckBKmRKZEiy____f1YSA-PrcKJ1JTkAyaR6qMZX84nWmMcCJBkagBRQ736w5mgSNR-AaIbYvDgLACDLUQs&#39;}</pre>
 </div>
 
 </div>
@@ -218,21 +204,20 @@ In&nbsp;[5]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From the above, we can see the database contains roughly 500,000 documents. We can grab a couple from the database to inspect locally.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[6]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">all_docs</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;include_docs&#39;</span> <span class="p">:</span> <span class="bp">True</span><span class="p">})):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">all_docs</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;include_docs&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">})):</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="k">break</span>
     <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">items</span>
+<span class="nb">print</span> <span class="n">items</span>
 </pre></div>
 
 </div>
@@ -245,9 +230,7 @@ In&nbsp;[6]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-[{u&apos;value&apos;: {u&apos;rev&apos;: u&apos;1-40fc15f608f95f0428e2e9d6b468e483&apos;}, u&apos;id&apos;: u&apos;04da0d01eb0f15d5c56eb1399a000a35&apos;, u&apos;key&apos;: u&apos;04da0d01eb0f15d5c56eb1399a000a35&apos;, u&apos;doc&apos;: {u&apos;DISTANCE&apos;: 1947.0, u&apos;DEST_AIRPORT_ID&apos;: 12892, u&apos;ARR_DEL15&apos;: 0.0, u&apos;ORIGIN_STATE_ABR&apos;: u&apos;GA&apos;, u&apos;_rev&apos;: u&apos;1-40fc15f608f95f0428e2e9d6b468e483&apos;, u&apos;ARR_DELAY_NEW&apos;: 0.0, u&apos;UNIQUE_CARRIER&apos;: u&apos;DL&apos;, u&apos;ORIGIN_AIRPORT_ID&apos;: 10397, u&apos;DISTANCE_GROUP&apos;: 8, u&apos;DEP_DEL15&apos;: 0.0, u&apos;_id&apos;: u&apos;04da0d01eb0f15d5c56eb1399a000a35&apos;, u&apos;DEST_STATE_ABR&apos;: u&apos;CA&apos;, u&apos;DEP_DELAY_NEW&apos;: 0.0, u&apos;FL_DATE&apos;: u&apos;2014-06-30&apos;}}, {u&apos;value&apos;: {u&apos;rev&apos;: u&apos;1-4dd24d56dc537210f49fe327c7773178&apos;}, u&apos;id&apos;: u&apos;04da0d01eb0f15d5c56eb1399a001198&apos;, u&apos;key&apos;: u&apos;04da0d01eb0f15d5c56eb1399a001198&apos;, u&apos;doc&apos;: {u&apos;DISTANCE&apos;: 282.0, u&apos;DEST_AIRPORT_ID&apos;: 13487, u&apos;ARR_DEL15&apos;: 0.0, u&apos;ORIGIN_STATE_ABR&apos;: u&apos;NE&apos;, u&apos;_rev&apos;: u&apos;1-4dd24d56dc537210f49fe327c7773178&apos;, u&apos;ARR_DELAY_NEW&apos;: 0.0, u&apos;UNIQUE_CARRIER&apos;: u&apos;DL&apos;, u&apos;ORIGIN_AIRPORT_ID&apos;: 13871, u&apos;DISTANCE_GROUP&apos;: 2, u&apos;DEP_DEL15&apos;: 0.0, u&apos;_id&apos;: u&apos;04da0d01eb0f15d5c56eb1399a001198&apos;, u&apos;DEST_STATE_ABR&apos;: u&apos;MN&apos;, u&apos;DEP_DELAY_NEW&apos;: 0.0, u&apos;FL_DATE&apos;: u&apos;2014-06-30&apos;}}]
-
+<pre>[{u&#39;value&#39;: {u&#39;rev&#39;: u&#39;1-40fc15f608f95f0428e2e9d6b468e483&#39;}, u&#39;id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;key&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;doc&#39;: {u&#39;DISTANCE&#39;: 1947.0, u&#39;DEST_AIRPORT_ID&#39;: 12892, u&#39;ARR_DEL15&#39;: 0.0, u&#39;ORIGIN_STATE_ABR&#39;: u&#39;GA&#39;, u&#39;_rev&#39;: u&#39;1-40fc15f608f95f0428e2e9d6b468e483&#39;, u&#39;ARR_DELAY_NEW&#39;: 0.0, u&#39;UNIQUE_CARRIER&#39;: u&#39;DL&#39;, u&#39;ORIGIN_AIRPORT_ID&#39;: 10397, u&#39;DISTANCE_GROUP&#39;: 8, u&#39;DEP_DEL15&#39;: 0.0, u&#39;_id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;DEST_STATE_ABR&#39;: u&#39;CA&#39;, u&#39;DEP_DELAY_NEW&#39;: 0.0, u&#39;FL_DATE&#39;: u&#39;2014-06-30&#39;}}, {u&#39;value&#39;: {u&#39;rev&#39;: u&#39;1-4dd24d56dc537210f49fe327c7773178&#39;}, u&#39;id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;key&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;doc&#39;: {u&#39;DISTANCE&#39;: 282.0, u&#39;DEST_AIRPORT_ID&#39;: 13487, u&#39;ARR_DEL15&#39;: 0.0, u&#39;ORIGIN_STATE_ABR&#39;: u&#39;NE&#39;, u&#39;_rev&#39;: u&#39;1-4dd24d56dc537210f49fe327c7773178&#39;, u&#39;ARR_DELAY_NEW&#39;: 0.0, u&#39;UNIQUE_CARRIER&#39;: u&#39;DL&#39;, u&#39;ORIGIN_AIRPORT_ID&#39;: 13871, u&#39;DISTANCE_GROUP&#39;: 2, u&#39;DEP_DEL15&#39;: 0.0, u&#39;_id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;DEST_STATE_ABR&#39;: u&#39;MN&#39;, u&#39;DEP_DELAY_NEW&#39;: 0.0, u&#39;FL_DATE&#39;: u&#39;2014-06-30&#39;}}]
 </pre>
 </div>
 </div>
@@ -262,17 +245,16 @@ In&nbsp;[6]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The dictionary format is hard to read and contains metadata from Cloudant that we don't care about. Let's use the <code>pandas</code> package to put the data in a tabular, HTML format instead.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[7]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pandas</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
 </pre></div>
 
 </div>
@@ -282,12 +264,10 @@ In&nbsp;[7]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[8]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;doc&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;doc&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -298,10 +278,9 @@ In&nbsp;[8]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
   <thead>
@@ -376,100 +355,43 @@ In&nbsp;[8]:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Returning to <a href="http://www.transtats.bts.gov/Fields.asp?Table_ID=236">the source of the data</a>, we can get definitions for each of these fields.</p>
 <dl class="dl-horizontal">
-<dt>
-ARR_DEL15
-</dt>
-<dd>
-Arrival Delay Indicator, 15 Minutes or More (1=Yes)
-</dd>
-<dt>
-ARR_DEL15
-</dt>
-<dd>
-Arrival Delay Indicator, 15 Minutes or More (1=Yes)
-</dd>
-<dt>
-ARR_DELAY_NEW
-</dt>
-<dd>
-Difference in minutes between scheduled and actual arrival time. Early arrivals set to 0.
-</dd>
-<dt>
-DEP_DEL15
-</dt>
-<dd>
-Departure Delay Indicator, 15 Minutes or More (1=Yes)
-</dd>
-<dt>
-DEP_DELAY_NEW
-</dt>
-<dd>
-Difference in minutes between scheduled and actual departure time. Early departures set to 0.
-</dd>
-<dt>
-DEST_AIRPORT_ID
-</dt>
-<dd>
-Destination Airport, Airport ID. An identification number assigned by US DOT to identify a unique airport. Use this field for airport analysis across a range of years because an airport can change its airport code and airport codes can be reused.
-</dd>
-<dt>
-DEST_STATE_ABR
-</dt>
-<dd>
-Destination Airport, State Code
-</dd>
-<dt>
-DISTANCE
-</dt>
-<dd>
-Distance between airports (miles)
-</dd>
-<dt>
-DISTANCE_GROUP
-</dt>
-<dd>
-Distance Intervals, every 250 Miles, for Flight Segment
-</dd>
-<dt>
-FL_DATE
-</dt>
-<dd>
-Flight Date (yyyymmdd)
-</dd>
-<dt>
-ORIGIN_AIRPORT_ID
-</dt>
-<dd>
-Origin Airport, Airport ID. An identification number assigned by US DOT to identify a unique airport. Use this field for airport analysis across a range of years because an airport can change its airport code and airport codes can be reused.
-</dd>
-<dt>
-ORIGIN_STATE_ABR
-</dt>
-<dd>
-Origin Airport, State Code
-</dd>
-<dt>
-UNIQUE_CARRIER
-</dt>
-<dd>
-Unique Carrier Code. When the same code has been used by multiple carriers, a numeric suffix is used for earlier users, for example, PA, PA(1), PA(2). Use this field for analysis across a range of years.
-</dd>
-</dl>
+<dt>ARR_DEL15</dt>
+<dd>Arrival Delay Indicator, 15 Minutes or More (1=Yes)</dd>
+<dt>ARR_DEL15</dt>
+<dd>Arrival Delay Indicator, 15 Minutes or More (1=Yes)</dd>
+<dt>ARR_DELAY_NEW</dt>
+<dd>Difference in minutes between scheduled and actual arrival time. Early arrivals set to 0.</dd>
+<dt>DEP_DEL15</dt>
+<dd>Departure Delay Indicator, 15 Minutes or More (1=Yes)</dd>
+<dt>DEP_DELAY_NEW</dt>
+<dd>Difference in minutes between scheduled and actual departure time. Early departures set to 0.</dd>
+<dt>DEST_AIRPORT_ID</dt>
+<dd>Destination Airport, Airport ID. An identification number assigned by US DOT to identify a unique airport. Use this field for airport analysis across a range of years because an airport can change its airport code and airport codes can be reused.</dd>
+<dt>DEST_STATE_ABR</dt>
+<dd>Destination Airport, State Code</dd>
+<dt>DISTANCE</dt>
+<dd>Distance between airports (miles)</dd>
+<dt>DISTANCE_GROUP</dt>
+<dd>Distance Intervals, every 250 Miles, for Flight Segment</dd>
+<dt>FL_DATE</dt>
+<dd>Flight Date (yyyymmdd)</dd>
+<dt>ORIGIN_AIRPORT_ID</dt>
+<dd>Origin Airport, Airport ID. An identification number assigned by US DOT to identify a unique airport. Use this field for airport analysis across a range of years because an airport can change its airport code and airport codes can be reused.</dd>
+<dt>ORIGIN_STATE_ABR</dt>
+<dd>Origin Airport, State Code</dd>
+<dt>UNIQUE_CARRIER</dt>
+<dd>Unique Carrier Code. When the same code has been used by multiple carriers, a numeric suffix is used for earlier users, for example, PA, PA(1), PA(2). Use this field for analysis across a range of years.</dd>
+</dl><p>For the purposes of the specific questions stated at the top of this notebook, we only need a subset of the available columns, namely delay metrics, origin and destination states, and the flight date. We'll ignore the other fields.</p>
 
-
-
-<p>For the purposes of the specific questions stated at the top of this notebook, we only need a subset of the available columns, namely delay metrics, origin and destination states, and the flight date. We'll ignore the other fields.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[9]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;FL_DATE&#39;</span><span class="p">,</span> <span class="s">u&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">u&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">u&#39;ARR_DEL15&#39;</span><span class="p">,</span> <span class="s">u&#39;ARR_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s">u&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="s">u&#39;DEP_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s">u&#39;DISTANCE&#39;</span><span class="p">,</span> <span class="s">u&#39;DISTANCE_GROUP&#39;</span><span class="p">,]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">u&#39;FL_DATE&#39;</span><span class="p">,</span> <span class="s1">u&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">u&#39;ARR_DEL15&#39;</span><span class="p">,</span> <span class="s1">u&#39;ARR_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEP_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s1">u&#39;DISTANCE&#39;</span><span class="p">,</span> <span class="s1">u&#39;DISTANCE_GROUP&#39;</span><span class="p">,]</span>
 </pre></div>
 
 </div>
@@ -484,29 +406,28 @@ In&nbsp;[9]:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Moving forward, we'll assume we only have 1 GB of RAM total. Since we're only dealing with half a million records here, we can probably pull the entire contents of the database into local memory. If the data proves too large, we can rely on the map/reduce and search capabilities in Cloudant to work with the data instead.</p>
 <p>Being optimistic, we write a little loop that gets up to 20,000 docs at a time from the database. It stores the 20,000 in a simple Python list. Once the buffer reaches the threshold, we create a DataFrame from the buffer which reduces the data to just the fields we want. We do this chunking because appending to a DataFrame one row at a time is much slower.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[10]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">%%</span><span class="k">time</span>
-<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">buff</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">all_docs</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;include_docs&#39;</span> <span class="p">:</span> <span class="bp">True</span><span class="p">})):</span>
-    <span class="n">buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;doc&#39;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">20000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&#39;Processed #{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">buff</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c"># don&#39;t forget the leftovers</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+dfs = []
+buff = []
+for i, item in enumerate(database.all_docs(params={&#39;include_docs&#39; : True})):
+    buff.append(item[&#39;doc&#39;])
+    if i &gt; 0 and i % 20000 == 0:
+        print &#39;Processed #{}&#39;.format(i)
+        df = pandas.DataFrame(buff, columns=columns)
+        dfs.append(df)
+        buff = []
+# don&#39;t forget the leftovers
+df = pandas.DataFrame(buff, columns=columns)
+dfs.append(df)
 </pre></div>
 
 </div>
@@ -519,8 +440,7 @@ In&nbsp;[10]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Processed #20000
+<pre>Processed #20000
 Processed #40000
 Processed #60000
 Processed #80000
@@ -547,7 +467,6 @@ Processed #480000
 Processed #500000
 CPU times: user 29 s, sys: 1.92 s, total: 30.9 s
 Wall time: 43.5 s
-
 </pre>
 </div>
 </div>
@@ -562,17 +481,16 @@ Wall time: 43.5 s
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can build one DataFrame by quickly concatenating all the subframes we built in the loop above.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[11]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -586,17 +504,16 @@ In&nbsp;[11]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point, we have two copies of all the data in memory, which is undesirable. Before we delete the temporary buffer and subframes to free up some RAM, let's ensure the DataFrame row count matches the document count in the database.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[12]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;doc_count&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;doc_count&#39;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -606,12 +523,10 @@ In&nbsp;[12]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[13]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">del</span> <span class="n">dfs</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">dfs</span>
 <span class="k">del</span> <span class="n">buff</span>
 </pre></div>
 
@@ -622,12 +537,10 @@ In&nbsp;[13]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[14]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">!</span>free -m
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>free -m
 </pre></div>
 
 </div>
@@ -640,12 +553,10 @@ In&nbsp;[14]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-             total       used       free     shared    buffers     cached
+<pre>             total       used       free     shared    buffers     cached
 Mem:           989        700        289          1         73        178
 -/+ buffers/cache:        449        540
 Swap:         2047         29       2017
-
 </pre>
 </div>
 </div>
@@ -660,17 +571,16 @@ Swap:         2047         29       2017
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As one last step, we reset the index on the DataFrame so that it is a unique, monotonically increasing integer. As it stands, we have dupes in our index because of our chunking (i.e., each chunk starts at index 0). This reset will prove important in some of our later plots where the index must be unique per row.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[15]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -683,22 +593,19 @@ In&nbsp;[15]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="distribution-of-delay-counts-by-state">Distribution of Delay Counts by State</h2>
-<blockquote>
-<p>What is the distribution of departure delays of at least 15 minutes by state? Arrival delays?</p>
+<h2 id="Distribution-of-Delay-Counts-by-State">Distribution of Delay Counts by State<a class="anchor-link" href="#Distribution-of-Delay-Counts-by-State">&#182;</a></h2><blockquote><p>What is the distribution of departure delays of at least 15 minutes by state? Arrival delays?</p>
 </blockquote>
 <p>Let's look at some basic information about delays to start and work up to delays grouped by state. Because the question asks about delays 15 minutes or longer, we'll focus on the <code>DEP_DEL15</code> and <code>ARR_DEL15</code> columns.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[16]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">df</span><span class="o">.</span><span class="n">DEP_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">DEP_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -709,16 +616,13 @@ In&nbsp;[16]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-0    0.731817
+<div class="output_text output_subarea output_execute_result">
+<pre>0    0.731817
 1    0.248993
-dtype: float64
-</pre>
+dtype: float64</pre>
 </div>
 
 </div>
@@ -729,12 +633,10 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[17]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">df</span><span class="o">.</span><span class="n">ARR_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ARR_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -745,16 +647,13 @@ In&nbsp;[17]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-0    0.718265
+<div class="output_text output_subarea output_execute_result">
+<pre>0    0.718265
 1    0.258054
-dtype: float64
-</pre>
+dtype: float64</pre>
 </div>
 
 </div>
@@ -769,17 +668,16 @@ dtype: float64
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Roughly a quarter of all departures and a quarter of all arrivals have delays. We can look at the distribution more closely once we enable and configure plotting with <a href="http://matplotlib.org/">matplotlib</a> and <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">seaborn</a>.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[18]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 
 </div>
@@ -789,12 +687,10 @@ In&nbsp;[18]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[19]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 
 </div>
@@ -804,15 +700,13 @@ In&nbsp;[19]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[20]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s">&quot;deep&quot;</span><span class="p">,</span> <span class="n">desat</span><span class="o">=.</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s">&quot;deep&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;figure.figsize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">,</span> <span class="n">desat</span><span class="o">=.</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
 </pre></div>
 
 </div>
@@ -826,17 +720,16 @@ In&nbsp;[20]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's group by state now and sum the number of delays. We'll do it for both departure and arrival delays.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[21]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">by_origin_state</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">by_origin_state</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">)</span>
 <span class="n">departure_delay_counts</span> <span class="o">=</span> <span class="n">by_origin_state</span><span class="o">.</span><span class="n">DEP_DEL15</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
@@ -847,12 +740,10 @@ In&nbsp;[21]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[22]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">by_dest_state</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">&#39;DEST_STATE_ABR&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">by_dest_state</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">)</span>
 <span class="n">arrival_delay_counts</span> <span class="o">=</span> <span class="n">by_dest_state</span><span class="o">.</span><span class="n">ARR_DEL15</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
@@ -867,17 +758,16 @@ In&nbsp;[22]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To plot, we'll put both series in a DataFrame so we can view the arrival and departure delays for each state side-by-side.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[23]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">departure_delay_counts</span><span class="p">,</span> <span class="n">arrival_delay_counts</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">departure_delay_counts</span><span class="p">,</span> <span class="n">arrival_delay_counts</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
 </div>
@@ -887,12 +777,10 @@ In&nbsp;[23]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[24]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;Number of delayed flights by state&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Number of delayed flights by state&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -903,14 +791,11 @@ In&nbsp;[24]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[24]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67ac978990&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67ac978990&gt;</pre>
 </div>
 
 </div>
@@ -1281,17 +1166,16 @@ AElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Big states with big airports appear to be in the top five. But we haven't accounted for how many total flights these states service. We should plot the percentage of flights that are delayed.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[25]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pct_departure_delay</span> <span class="o">=</span> <span class="n">departure_delay_counts</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">ORIGIN_STATE_ABR</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_departure_delay</span> <span class="o">=</span> <span class="n">departure_delay_counts</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">ORIGIN_STATE_ABR</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="n">pct_arrival_delay</span> <span class="o">=</span> <span class="n">arrival_delay_counts</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">DEST_STATE_ABR</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
@@ -1306,17 +1190,16 @@ In&nbsp;[25]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Ranking states of origin by their percentage of departures tells a different story than the plot above. For example, here we see Illinois and Arkansas at the top of the list whereas IL was third in total departure delay counts and AR was ranked 25th or so. California, which is #2 in the number of total departure delays is only #17 in percentage of departures delayed. Not bad.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[26]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pct_departure_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;</span><span class="si">% f</span><span class="s">lights with departure delays by origin state&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_departure_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">% f</span><span class="s1">lights with departure delays by origin state&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1327,14 +1210,11 @@ In&nbsp;[26]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[26]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67abb67e90&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67abb67e90&gt;</pre>
 </div>
 
 </div>
@@ -1660,17 +1540,16 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Similarly, when we look at destination states ranked by percentage of arrivals delayed, we see some new states at the head of the list. For instance, Delaware, second to last in the total number of delays overall, has the highest percentage of arrival delays for inbound flights. Iowa and Kansas are also new entries near the top.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[27]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pct_arrival_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;</span><span class="si">% f</span><span class="s">lights with arrival delay by destination state&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_arrival_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">% f</span><span class="s1">lights with arrival delay by destination state&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1681,14 +1560,11 @@ In&nbsp;[27]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[27]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67ad3fec10&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67ad3fec10&gt;</pre>
 </div>
 
 </div>
@@ -2027,17 +1903,16 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can get a sense of the difference between the two percentages for each state by plotting them on the same axes. In the plot below, we find that most states see more arrival delays than departure delays. The disparity seems greatest for smaller, less populated states that don't have huge airports (e.g., DE, IA, RI). We can't say for sure without studying more data or perhaps correlating the disparity with the state's ranking in terms of the total number of flights it serviced. We'll leave that as an exercise for the future.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[28]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pct_delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">pct_departure_delay</span><span class="p">,</span> <span class="n">pct_arrival_delay</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;PCT_DEP_DEL15&#39;</span><span class="p">,</span> <span class="s">&#39;PCT_ARR_DEL15&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">pct_departure_delay</span><span class="p">,</span> <span class="n">pct_arrival_delay</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PCT_DEP_DEL15&#39;</span><span class="p">,</span> <span class="s1">&#39;PCT_ARR_DEL15&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
 </div>
@@ -2047,12 +1922,10 @@ In&nbsp;[28]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[29]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">pct_delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">&#39;PCT_ARR_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&#39;Overlapping </span><span class="si">% d</span><span class="s">elay plots for comparison&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;PCT_ARR_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Overlapping </span><span class="si">% d</span><span class="s1">elay plots for comparison&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2063,14 +1936,11 @@ In&nbsp;[29]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67a96854d0&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f67a96854d0&gt;</pre>
 </div>
 
 </div>
@@ -2472,27 +2342,24 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="delay-tendency">Delay Tendency</h2>
-<blockquote>
-<p>Is there a tendency of flights from one state to another to experience a delay of 15 minutes or more on the arriving end?</p>
+<h2 id="Delay-Tendency">Delay Tendency<a class="anchor-link" href="#Delay-Tendency">&#182;</a></h2><blockquote><p>Is there a tendency of flights from one state to another to experience a delay of 15 minutes or more on the arriving end?</p>
 </blockquote>
 <p>While there are many ways to answer this question, we'll look at visualizations of two metrics:</p>
-<ol style="list-style-type: decimal">
-<li>How many times does a delay occur for an (origin → destination) state pair over all flights during the time period? (This is the <a href="http://en.wikipedia.org/wiki/Association_rule_learning#Useful_Concepts">support of a simple association rule</a>.)</li>
+<ol>
+<li>How many times does a delay occur for an (origin &rarr; destination) state pair over all flights during the time period? (This is the <a href="http://en.wikipedia.org/wiki/Association_rule_learning#Useful_Concepts">support of a simple association rule</a>.)</li>
 <li>What percentage of total flights from an origin to a destination are delayed during the time period?</li>
 </ol>
 <p>First, we'll compute the support. We do so by grouping all of the arrival delay counts by the origin and destination.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[30]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 </pre></div>
 
 </div>
@@ -2502,12 +2369,10 @@ In&nbsp;[30]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[31]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">delay_counts_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;ARR_DEL15&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;DEST_STATE_ABR&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_counts_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;ARR_DEL15&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2519,10 +2384,9 @@ In&nbsp;[31]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[31]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
   <thead>
@@ -2575,18 +2439,17 @@ In&nbsp;[31]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We divide each (origin → destination) delay count by the total number of flights during the period.</p>
+<p>We divide each (origin &rarr; destination) delay count by the total number of flights during the period.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[32]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">support</span> <span class="o">=</span> <span class="p">(</span><span class="n">delay_counts_df</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">support</span> <span class="o">=</span> <span class="p">(</span><span class="n">delay_counts_df</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2598,10 +2461,9 @@ In&nbsp;[32]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[32]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
   <thead>
@@ -2655,17 +2517,16 @@ In&nbsp;[32]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We unstack the multiple indices so that we have a N x N matrix with origins as rows and destinations as columns.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[33]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">support</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">support</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2677,10 +2538,9 @@ In&nbsp;[33]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
   <thead>
@@ -2876,18 +2736,17 @@ In&nbsp;[33]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Unfortunately, we now have a multilevel set of columns. One way to remove the outer level is to rotate the matrix, reset the outer index to drop it, and then rotate it back.</p>
-<p>In the resulting matrix, each cell represents the proportion of total, system-wide flights that were delayed between an (origin → destination) pair.</p>
+<p>In the resulting matrix, each cell represents the proportion of total, system-wide flights that were delayed between an (origin &rarr; destination) pair.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[34]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">support</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">support</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2899,10 +2758,9 @@ In&nbsp;[34]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[34]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
   <thead>
@@ -3094,17 +2952,16 @@ In&nbsp;[34]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point, we have a DataFrame that we can query but no clear idea of where to start looking. A visualization of the entire DataFrame can help us find interesting pairs. We borrow and slightly modify some code from <code>seaborn</code> to plot our asymmetric matrix as a heatmap.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[37]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 
 </div>
@@ -3114,47 +2971,45 @@ In&nbsp;[37]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[38]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">asymmatplot</span><span class="p">(</span><span class="n">plotmat</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">asymmatplot</span><span class="p">(</span><span class="n">plotmat</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Plot an asymmetric matrix with colormap and statistic values. A modification of the</span>
 <span class="sd">    symmatplot() function in Seaborn to show the upper-half of the matrix.</span>
 <span class="sd">    </span>
 <span class="sd">    See https://github.com/mwaskom/seaborn/blob/master/seaborn/linearmodels.py for the original.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 
     <span class="n">nvars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plotmat</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">cmap_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">cmap_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">plotmat</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.15</span>
         <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">plotmat</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.15</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmap_range</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">cmap_range</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;cmap_range argument not understood&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cmap_range argument not understood&quot;</span><span class="p">)</span>
 
     <span class="n">mat_img</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">plotmat</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mat_img</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=.</span><span class="mi">75</span><span class="p">)</span>
  
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s">&quot;bottom&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
 
     <span class="n">minor_ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-.</span><span class="mi">5</span><span class="p">,</span> <span class="n">nvars</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">nvars</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">minor_ticks</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">minor_ticks</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">minor_ticks</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">minor_ticks</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">major_ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nvars</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nvars</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">major_ticks</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">major_ticks</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s">&quot;major&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s">&quot;minor&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;minor&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ax</span>
 </pre></div>
@@ -3170,19 +3025,18 @@ In&nbsp;[38]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the plot, gray boxes represent cases where there are no flights between the origin (row) and destination (column) states. We see mostly light yellowish boxes representing state pairs where delays occur, but in tiny numbers compared to the total number of system-wide flights.</p>
-<p>We do see a couple very hot spots, namely in the (CA → CA) and (TX → TX) cells. We also see a few moderately hot spots, for example (TX → CA) and (FL → NY). We can interpret these cells as indicators of where delays tend to occur most across the entire set of flights.</p>
+<p>We do see a couple very hot spots, namely in the (CA &rarr; CA) and (TX &rarr; TX) cells. We also see a few moderately hot spots, for example (TX &rarr; CA) and (FL &rarr; NY). We can interpret these cells as indicators of where delays tend to occur most across the entire set of flights.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[39]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
-<span class="n">asymmatplot</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">support</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;OrRd&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">asymmatplot</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">support</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -3193,14 +3047,11 @@ In&nbsp;[39]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[39]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[39]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f679b621890&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f679b621890&gt;</pre>
 </div>
 
 </div>
@@ -3957,18 +3808,17 @@ aokAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To understand what the percentage of flights for a particular (origin → destination) state pair that are delayed, we can look at a second metric using the same visualization. Here we compute the total number of flights for each (origin → destination) pair.</p>
+<p>To understand what the percentage of flights for a particular (origin &rarr; destination) state pair that are delayed, we can look at a second metric using the same visualization. Here we compute the total number of flights for each (origin &rarr; destination) pair.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[40]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;FL_DATE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s">&#39;DEST_STATE_ABR&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;FL_DATE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -3982,18 +3832,17 @@ In&nbsp;[40]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To put trip counts DataFrame and our earlier <code>delay_counts</code> DataFrame on the same axes, we rename the columns to <code>COUNTS</code> in both cases.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[41]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">delay_counts_df</span> <span class="o">=</span> <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">({</span><span class="s">&#39;ARR_DEL15&#39;</span> <span class="p">:</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">({</span><span class="s">&#39;FL_DATE&#39;</span> <span class="p">:</span> <span class="s">&#39;COUNTS&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_counts_df</span> <span class="o">=</span> <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">({</span><span class="s1">&#39;ARR_DEL15&#39;</span> <span class="p">:</span> <span class="s1">&#39;COUNTS&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">({</span><span class="s1">&#39;FL_DATE&#39;</span> <span class="p">:</span> <span class="s1">&#39;COUNTS&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -4006,18 +3855,17 @@ In&nbsp;[41]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we divide the delay counts by the total trip counts and perform the same transforms we did previous to produce the N by N matrix. In this case, each cell represents the proportion of flights between each (origin → destination) that were delayed.</p>
+<p>Now we divide the delay counts by the total trip counts and perform the same transforms we did previous to produce the N by N matrix. In this case, each cell represents the proportion of flights between each (origin &rarr; destination) that were delayed.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[42]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">delay_counts_df</span> <span class="o">/</span> <span class="n">trip_counts_df</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">delay_counts_df</span> <span class="o">/</span> <span class="n">trip_counts_df</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
 </div>
@@ -4030,27 +3878,26 @@ In&nbsp;[42]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this second heatmap plot, the (CA → CA) and (TX → TX) hotspots from the firt visualization no longer stand out. Though there are many in-state delays for these two states, there are even more flights, keeping the percentage of delayed flights for these in-state trips lower than other routes.</p>
+<p>In this second heatmap plot, the (CA &rarr; CA) and (TX &rarr; TX) hotspots from the firt visualization no longer stand out. Though there are many in-state delays for these two states, there are even more flights, keeping the percentage of delayed flights for these in-state trips lower than other routes.</p>
 <p>To the contrary, we see some cases where all flights from one state to another had arrival delays:</p>
 <ul>
-<li>(AR → UT)</li>
-<li>(MT → NY)</li>
-<li>(CO → RI) and (RI → CO)</li>
+<li>(AR &rarr; UT)</li>
+<li>(MT &rarr; NY)</li>
+<li>(CO &rarr; RI) and (RI &rarr; CO)</li>
 </ul>
-<p>We can also see some other moderately hot spots, such as (AK → NJ) and (OK → MN), which seem to have a higher percentage of delays than other state pairs.</p>
-<p>One &quot;crosshair&quot; jumps out in the visualization: the row and column representing Illinois are nearly both filled with non-gray cells. On closer inspection, we see Illinois sends flights to and receives flights from every other state except one: TT, the state code abbreviation for U.S. Pacific Trust Territories and Possessions. And though it is difficult to make accurate relative value judgments from this visualization, it appears the run of cells in the row and column for Illinois are darker than most other row or column runs (e.g., GA).</p>
+<p>We can also see some other moderately hot spots, such as (AK &rarr; NJ) and (OK &rarr; MN), which seem to have a higher percentage of delays than other state pairs.</p>
+<p>One "crosshair" jumps out in the visualization: the row and column representing Illinois are nearly both filled with non-gray cells. On closer inspection, we see Illinois sends flights to and receives flights from every other state except one: TT, the state code abbreviation for U.S. Pacific Trust Territories and Possessions. And though it is difficult to make accurate relative value judgments from this visualization, it appears the run of cells in the row and column for Illinois are darker than most other row or column runs (e.g., GA).</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[43]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
-<span class="n">asymmatplot</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">mat</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">asymmatplot</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">mat</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -4061,14 +3908,11 @@ In&nbsp;[43]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[43]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f679b051950&gt;
-</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f679b051950&gt;</pre>
 </div>
 
 </div>
@@ -4916,18 +4760,17 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Of course, this plot only shows proportions of delayed flights between two states and doesn't depict the number of flights between the two nor the magnitude of the delay. So while all flights between Rhode Island and Colorado were delayed, we need to keep in mind ...</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[44]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">print</span> <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">&#39;RI&#39;</span><span class="p">,</span> <span class="s">&#39;CO&#39;</span><span class="p">]</span>
-<span class="k">print</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">&#39;RI&#39;</span><span class="p">,</span> <span class="s">&#39;CO&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;RI&#39;</span><span class="p">,</span> <span class="s1">&#39;CO&#39;</span><span class="p">]</span>
+<span class="nb">print</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;RI&#39;</span><span class="p">,</span> <span class="s1">&#39;CO&#39;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -4940,12 +4783,10 @@ In&nbsp;[44]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-COUNTS    3
+<pre>COUNTS    3
 Name: (RI, CO), dtype: float64
 COUNTS    3
 Name: (RI, CO), dtype: int64
-
 </pre>
 </div>
 </div>
@@ -4960,7 +4801,8 @@ Name: (RI, CO), dtype: int64
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>there were only three of them!</p>
-<p>A visualization that captures both the proportion of (origin → destination) flights delayed as well as the proportion of total flights represented by that state pair is yet another exercise for the future.</p>
+<p>A visualization that captures both the proportion of (origin &rarr; destination) flights delayed as well as the proportion of total flights represented by that state pair is yet another exercise for the future.</p>
+
 </div>
 </div>
 </div>
@@ -4969,22 +4811,19 @@ Name: (RI, CO), dtype: int64
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="delay-distribution-by-date">Delay Distribution by Date</h2>
-<blockquote>
-<p>How did arrival delay in minutes vary day-by-day?</p>
+<h2 id="Delay-Distribution-by-Date">Delay Distribution by Date<a class="anchor-link" href="#Delay-Distribution-by-Date">&#182;</a></h2><blockquote><p>How did arrival delay in minutes vary day-by-day?</p>
 </blockquote>
 <p>To address this question, we can group the <code>ARR_DELAY_NEW</code> column by date and look at their descriptive stats. A Tukey box plot by day is a reasonable way for us to start.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[45]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">ARR_DELAY_NEW</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">FL_DATE</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
 </pre></div>
@@ -5732,18 +5571,17 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Oh my, outliers! If the data are to be trusted, there's at least one flight every day that is over 500 minutes (8 hours) late in arriving. In the most extreme case, a flight scheduled on 2014-06-19 appears to have arrived 1800 minutes (30 hours) late.</p>
 <p>Whether this information is accurate or not requires some fact checking against other historical sources. For now, we can turn off the fliers to get a better view of the interquartile range.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[46]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">ARR_DELAY_NEW</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">FL_DATE</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">showfliers</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">ARR_DELAY_NEW</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">FL_DATE</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">showfliers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
 </pre></div>
 
@@ -6127,17 +5965,16 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see that the median arrival delay on most days is zero (or better than zero: this data column counts early arrivals as zeros). Some days see greater skew toward longer delays than others, particularly over the five day periods of Sunday, 2014-06-08 through Friday, 2014-06-13 and Monday, 2014-06-23 through Friday, 2014-06-27. There's also another period of elongation from Wednesday, 2014-06-18 through Thursday, 2014-06-19. These might relate to weather patterns during those weeks or an increase in number of passengers (e.g., summer vacations). Further study and sources of data are required to test these hypotheses.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[47]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">!</span>cal 6 2014
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cal <span class="m">6</span> <span class="m">2014</span>
 </pre></div>
 
 </div>
@@ -6150,8 +5987,7 @@ In&nbsp;[47]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-     June 2014        
+<pre>     June 2014        
 Su Mo Tu We Th Fr Sa  
  1  2  3  4  5  6  7  
  8  9 10 11 12 13 14  
@@ -6159,7 +5995,6 @@ Su Mo Tu We Th Fr Sa
 22 23 24 25 26 27 28  
 29 30                 
                       
-
 </pre>
 </div>
 </div>
@@ -6173,13 +6008,13 @@ Su Mo Tu We Th Fr Sa
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="going-further">Going Further</h2>
-<p>If you wish to take this exploration further, here are some questions you might consider addressing with additional thinking and data.</p>
+<h2 id="Going-Further">Going Further<a class="anchor-link" href="#Going-Further">&#182;</a></h2><p>If you wish to take this exploration further, here are some questions you might consider addressing with additional thinking and data.</p>
 <ul>
 <li>How accurately can a model predict if a flight will be delayed or not using simple features like origin, destination, day of the week, etc.?</li>
 <li>What factors (e.g., U.S. weather) help explain the greater median arrival delay and dispersion from 2014-06-08 to 2014-06-13?</li>
 <li>How do the results above contrast with the results from applying the same analyses to data from June, 2001? June, 2002?</li>
 </ul>
+
 </div>
 </div>
 </div>
@@ -6198,10 +6033,10 @@ Su Mo Tu We Th Fr Sa
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -6226,7 +6061,7 @@ Su Mo Tu We Th Fr Sa
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

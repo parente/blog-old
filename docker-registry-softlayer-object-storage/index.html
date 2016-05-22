@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>Run a Docker Registry Backed by IBM SoftLayer Object Storage - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -45,8 +46,8 @@
   <h1 class="pageTitle">Run a Docker Registry Backed by IBM SoftLayer Object Storage</h1>
     <p class="pageDate">June 22, 2014</p>
   <p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>
-<div class="codehilite"><pre>me@local<span class="nv">$ </span>mkdir -p /mnt/registry
-me@local<span class="nv">$ </span>sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registry
+<div class="codehilite"><pre><span></span>me@local$ mkdir -p /mnt/registry
+me@local$ sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registry
 </pre></div>
 
 
@@ -72,7 +73,7 @@ me@local<span class="nv">$ </span>sudo docker run -d -p 5000:5000 -v /mnt/regist
 <li>Click <em>Finalize Your Order</em>.</li>
 </ol>
 <p>When your VM is ready, get its public IP address from the <em>Devices &rarr; Device List</em>. If you configured it with a public key, use the corresponding private key to SSH into it as the root user. If not, use the generated root password also shown in the <em>Device List</em> entry for your instance.</p>
-<div class="codehilite"><pre>me@local<span class="nv">$ </span>ssh -i ~/.ssh/mykey.pem root@208.43.1.1
+<div class="codehilite"><pre><span></span>me@local$ ssh -i ~/.ssh/mykey.pem root@208.43.1.1
 </pre></div>
 
 
@@ -81,31 +82,31 @@ me@local<span class="nv">$ </span>sudo docker run -d -p 5000:5000 -v /mnt/regist
 <h2>Build a <code>registry-swift</code> Image</h2>
 <p>The official registry container image does not include the Swift storage driver. Nor does it include an option in the sample configuration to override the driver's <code>swift_auth_version</code> from its default value of <code>2</code>. You need both to work with SoftLayer Object Storage. You can get both by building your own image starting from the official registry image.</p>
 <p>On your VM, create a <code>Dockerfile</code> and fill it with the following commands.</p>
-<div class="codehilite"><pre><span class="c"># start from a registry release known to work</span>
+<div class="codehilite"><pre><span></span><span class="c1"># start from a registry release known to work</span>
 FROM registry:0.7.3
-<span class="c"># get the swift driver for the registry</span>
+<span class="c1"># get the swift driver for the registry</span>
 RUN pip install docker-registry-driver-swift<span class="o">==</span>0.0.1
-<span class="c"># SoftLayer uses v1 auth and the sample config doesn&#39;t have an option </span>
-<span class="c"># for it so inject one</span>
+<span class="c1"># SoftLayer uses v1 auth and the sample config doesn&#39;t have an option </span>
+<span class="c1"># for it so inject one</span>
 RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSION&#39;</span> /docker-registry/config/config_sample.yml
 </pre></div>
 
 
 <p>Build the Dockerfile like so, replacing <code>parente</code> with your Docker username.</p>
-<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker build -t parente/registry-swift:0.7.3 .
+<div class="codehilite"><pre><span></span>root@vm$ docker build -t parente/registry-swift:0.7.3 .
 </pre></div>
 
 
 <h2>Run a <code>registry-swift</code> Container</h2>
 <p>With the image in hand, you're ready to launch an instance. Doing so requires that you set quite a few options which I explain after the command below:</p>
-<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker run -it -d <span class="se">\</span>
+<div class="codehilite"><pre><span></span>root@vm$ docker run -it -d <span class="se">\</span>
     -e <span class="nv">SETTINGS_FLAVOR</span><span class="o">=</span>swift <span class="se">\</span>
     -e <span class="nv">OS_AUTH_URL</span><span class="o">=</span><span class="s1">&#39;https://dal05.objectstorage.service.networklayer.com/auth/v1.0&#39;</span> <span class="se">\</span>
-    -e <span class="nv">OS_AUTH_VERSION</span><span class="o">=</span>1 <span class="se">\</span>
+    -e <span class="nv">OS_AUTH_VERSION</span><span class="o">=</span><span class="m">1</span> <span class="se">\</span>
     -e <span class="nv">OS_USERNAME</span><span class="o">=</span><span class="s1">&#39;my_master_account:my_account&#39;</span> <span class="se">\</span>
     -e <span class="nv">OS_PASSWORD</span><span class="o">=</span><span class="s1">&#39;my_api_key&#39;</span> <span class="se">\</span>
     -e <span class="nv">OS_CONTAINER</span><span class="o">=</span><span class="s1">&#39;docker-registry&#39;</span> <span class="se">\</span>
-    -e <span class="nv">GUNICORN_WORKERS</span><span class="o">=</span>8 <span class="se">\</span>
+    -e <span class="nv">GUNICORN_WORKERS</span><span class="o">=</span><span class="m">8</span> <span class="se">\</span>
     -p 127.0.0.1:5000:5000 <span class="se">\</span>
     parente/registry-swift:0.7.3
 </pre></div>
@@ -124,12 +125,12 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
 </ul>
 <h2>Push to Test</h2>
 <p>With the registry running, you can now test it by pushing something to it. Since you have the registry image you just built on hand, you can use that. First, tag it with the registry IP and port as a prefix, again replacing <code>parente</code> with your username.</p>
-<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker tag parente/registry-swift:0.7.3 127.0.0.1:5000/parente/registry-swift:0.7.3
+<div class="codehilite"><pre><span></span>root@vm$ docker tag parente/registry-swift:0.7.3 127.0.0.1:5000/parente/registry-swift:0.7.3
 </pre></div>
 
 
 <p>Now push it.</p>
-<div class="codehilite"><pre>root@vm<span class="nv">$ </span>docker push 127.0.0.1:5000/parente/registry-swift:0.7.3
+<div class="codehilite"><pre><span></span>root@vm$ docker push 127.0.0.1:5000/parente/registry-swift:0.7.3
 </pre></div>
 
 
@@ -151,10 +152,10 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -179,7 +180,7 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

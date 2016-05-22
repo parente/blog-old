@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
   <title>pass on OSX - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
     <link rel="stylesheet" type="text/css" href="../static/css/pygments.css" />
-    <link href='//fonts.googleapis.com/css?family=Dosis:300,600' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Gentium+Basic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
+    <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/site.css" type="text/css" media="screen" />
 
     <!-- Google Analytics -->
@@ -45,34 +46,34 @@
   <h1 class="pageTitle">pass on OSX</h1>
     <p class="pageDate">January 08, 2014</p>
   <p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>
-<div class="codehilite"><pre>desktop<span class="nv">$ </span>brew update
-desktop<span class="nv">$ </span>brew install pass
+<div class="codehilite"><pre><span></span>desktop$ brew update
+desktop$ brew install pass
 
-<span class="c"># create a key, answer all prompts</span>
-desktop<span class="nv">$ </span>gpg2 --gen-key
+<span class="c1"># create a key, answer all prompts</span>
+desktop$ gpg2 --gen-key
 
-<span class="c"># init password store using email from key</span>
-desktop<span class="nv">$ </span>pass init parente@cs.unc.edu
+<span class="c1"># init password store using email from key</span>
+desktop$ pass init parente@cs.unc.edu
 
-<span class="c"># add passwords</span>
-desktop<span class="nv">$ </span>pass insert Home/wifi
-desktop<span class="nv">$ </span>pass insert Home/rpi
-desktop<span class="nv">$ </span>pass insert Webfaction/panel
+<span class="c1"># add passwords</span>
+desktop$ pass insert Home/wifi
+desktop$ pass insert Home/rpi
+desktop$ pass insert Webfaction/panel
 
-<span class="c"># make it a git repo</span>
-desktop<span class="nv">$ </span>pass git init
+<span class="c1"># make it a git repo</span>
+desktop$ pass git init
 
-<span class="c"># export keys for laptop</span>
-desktop<span class="nv">$ </span>gpg2 --export parente@cs.unc.edu &gt; /tmp/key.pub
-desktop<span class="nv">$ </span>gpg2 --export-secret-key parente@cs.unc.edu &gt; /tmp/key
+<span class="c1"># export keys for laptop</span>
+desktop$ gpg2 --export parente@cs.unc.edu &gt; /tmp/key.pub
+desktop$ gpg2 --export-secret-key parente@cs.unc.edu &gt; /tmp/key
 
-<span class="c"># import keys on laptop</span>
-laptop<span class="nv">$ </span>scp desktop:/tmp/key* /tmp
-laptop<span class="nv">$ </span>gpg2 --import /tmp/key.pub
-laptop<span class="nv">$ </span>gpg2 --import /tmp/key
+<span class="c1"># import keys on laptop</span>
+laptop$ scp desktop:/tmp/key* /tmp
+laptop$ gpg2 --import /tmp/key.pub
+laptop$ gpg2 --import /tmp/key
 
-<span class="c"># trust keys on laptop</span>
-laptop<span class="nv">$ </span>gpg --edit-key parente@cs.unc.edu
+<span class="c1"># trust keys on laptop</span>
+laptop$ gpg --edit-key parente@cs.unc.edu
 ...
 gpg&gt; trust
 ...
@@ -80,12 +81,12 @@ gpg&gt; trust
   <span class="nv">m</span> <span class="o">=</span> back to the main menu
 
 Your decision? 5
-Do you really want to <span class="nb">set </span>this key to ultimate trust? <span class="o">(</span>y/N<span class="o">)</span> y
+Do you really want to <span class="nb">set</span> this key to ultimate trust? <span class="o">(</span>y/N<span class="o">)</span> y
 ...
 gpg&gt; quit
 
-<span class="c"># git clone to laptop</span>
-laptop<span class="nv">$ </span>git clone desktop/.password-store ~/.password-store
+<span class="c1"># git clone to laptop</span>
+laptop$ git clone desktop/.password-store ~/.password-store
 </pre></div>
 
 
@@ -106,10 +107,10 @@ laptop<span class="nv">$ </span>git clone desktop/.password-store ~/.password-st
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
-            <i class="fa fa-github"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
-            <i class="fa fa-google-plus"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
+            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-google-plus fa-fw"></i> <a title="Google Plus account" href="https://plus.google.com/108324270881375083602/">google.com/+PeterParente</a>
           </div>
         </div>
 
@@ -134,7 +135,7 @@ laptop<span class="nv">$ </span>git clone desktop/.password-store ~/.password-st
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2015 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>
