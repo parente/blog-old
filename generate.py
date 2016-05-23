@@ -1,7 +1,4 @@
 '''Renders my blog.'''
-from os.path import join
-from datetime import datetime
-from subprocess import call, check_call
 import mako.template
 import mako.lookup
 import markdown
@@ -11,6 +8,10 @@ import shutil
 import os
 import subprocess
 import json
+from os.path import join
+from datetime import datetime
+from subprocess import call, check_call
+from nbconvert import HTMLExporter
 
 SITE_AUTHOR = os.environ.get('SITE_AUTHOR', "Peter Parente")
 SITE_NAME = os.environ.get('SITE_NAME', "Parente's Mindtrove")
@@ -176,12 +177,9 @@ class IPythonNotebookParser(object):
 
     @classmethod
     def _nbconvert_to_html(cls, ipynb):
-        rv = subprocess.Popen(['jupyter', 'nbconvert', '--to', 'html', '--template', 'basic', ipynb, '--stdout'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        stdout, stderr = rv.communicate()
-        if rv.returncode == 0:
-            return stdout
-        else:
-            raise RuntimeError(stderr)
+        e = HTMLExporter()
+        e.template_file = 'basic'
+        return e.from_filename(ipynb)[0]
 
     @classmethod
     def _get_metadata(cls, text, page):

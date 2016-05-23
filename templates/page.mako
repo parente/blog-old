@@ -9,7 +9,7 @@
   % if 'date' in page:
     <p class="pageDate">${page['date'].strftime('%B %d, %Y')}</p>
   % endif
-  ${page['html'].decode('utf-8')}
+  ${page['html']}
 </%block>
 
 <%block name="pageMeta">
