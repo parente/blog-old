@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>http://mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Sun, 22 May 2016 23:02:13 GMT</pubDate>
+    <pubDate>Wed, 25 May 2016 04:29:57 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Kicking the Tires: Bluemix Insights for Weather</title>
+      <link>http://mindtrove.info/bluemix-insights-for-weather/</link>
+      <pubDate>Thu, 14 Apr 2016 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/bluemix-insights-for-weather/</guid>
+      <description>Kicking the Tires: Bluemix Insights for Weather</description>
+      <content:encoded><![CDATA[<h1>Kicking the Tires: Bluemix Insights for Weather</h1>]]></content:encoded>
+    </item>
     <item>
       <title>Four Ways to Extend Jupyter Notebook</title>
       <link>http://mindtrove.info/4-ways-to-extend-jupyter-notebook/</link>
@@ -85,14 +93,6 @@
       <guid>http://mindtrove.info/watch-vagrant-changes/</guid>
       <description>Watch Vagrant Changes</description>
       <content:encoded><![CDATA[<p><a href="http://vagrantup.com">Vagrant</a> is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type <code>vagrant up</code> and <code>vagrant ssh</code> in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient <code>/vagrant</code> project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Two Years</title>
-      <link>http://mindtrove.info/two-years/</link>
-      <pubDate>Tue, 07 May 2013 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/two-years/</guid>
-      <description>Two Years</description>
-      <content:encoded><![CDATA[<p>I'm alive and kicking. You wouldn't know it looking at this blog. Or my Twitter account. Or my (deleted) Facebook account. But, yep, I'm still here.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
