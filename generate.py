@@ -6,8 +6,8 @@ import yaml
 import glob
 import shutil
 import os
-import subprocess
-import json
+import re
+import nbformat
 from os.path import join
 from datetime import datetime
 from subprocess import call, check_call
@@ -150,7 +150,7 @@ class YamlParser(object):
 class GitFetcher(object):
     @classmethod
     def execute(cls, path, page):
-        '''Clone a gist into the path.'''
+        '''Clones a git repo into the path.'''
         if 'git_url' in page:
             check_call(['git', 'init'], cwd=path)
             call(['git', 'remote', 'add', 'origin', page['git_url']], cwd=path)
@@ -164,42 +164,43 @@ class IPythonNotebookParser(object):
         ipynb = join(path, page.get('filename', 'index.ipynb'))
         if not os.path.isfile(ipynb) or not ipynb.endswith('.ipynb'):
             return
+        else:
+            page.setdefault('filename', 'index.ipynb')
         with file(ipynb) as f:
             print 'Processing', path, 'as a Jupyter Notebook'
-            text = f.read()
+            doc = nbformat.read(f, 4)
 
-        cls._get_metadata(text, page)
-        page['html'] = cls._nbconvert_to_html(ipynb)
+        if 'title' not in page and 'title' in doc['metadata']:
+            page['title'] = doc['metadata']['title']
+        if 'date' not in page and 'date' in doc['metadata']:
+            page['date'] = doc['metadata']['date']
+        page['excerpt'] = cls._build_excerpt(doc)
+        page['html'] = cls._nbconvert_to_html(doc)
         page['src'] = path
         page['slug'] = os.path.basename(path)
         # more specific template which includes additional css
         page['template'] = 'notebook.mako'
 
     @classmethod
-    def _nbconvert_to_html(cls, ipynb):
+    def _nbconvert_to_html(cls, doc):
+        if doc['cells'] and doc['cells'][0]['cell_type'] == 'markdown':
+            source = doc['cells'][0]['source']
+            doc['cells'][0]['source'] = re.sub('#+.*\n', '', source, re.MULTILINE)
+
         e = HTMLExporter()
         e.template_file = 'basic'
-        return e.from_filename(ipynb)[0]
-
-    @classmethod
-    def _get_metadata(cls, text, page):
-        doc = json.loads(text)
-        if 'title' not in page and 'title' in doc['metadata']:
-            page['title'] = doc['metadata']['title']
-        if 'date' not in page and 'date' in doc['metadata']:
-            page['date'] = doc['metadata']['date']
-        page['excerpt'] = cls._build_excerpt(doc)
+        return e.from_notebook_node(doc)[0]
 
     @classmethod
     def _build_excerpt(cls, doc):
         try:
-            cells = doc['worksheets'][0]['cells']
+            cells = doc['cells']
         except (KeyError, ValueError):
             return ''
         for cell in cells:
             if cell['cell_type'] == 'markdown':
                 excerpt = []
-                for line in cell['source']:
+                for line in cell['source'].split('\n'):
                     if line.strip() == '':
                         break
                     excerpt.append(line)
@@ -215,6 +216,8 @@ class MarkdownParser(object):
         fn = join(path, page.get('filename', 'index.md'))
         if not os.path.isfile(fn) or not fn.endswith('.md'):
             return
+        else:
+            page.setdefault('filename', 'index.md')
         with file(fn) as f:
             print 'Processing', path, 'as Markdown'
             text = f.read()

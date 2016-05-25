@@ -9,6 +9,10 @@
   % if 'date' in page:
     <p class="pageDate">${page['date'].strftime('%B %d, %Y')}</p>
   % endif
+  % if 'prefix' in page:
+    <p>${page['prefix']}</p>
+    <hr />
+  % endif
   ${page['html']}
 </%block>
 
