@@ -156,6 +156,7 @@ class GitFetcher(object):
             call(['git', 'remote', 'add', 'origin', page['git_url']], cwd=path)
             check_call(['git', 'fetch', 'origin'], cwd=path)
             check_call(['git', 'reset', '--hard', 'origin/master'], cwd=path)
+            check_call(['rm', '-rf', '.git'], cwd=path)
 
 
 class IPythonNotebookParser(object):
