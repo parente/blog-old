@@ -1,0 +1,6 @@
+---
+title: "Code Hiding on nbviewer"
+date: "2016-04-08"
+git_url: "https://gist.github.com/parente/35f5d3a9145bd3f030c8.git"
+filename: nbviewer_code_toggle.ipynb
+prefix: <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
