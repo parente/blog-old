@@ -202,9 +202,10 @@ class IPythonNotebookParser(object):
             if cell['cell_type'] == 'markdown':
                 excerpt = []
                 for line in cell['source'].split('\n'):
-                    if line.strip() == '':
-                        break
+                    if line.startswith('#'): continue
+                    if line.strip() == '' and excerpt: break
                     excerpt.append(line)
+                    print(line)
                 return MarkdownParser.md.convert(''.join(excerpt))
         return ''
 
