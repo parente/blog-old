@@ -10,7 +10,7 @@
     <title>Parente's Mindtrove</title>
     <link>http://mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Fri, 27 May 2016 04:30:12 GMT</pubDate>
+    <pubDate>Fri, 27 May 2016 13:53:31 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -20,7 +20,7 @@
       <pubDate>Thu, 14 Apr 2016 00:00:00 </pubDate>
       <guid>http://mindtrove.info/bluemix-insights-for-weather/</guid>
       <description>Kicking the Tires: Bluemix Insights for Weather</description>
-      <content:encoded><![CDATA[<h1>Kicking the Tires: Bluemix Insights for Weather</h1>]]></content:encoded>
+      <content:encoded><![CDATA[<p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>]]></content:encoded>
     </item>
     <item>
       <title>Code Hiding on nbviewer</title>
@@ -28,7 +28,7 @@
       <pubDate>Fri, 08 Apr 2016 00:00:00 </pubDate>
       <guid>http://mindtrove.info/code-hiding-on-nbviewer/</guid>
       <description>Code Hiding on nbviewer</description>
-      <content:encoded><![CDATA[<h1>Code Hiding on nbviewer</h1>]]></content:encoded>
+      <content:encoded><![CDATA[<p>When this notebook first loads on <a href="http://nbviewer.jupyter.org/gist/parente/35f5d3a9145bd3f030c8">nbviewer</a>, all of the input cells are hidden. To reveal them, click the element tag icon in the top right of nbviewer. Click it again to hide them once more.</p>]]></content:encoded>
     </item>
     <item>
       <title>Four Ways to Extend Jupyter Notebook</title>
