@@ -11,7 +11,6 @@
   % endif
   % if 'prefix' in page:
     <p>${page['prefix']}</p>
-    <hr />
   % endif
   ${page['html']}
 </%block>

@@ -9,7 +9,10 @@ SITE_NAME:=Parente's Mindtrove
 SITE_DOMAIN:=mindtrove.info
 
 help:
-	@echo 'make clean release'
+	@echo 'Setup - make env'
+	@echo 'Render - make build'
+	@echo 'Inspect - make server'
+	@echo 'Release - make clean release'
 
 clean:
 	@rm -rf _output
@@ -42,3 +45,6 @@ dev:
 		-e SITE_NAME="$(SITE_NAME)" \
 		-e SITE_DOMAIN='http://$(SITE_DOMAIN)' \
 		-v `pwd`:/srv/blog -p 8000:8000 $(IMAGE) /bin/bash
+		
+server:
+	@open http://localhost:8000/_output && python -m http.server
