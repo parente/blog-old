@@ -1,28 +1,31 @@
 '''Renders my blog.'''
-import mako.template
-import mako.lookup
-import markdown
-import yaml
 import glob
 import shutil
 import os
 import re
+import mako.template
+import mako.lookup
+import markdown
+import yaml
 import nbformat
 from os.path import join
 from datetime import datetime
 from subprocess import call, check_call
 from nbconvert import HTMLExporter
 
+# Default to my blog configuration, but let env vars override
 SITE_AUTHOR = os.environ.get('SITE_AUTHOR', "Peter Parente")
 SITE_NAME = os.environ.get('SITE_NAME', "Parente's Mindtrove")
 SITE_ROOT = os.environ.get('SITE_ROOT', '')
 SITE_DOMAIN = os.environ.get('SITE_DOMAIN', 'http://mindtrove.info')
 
+# Constants
 STATIC_DIR = 'static'
 TEMPLATES_DIR = 'templates'
 PAGES_DIR = 'pages'
 OUT_DIR = '_output'
 
+# Configure mako to look in the templates directory
 TMPL_LOOKUP = mako.lookup.TemplateLookup(
     directories=[join('.', TEMPLATES_DIR)],
     output_encoding='utf-8',
@@ -32,6 +35,8 @@ TMPL_LOOKUP = mako.lookup.TemplateLookup(
 
 def copyinto(src, dst, symlinks=False, ignore=None):
     '''
+    Copy files and subdirectoryes from src into dst.
+    
     http://stackoverflow.com/questions/1868714/how-do-i-copy-an-entire-directory-of-files-into-an-existing-directory-using-pyth
     '''
     for item in os.listdir(src):
@@ -44,7 +49,7 @@ def copyinto(src, dst, symlinks=False, ignore=None):
 
 
 def save_rss(pages):
-    '''Save the rendered RSS feed.'''
+    '''Save a RSS document listing all of the pages.'''
     rss_tmpl = TMPL_LOOKUP.get_template('rss.mako')
     xml = rss_tmpl.render(
         site_domain=SITE_DOMAIN,
@@ -58,7 +63,7 @@ def save_rss(pages):
 
 
 def save_atom(pages):
-    '''Save the rendered Atom feed.'''
+    '''Save an Atom document listing of all of the pages.'''
     atom_tmpl = TMPL_LOOKUP.get_template('atom.mako')
     xml = atom_tmpl.render(
         site_author=SITE_AUTHOR,
@@ -73,7 +78,7 @@ def save_atom(pages):
 
 
 def save_archive(pages):
-    '''Save the rendered archive page.'''
+    '''Save an HTML document listing all of the pages.'''
     archive_tmpl = TMPL_LOOKUP.get_template('archive.mako')
     html = archive_tmpl.render(
         site_name=SITE_NAME,
@@ -86,7 +91,7 @@ def save_archive(pages):
 
 
 def save_latest(pages):
-    '''Save the latest page as the index page.'''
+    '''Save the latest page as index.html.'''
     page = pages[0]
     tmpl_name = page.get('template', 'page.mako')
     page_tmpl = TMPL_LOOKUP.get_template(tmpl_name)
@@ -123,7 +128,11 @@ def save_html(pages):
 
 
 def org_pages(pages):
-    '''Sort pages newest to oldest.'''
+    '''Sort pages from newest to oldest.
+    
+    Use the `date` key for sorting. Add a `next` key to link one page to the
+    next.
+    '''
     for page in pages:
         if 'date' in page:
             page['date'] = datetime.strptime(page['date'], '%Y-%m-%d')
@@ -138,7 +147,10 @@ def org_pages(pages):
 class YamlParser(object):
     @classmethod
     def execute(cls, path, page):
-        '''Parses yaml as page metadata.'''
+        '''Parse a yaml file in the path and update page with its contents.
+        
+        Use the page filename or fall back on index.yaml as the default.
+        '''
         fn = join(path, page.get('filename', 'index.yml'))
         if not os.path.isfile(fn) or not fn.endswith('.yml'):
             return
@@ -150,7 +162,7 @@ class YamlParser(object):
 class GitFetcher(object):
     @classmethod
     def execute(cls, path, page):
-        '''Clones a git repo into the path.'''
+        '''Clone a git repo into the path if the page contains a git_url key.'''
         if 'git_url' in page:
             check_call(['git', 'init'], cwd=path)
             call(['git', 'remote', 'add', 'origin', page['git_url']], cwd=path)
@@ -159,9 +171,17 @@ class GitFetcher(object):
             check_call(['rm', '-rf', '.git'], cwd=path)
 
 
-class IPythonNotebookParser(object):
+class JupyterNotebookParser(object):
     @classmethod
     def execute(cls, path, page):
+        '''Parse an ipynb file in the path and update the page with its 
+        contents.
+        
+        Use the page filename or fall back on index.ipynb as the default.
+        Use the title and date from the notebook metadata if the page does not
+        already contain a title and date key. Generate an excerpt and HTML
+        rendering of the notebook.
+        '''
         ipynb = join(path, page.get('filename', 'index.ipynb'))
         if not os.path.isfile(ipynb) or not ipynb.endswith('.ipynb'):
             return
@@ -183,19 +203,27 @@ class IPythonNotebookParser(object):
         page['template'] = 'notebook.mako'
 
     @classmethod
-    def _nbconvert_to_html(cls, doc):
-        if doc['cells'] and doc['cells'][0]['cell_type'] == 'markdown':
-            source = doc['cells'][0]['source']
-            doc['cells'][0]['source'] = re.sub('#+.*\n', '', source, re.MULTILINE)
+    def _nbconvert_to_html(cls, page):
+        '''Use nbconvert to render a notebook as HTML.
+        
+        Strip the headings from the first markdown cell to avoid showing the 
+        page title twice on the blog.
+        '''
+        if page['cells'] and page['cells'][0]['cell_type'] == 'markdown':
+            source = page['cells'][0]['source']
+            page['cells'][0]['source'] = re.sub('#+.*\n', '', source, re.MULTILINE)
 
         e = HTMLExporter()
         e.template_file = 'basic'
-        return e.from_notebook_node(doc)[0]
+        return e.from_notebook_node(page)[0]
 
     @classmethod
-    def _build_excerpt(cls, doc):
+    def _build_excerpt(cls, page):
+        '''Build an excerpt from the first paragraph of the first markdown
+        cell in the notebook.
+        '''
         try:
-            cells = doc['cells']
+            cells = page['cells']
         except (KeyError, ValueError):
             return ''
         for cell in cells:
@@ -205,16 +233,23 @@ class IPythonNotebookParser(object):
                     if line.startswith('#'): continue
                     if line.strip() == '' and excerpt: break
                     excerpt.append(line)
-                    print(line)
                 return MarkdownParser.md.convert(''.join(excerpt))
         return ''
 
 
 class MarkdownParser(object):
-    md = markdown.Markdown(extensions=['meta', 'fenced_code', 'codehilite'], output_format='xhtml5')
+    md = markdown.Markdown(extensions=['meta', 'fenced_code', 'codehilite'], 
+        output_format='xhtml5')
 
     @classmethod
     def execute(cls, path, page):
+        '''Parse an md file in the path and update the page with its 
+        contents.
+        
+        Use the page filename or fall back on index.md as the default.
+        Add metadata from the extended metadata section of the document to the
+        page along with the rendered HTML.
+        '''
         fn = join(path, page.get('filename', 'index.md'))
         if not os.path.isfile(fn) or not fn.endswith('.md'):
             return
@@ -236,9 +271,8 @@ class MarkdownParser(object):
 
     @classmethod
     def _build_excerpt(cls, text):
-        '''
-        First non-blank line after the first blank line separating the metadata
-        from the content of the doc.
+        '''Build an excerpt from the first non-blank line after the first blank 
+        line separating the metadata from the content of the doc.
         '''
         lines = []
         prior = None
@@ -256,9 +290,14 @@ class MarkdownParser(object):
         return cls.md.convert('\n'.join(lines[start+1:end]))
 
 def load_pages():
-    '''Parse data and metadata for all pages.'''
+    '''Parse data and metadata for all pages.
+    
+    Iterate over of the page directories. Pass the page source document and 
+    in-memory page representation to all parsers. Raise a RuntimeError if 
+    no parser emits HTML for the page.
+    '''
     pages = []
-    handlers = [YamlParser, GitFetcher, MarkdownParser, IPythonNotebookParser]
+    handlers = [YamlParser, GitFetcher, MarkdownParser, JupyterNotebookParser]
     for path in glob.glob(join(PAGES_DIR, '*')):
         page = {}
         for handler in handlers:
@@ -282,7 +321,7 @@ def clean():
 
 
 def main():
-    '''Clean and build all pages to the output directory.'''
+    '''Clean and build the blog site in the output directory.'''
     clean()
     save_static()
     pages = load_pages()

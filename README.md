@@ -1,1 +1,6 @@
-The static-site builder for my blog: http://mindtrove.info. Uses a Docker contianer for a consistent site generation environment. Supports pages written in Markdown or IPython Notebooks.
+The content and static-site builder for my blog, http://mindtrove.info
+
+* Supports pages written in Markdown or Jupyter Notebooks
+* Can pull pages from external git repositories (e.g., gist.github.com)
+* Relies on a few hundred lines of Python and a handful of Mako templates
+* Uses a Docker image for a consistent site generation environment 
