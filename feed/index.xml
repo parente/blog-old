@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>http://mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Fri, 27 May 2016 13:53:31 GMT</pubDate>
+    <pubDate>Fri, 10 Jun 2016 00:12:17 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Flatten Nested JSON with Pandas</title>
+      <link>http://mindtrove.info/flatten-nested-json-with-pandas/</link>
+      <pubDate>Thu, 09 Jun 2016 00:00:00 </pubDate>
+      <guid>http://mindtrove.info/flatten-nested-json-with-pandas/</guid>
+      <description>Flatten Nested JSON with Pandas</description>
+      <content:encoded><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Kicking the Tires: Bluemix Insights for Weather</title>
       <link>http://mindtrove.info/bluemix-insights-for-weather/</link>
@@ -85,14 +93,6 @@
       <guid>http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/</guid>
       <description>A reveal.js Docker Base Image with ONBUILD</description>
       <content:encoded><![CDATA[<p>Docker 0.8 introduced the <code>ONBUILD</code> instruction for Dockerfiles. I'll admit, when I read <a href="http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/">the release announcement</a>, I glossed right over this new feature. Now that I've had time to <a href="http://docs.docker.io/en/latest/reference/builder/#onbuild">read more about it</a>, I can see its potential for creating build environments.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>pass on OSX</title>
-      <link>http://mindtrove.info/password-store-osx/</link>
-      <pubDate>Wed, 08 Jan 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/password-store-osx/</guid>
-      <description>pass on OSX</description>
-      <content:encoded><![CDATA[<p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

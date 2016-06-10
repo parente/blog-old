@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2016-05-27T13:53:31Z</updated>
+  <updated>2016-06-10T00:12:17Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="http://mindtrove.info" />
   <id>http://mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>http://mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Flatten Nested JSON with Pandas]]></title>
+    <link rel="alternate" type="text/html" href="http://mindtrove.info/flatten-nested-json-with-pandas/" />
+    <id>http://mindtrove.info/flatten-nested-json-with-pandas/</id>
+    <updated>2016-06-09T00:00:00Z</updated>
+    <published>2016-06-09T00:00:00Z</published>
+    <summary type="html"><![CDATA[Flatten Nested JSON with Pandas]]></summary>
+    <content type="html" xml:base="http://mindtrove.info/flatten-nested-json-with-pandas/"><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2014-02-20T00:00:00Z</published>
     <summary type="html"><![CDATA[A reveal.js Docker Base Image with ONBUILD]]></summary>
     <content type="html" xml:base="http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/"><![CDATA[<p>Docker 0.8 introduced the <code>ONBUILD</code> instruction for Dockerfiles. I'll admit, when I read <a href="http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/">the release announcement</a>, I glossed right over this new feature. Now that I've had time to <a href="http://docs.docker.io/en/latest/reference/builder/#onbuild">read more about it</a>, I can see its potential for creating build environments.</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>http://mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[pass on OSX]]></title>
-    <link rel="alternate" type="text/html" href="http://mindtrove.info/password-store-osx/" />
-    <id>http://mindtrove.info/password-store-osx/</id>
-    <updated>2014-01-08T00:00:00Z</updated>
-    <published>2014-01-08T00:00:00Z</published>
-    <summary type="html"><![CDATA[pass on OSX]]></summary>
-    <content type="html" xml:base="http://mindtrove.info/password-store-osx/"><![CDATA[<p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>]]></content>
   </entry>
 </feed>
