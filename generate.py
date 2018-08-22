@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''Renders my blog.'''
 import glob
 import shutil
@@ -58,7 +59,7 @@ def save_rss(pages):
         latest_pages=[page for page in pages[:10] if 'date' in page]
     )
     os.mkdir(join(OUT_DIR, 'feed'))
-    with file(join(OUT_DIR, 'feed', 'index.xml'), 'w') as f:
+    with open(join(OUT_DIR, 'feed', 'index.xml'), 'wb') as f:
         f.write(xml)
 
 
@@ -73,7 +74,7 @@ def save_atom(pages):
         latest_pages=[page for page in pages[:10] if 'date' in page]
     )
     os.makedirs(join(OUT_DIR, 'feed', 'atom'))
-    with file(join(OUT_DIR, 'feed', 'atom', 'index.xml'), 'w') as f:
+    with open(join(OUT_DIR, 'feed', 'atom', 'index.xml'), 'wb') as f:
         f.write(xml)
 
 
@@ -86,7 +87,7 @@ def save_archive(pages):
         all_pages=pages
     )
     os.makedirs(join(OUT_DIR, 'posts'))
-    with file(join(OUT_DIR, 'posts', 'index.html'), 'w') as f:
+    with open(join(OUT_DIR, 'posts', 'index.html'), 'wb') as f:
         f.write(html)
 
 
@@ -102,9 +103,9 @@ def save_latest(pages):
         all_pages=pages
     )
     in_tree = page['src']
-    print 'Saving', in_tree, 'as latest'
+    print('Saving', in_tree, 'as latest')
     copyinto(in_tree, OUT_DIR)
-    with file(join(OUT_DIR, 'index.html'), 'w') as f:
+    with open(join(OUT_DIR, 'index.html'), 'wb') as f:
         f.write(html)
 
 
@@ -121,9 +122,9 @@ def save_html(pages):
         )
         in_tree = page['src']
         out_tree = join(OUT_DIR, os.path.basename(in_tree))
-        print 'Saving', out_tree
+        print('Saving', out_tree)
         shutil.copytree(in_tree, out_tree)
-        with file(join(out_tree, 'index.html'), 'w') as f:
+        with open(join(out_tree, 'index.html'), 'wb') as f:
             f.write(html)
 
 
@@ -148,14 +149,14 @@ class YamlParser(object):
     @classmethod
     def execute(cls, path, page):
         '''Parse a yaml file in the path and update page with its contents.
-        
-        Use the page filename or fall back on index.yaml as the default.
+
+        Use the page filename or fall back on index.yml as the default.
         '''
         fn = join(path, page.get('filename', 'index.yml'))
         if not os.path.isfile(fn) or not fn.endswith('.yml'):
             return
-        with file(fn) as f:
-            print 'Processing', path, 'as YAML'
+        with open(fn) as f:
+            print('Processing', path, 'as YAML')
             page.update(yaml.load(f.read()))
 
     
@@ -166,17 +167,77 @@ class GitFetcher(object):
         if 'git_url' in page:
             check_call(['git', 'init'], cwd=path)
             call(['git', 'remote', 'add', 'origin', page['git_url']], cwd=path)
-            check_call(['git', 'fetch', 'origin'], cwd=path)
+            check_call(['git', 'fetch', '--depth=1', 'origin'], cwd=path)
             check_call(['git', 'reset', '--hard', 'origin/master'], cwd=path)
             check_call(['rm', '-rf', '.git'], cwd=path)
+
+
+class FileMerger(object):
+    @classmethod
+    def execute(cls, path, page):
+        if 'merge' not in page:
+            return
+
+        to_merge = [join(path, fn) for fn in page['merge']]
+        exts = {os.path.splitext(fn)[1] for fn in to_merge}
+        if '.ipynb' in exts:
+            # Merge into a single notebook file
+            merged = cls._join_into_ipynb(to_merge)
+            page['filename'] = 'merged.ipynb'
+            with open(join(path, page['filename']), 'w') as fh:
+                nbformat.write(merged, fh)
+        else:
+            # Assume we're merging into a flat markdown file
+            merged = cls._join_into_md(to_merge)
+            page['filename'] = 'merged.md'
+            with open(join(path, page['filename']), 'w') as fh:
+                fh.write(merged)
+
+    @classmethod
+    def _join_into_ipynb(cls, paths):
+        needs_header = False
+        embed_tmpl = TMPL_LOOKUP.get_template('embed.mako')
+
+        nb = nbformat.v4.new_notebook()
+        for path in paths:
+            if needs_header:
+                # Introduce the file if it's not the first file
+                header_html = embed_tmpl.render(filename=os.path.basename(path))
+                nb.cells.append(nbformat.v4.new_markdown_cell(header_html.decode('utf-8')))
+            else:
+                needs_header = True
+
+            if path.endswith('.md'):
+                # Splat a markdown file into a notebook markdown cell
+                with open(path) as fh:
+                    md = fh.read()
+                md_cell = nbformat.v4.new_markdown_cell(md)
+                nb.cells.append(md_cell)
+            elif path.endswith('.ipynb'):
+                # Add all cells from a notebook into the new output notebook
+                with open(path) as fh:
+                    partial_nb = nbformat.read(path, 4)
+                nb.cells.extend(partial_nb.cells)
+            else:
+                raise RuntimeError(f'Unsupported file format: {path}')
+        return nb
+
+    @classmethod
+    def _join_into_md(cls, paths):
+        merged = []
+        for path in paths:
+            with open(path) as fh:
+                lines = fh.read()
+            merged.append(lines)
+        return '\n'.join(merged)
 
 
 class JupyterNotebookParser(object):
     @classmethod
     def execute(cls, path, page):
-        '''Parse an ipynb file in the path and update the page with its 
+        '''Parse an ipynb file in the path and update the page with its
         contents.
-        
+
         Use the page filename or fall back on index.ipynb as the default.
         Use the title and date from the notebook metadata if the page does not
         already contain a title and date key. Generate an excerpt and HTML
@@ -187,8 +248,8 @@ class JupyterNotebookParser(object):
             return
         else:
             page.setdefault('filename', 'index.ipynb')
-        with file(ipynb) as f:
-            print 'Processing', path, 'as a Jupyter Notebook'
+        with open(ipynb) as f:
+            print('Processing', path, 'as a Jupyter Notebook')
             doc = nbformat.read(f, 4)
 
         if 'title' not in page and 'title' in doc['metadata']:
@@ -203,19 +264,19 @@ class JupyterNotebookParser(object):
         page['template'] = 'notebook.mako'
 
     @classmethod
-    def _nbconvert_to_html(cls, page):
+    def _nbconvert_to_html(cls, doc):
         '''Use nbconvert to render a notebook as HTML.
-        
-        Strip the headings from the first markdown cell to avoid showing the 
+
+        Strip the headings from the first markdown cell to avoid showing the
         page title twice on the blog.
         '''
-        if page['cells'] and page['cells'][0]['cell_type'] == 'markdown':
-            source = page['cells'][0]['source']
-            page['cells'][0]['source'] = re.sub('#+.*\n', '', source, re.MULTILINE)
+        if doc.cells and doc.cells[0].cell_type == 'markdown':
+            source = doc.cells[0].source
+            doc.cells[0].source = re.sub('^# .*\n', '', source)
 
         e = HTMLExporter()
         e.template_file = 'basic'
-        return e.from_notebook_node(page)[0]
+        return e.from_notebook_node(doc)[0]
 
     @classmethod
     def _build_excerpt(cls, page):
@@ -243,7 +304,7 @@ class MarkdownParser(object):
 
     @classmethod
     def execute(cls, path, page):
-        '''Parse an md file in the path and update the page with its 
+        '''Parse an md file in the path and update the page with its
         contents.
         
         Use the page filename or fall back on index.md as the default.
@@ -255,12 +316,12 @@ class MarkdownParser(object):
             return
         else:
             page.setdefault('filename', 'index.md')
-        with file(fn) as f:
-            print 'Processing', path, 'as Markdown'
+        with open(fn) as f:
+            print('Processing', path, 'as Markdown')
             text = f.read()
         html = cls.md.convert(text)
         meta = cls.md.Meta
-        for key, value in meta.iteritems():
+        for key, value in meta.items():
             meta[key] = ''.join(value)
         
         page.update(meta)
@@ -291,13 +352,13 @@ class MarkdownParser(object):
 
 def load_pages():
     '''Parse data and metadata for all pages.
-    
-    Iterate over of the page directories. Pass the page source document and 
-    in-memory page representation to all parsers. Raise a RuntimeError if 
+
+    Iterate over the page directories. Pass the page source document and
+    in-memory page representation to all parsers. Raise a RuntimeError if
     no parser emits HTML for the page.
     '''
     pages = []
-    handlers = [YamlParser, GitFetcher, MarkdownParser, JupyterNotebookParser]
+    handlers = [YamlParser, GitFetcher, FileMerger, MarkdownParser, JupyterNotebookParser]
     for path in glob.glob(join(PAGES_DIR, '*')):
         page = {}
         for handler in handlers:
