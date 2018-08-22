@@ -16,6 +16,7 @@ help:
 
 clean:
 	@rm -rf _output
+	@git clean -f .
 
 env:
 	@conda create -n blog --file requirements.txt python=3
