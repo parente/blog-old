@@ -10,15 +10,23 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Wed, 22 Aug 2018 23:45:48 GMT</pubDate>
+    <pubDate>Wed, 22 Aug 2018 23:58:15 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
+      <title>Jupyter Tidbit: Use nbconvert to clear notebook outputs</title>
+      <link>mindtrove.info/jupyter-tidbit-clear-outputs/</link>
+      <pubDate>Wed, 22 Aug 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-clear-outputs/</guid>
+      <description>Jupyter Tidbit: Use nbconvert to clear notebook outputs</description>
+      <content:encoded><![CDATA[<p><a href="http://nbconvert.readthedocs.io/en/stable/">nbconvert</a> has a preprocessor that clears cell outputs from notebook files, leaving cell inputs intact.</p>]]></content:encoded>
+    </item>
+    <item>
       <title>Jupyter Tidbit: %run your ipynb file</title>
-      <link>mindtrove.info/jupyter-tip-run-ipynb-files/</link>
+      <link>mindtrove.info/jupyter-tidbit-run-ipynb-files/</link>
       <pubDate>Tue, 21 Aug 2018 00:00:00 </pubDate>
-      <guid>mindtrove.info/jupyter-tip-run-ipynb-files/</guid>
+      <guid>mindtrove.info/jupyter-tidbit-run-ipynb-files/</guid>
       <description>Jupyter Tidbit: %run your ipynb file</description>
       <content:encoded><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content:encoded>
     </item>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/docker-registry-softlayer-object-storage/</guid>
       <description>Run a Docker Registry Backed by IBM SoftLayer Object Storage</description>
       <content:encoded><![CDATA[<p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Whispers of Test Failures</title>
-      <link>mindtrove.info/whispers-of-test-failures/</link>
-      <pubDate>Sat, 19 Apr 2014 00:00:00 </pubDate>
-      <guid>mindtrove.info/whispers-of-test-failures/</guid>
-      <description>Whispers of Test Failures</description>
-      <content:encoded><![CDATA[<p>Yesterday, I learned that support for the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">speech synthesis portion of the Web Speech API spec</a> landed in Chrome stable. I also learned that I'm behind the curve given that the <a href="http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API">HTML5 Rocks Speech Synthesis tutorial</a> was published nearly four months ago. I immediately set out to rectify this situation by having my browser whisper my frontend test failures to me.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

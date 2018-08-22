@@ -7,7 +7,7 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-22T23:45:48Z</updated>
+  <updated>2018-08-22T23:58:15Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
@@ -17,13 +17,26 @@
       <name>Peter Parente</name>
       <uri>mindtrove.info</uri>
     </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Use nbconvert to clear notebook outputs]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-clear-outputs/" />
+    <id>mindtrove.info/jupyter-tidbit-clear-outputs/</id>
+    <updated>2018-08-22T00:00:00Z</updated>
+    <published>2018-08-22T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Use nbconvert to clear notebook outputs]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-clear-outputs/"><![CDATA[<p><a href="http://nbconvert.readthedocs.io/en/stable/">nbconvert</a> has a preprocessor that clears cell outputs from notebook files, leaving cell inputs intact.</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
     <title type="html"><![CDATA[Jupyter Tidbit: %run your ipynb file]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tip-run-ipynb-files/" />
-    <id>mindtrove.info/jupyter-tip-run-ipynb-files/</id>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-run-ipynb-files/" />
+    <id>mindtrove.info/jupyter-tidbit-run-ipynb-files/</id>
     <updated>2018-08-21T00:00:00Z</updated>
     <published>2018-08-21T00:00:00Z</published>
     <summary type="html"><![CDATA[Jupyter Tidbit: %run your ipynb file]]></summary>
-    <content type="html" xml:base="mindtrove.info/jupyter-tip-run-ipynb-files/"><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-ipynb-files/"><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content>
   </entry>
   <entry>
     <author>
@@ -128,18 +141,5 @@
     <published>2014-06-22T00:00:00Z</published>
     <summary type="html"><![CDATA[Run a Docker Registry Backed by IBM SoftLayer Object Storage]]></summary>
     <content type="html" xml:base="mindtrove.info/docker-registry-softlayer-object-storage/"><![CDATA[<p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Whispers of Test Failures]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/whispers-of-test-failures/" />
-    <id>mindtrove.info/whispers-of-test-failures/</id>
-    <updated>2014-04-19T00:00:00Z</updated>
-    <published>2014-04-19T00:00:00Z</published>
-    <summary type="html"><![CDATA[Whispers of Test Failures]]></summary>
-    <content type="html" xml:base="mindtrove.info/whispers-of-test-failures/"><![CDATA[<p>Yesterday, I learned that support for the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">speech synthesis portion of the Web Speech API spec</a> landed in Chrome stable. I also learned that I'm behind the curve given that the <a href="http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API">HTML5 Rocks Speech Synthesis tutorial</a> was published nearly four months ago. I immediately set out to rectify this situation by having my browser whisper my frontend test failures to me.</p>]]></content>
   </entry>
 </feed>
