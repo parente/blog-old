@@ -7,7 +7,7 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-22T23:38:20Z</updated>
+  <updated>2018-08-22T23:45:48Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
@@ -18,12 +18,12 @@
       <uri>mindtrove.info</uri>
     </author>
     <title type="html"><![CDATA[Jupyter Tidbit: %run your ipynb file]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tip-%run/" />
-    <id>mindtrove.info/jupyter-tip-%run/</id>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tip-run-ipynb-files/" />
+    <id>mindtrove.info/jupyter-tip-run-ipynb-files/</id>
     <updated>2018-08-21T00:00:00Z</updated>
     <published>2018-08-21T00:00:00Z</published>
     <summary type="html"><![CDATA[Jupyter Tidbit: %run your ipynb file]]></summary>
-    <content type="html" xml:base="mindtrove.info/jupyter-tip-%run/"><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content>
+    <content type="html" xml:base="mindtrove.info/jupyter-tip-run-ipynb-files/"><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content>
   </entry>
   <entry>
     <author>
