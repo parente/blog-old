@@ -4,29 +4,24 @@ GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
 
 IMAGE:=parente/blog:latest
 
-SITE_AUTHOR:=Peter Parente
-SITE_NAME:=Parente's Mindtrove
-SITE_DOMAIN:=mindtrove.info
+export SITE_AUTHOR:=Peter Parente
+export SITE_NAME:=Parente's Mindtrove
+export SITE_DOMAIN:=mindtrove.info
 
 help:
-	@echo 'Setup - make env'
-	@echo 'Render - make build'
-	@echo 'Inspect - make server'
-	@echo 'Release - make clean release'
+	@echo '1. Setup - make env'
+	@echo '2. Render - make build'
+	@echo '3. Inspect - make server'
+	@echo '4. Release - make release'
 
 clean:
 	@rm -rf _output
 
 env:
-	@docker build --rm -t $(IMAGE) .
+	@conda create -n blog --file requirements.txt python=3
 
 build:
-	@docker run -it --rm \
-		-e SITE_AUTHOR='$(SITE_AUTHOR)' \
-		-e SITE_NAME="$(SITE_NAME)" \
-		-e SITE_DOMAIN='http://$(SITE_DOMAIN)' \
-		-v `pwd`:/srv/blog \
-		$(IMAGE) python generate.py
+	python generate.py
 
 release: build
 	@cd _output && \
@@ -39,12 +34,5 @@ release: build
 		git commit -m "Release $(GIT_VERSION)" && \
 		git push upstream HEAD:gh-pages
 
-dev:
-	@docker run -it --rm  \
-		-e SITE_AUTHOR='$(SITE_AUTHOR)' \
-		-e SITE_NAME="$(SITE_NAME)" \
-		-e SITE_DOMAIN='http://$(SITE_DOMAIN)' \
-		-v `pwd`:/srv/blog -p 8000:8000 $(IMAGE) /bin/bash
-		
 server:
 	@open http://localhost:8000/_output && python -m http.server
