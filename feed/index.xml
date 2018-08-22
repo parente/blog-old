@@ -8,91 +8,91 @@
      >
   <channel>
     <title>Parente's Mindtrove</title>
-    <link>http://mindtrove.info</link>
+    <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Mon, 10 Oct 2016 02:10:48 GMT</pubDate>
+    <pubDate>Wed, 22 Aug 2018 23:38:20 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
+      <title>Jupyter Tidbit: %run your ipynb file</title>
+      <link>mindtrove.info/jupyter-tip-%run/</link>
+      <pubDate>Tue, 21 Aug 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tip-%run/</guid>
+      <description>Jupyter Tidbit: %run your ipynb file</description>
+      <content:encoded><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content:encoded>
+    </item>
+    <item>
       <title>Flatten Nested JSON with Pandas</title>
-      <link>http://mindtrove.info/flatten-nested-json-with-pandas/</link>
+      <link>mindtrove.info/flatten-nested-json-with-pandas/</link>
       <pubDate>Thu, 09 Jun 2016 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/flatten-nested-json-with-pandas/</guid>
+      <guid>mindtrove.info/flatten-nested-json-with-pandas/</guid>
       <description>Flatten Nested JSON with Pandas</description>
       <content:encoded><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content:encoded>
     </item>
     <item>
       <title>Kicking the Tires: Bluemix Insights for Weather</title>
-      <link>http://mindtrove.info/bluemix-insights-for-weather/</link>
+      <link>mindtrove.info/bluemix-insights-for-weather/</link>
       <pubDate>Thu, 14 Apr 2016 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/bluemix-insights-for-weather/</guid>
+      <guid>mindtrove.info/bluemix-insights-for-weather/</guid>
       <description>Kicking the Tires: Bluemix Insights for Weather</description>
       <content:encoded><![CDATA[<p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>]]></content:encoded>
     </item>
     <item>
       <title>Code Hiding on nbviewer</title>
-      <link>http://mindtrove.info/code-hiding-on-nbviewer/</link>
+      <link>mindtrove.info/code-hiding-on-nbviewer/</link>
       <pubDate>Fri, 08 Apr 2016 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/code-hiding-on-nbviewer/</guid>
+      <guid>mindtrove.info/code-hiding-on-nbviewer/</guid>
       <description>Code Hiding on nbviewer</description>
       <content:encoded><![CDATA[<p>When this notebook first loads on <a href="http://nbviewer.jupyter.org/gist/parente/35f5d3a9145bd3f030c8">nbviewer</a>, all of the input cells are hidden. To reveal them, click the element tag icon in the top right of nbviewer. Click it again to hide them once more.</p>]]></content:encoded>
     </item>
     <item>
       <title>Four Ways to Extend Jupyter Notebook</title>
-      <link>http://mindtrove.info/4-ways-to-extend-jupyter-notebook/</link>
+      <link>mindtrove.info/4-ways-to-extend-jupyter-notebook/</link>
       <pubDate>Sun, 19 Jul 2015 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/4-ways-to-extend-jupyter-notebook/</guid>
+      <guid>mindtrove.info/4-ways-to-extend-jupyter-notebook/</guid>
       <description>Four Ways to Extend Jupyter Notebook</description>
       <content:encoded><![CDATA[<p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>]]></content:encoded>
     </item>
     <item>
       <title>Control Read/Write Access to Your Private Docker Registry</title>
-      <link>http://mindtrove.info/control-read-write-access-docker-private-registry/</link>
+      <link>mindtrove.info/control-read-write-access-docker-private-registry/</link>
       <pubDate>Sat, 07 Feb 2015 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/control-read-write-access-docker-private-registry/</guid>
+      <guid>mindtrove.info/control-read-write-access-docker-private-registry/</guid>
       <description>Control Read/Write Access to Your Private Docker Registry</description>
       <content:encoded><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content:encoded>
     </item>
     <item>
       <title>Exploration of Airline On-Time Performance</title>
-      <link>http://mindtrove.info/exploration-of-airline-on-time-performance/</link>
+      <link>mindtrove.info/exploration-of-airline-on-time-performance/</link>
       <pubDate>Tue, 21 Oct 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/exploration-of-airline-on-time-performance/</guid>
+      <guid>mindtrove.info/exploration-of-airline-on-time-performance/</guid>
       <description>Exploration of Airline On-Time Performance</description>
       <content:encoded><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content:encoded>
     </item>
     <item>
       <title>This is My Blog on Docker + IPython</title>
-      <link>http://mindtrove.info/my-blog-on-docker-ipython/</link>
+      <link>mindtrove.info/my-blog-on-docker-ipython/</link>
       <pubDate>Sun, 13 Jul 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/my-blog-on-docker-ipython/</guid>
+      <guid>mindtrove.info/my-blog-on-docker-ipython/</guid>
       <description>This is My Blog on Docker + IPython</description>
       <content:encoded><![CDATA[<p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>]]></content:encoded>
     </item>
     <item>
       <title>Run a Docker Registry Backed by IBM SoftLayer Object Storage</title>
-      <link>http://mindtrove.info/docker-registry-softlayer-object-storage/</link>
+      <link>mindtrove.info/docker-registry-softlayer-object-storage/</link>
       <pubDate>Sun, 22 Jun 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/docker-registry-softlayer-object-storage/</guid>
+      <guid>mindtrove.info/docker-registry-softlayer-object-storage/</guid>
       <description>Run a Docker Registry Backed by IBM SoftLayer Object Storage</description>
       <content:encoded><![CDATA[<p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>]]></content:encoded>
     </item>
     <item>
       <title>Whispers of Test Failures</title>
-      <link>http://mindtrove.info/whispers-of-test-failures/</link>
+      <link>mindtrove.info/whispers-of-test-failures/</link>
       <pubDate>Sat, 19 Apr 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/whispers-of-test-failures/</guid>
+      <guid>mindtrove.info/whispers-of-test-failures/</guid>
       <description>Whispers of Test Failures</description>
       <content:encoded><![CDATA[<p>Yesterday, I learned that support for the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">speech synthesis portion of the Web Speech API spec</a> landed in Chrome stable. I also learned that I'm behind the curve given that the <a href="http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API">HTML5 Rocks Speech Synthesis tutorial</a> was published nearly four months ago. I immediately set out to rectify this situation by having my browser whisper my frontend test failures to me.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>A reveal.js Docker Base Image with ONBUILD</title>
-      <link>http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/</link>
-      <pubDate>Thu, 20 Feb 2014 00:00:00 </pubDate>
-      <guid>http://mindtrove.info/a-reveal.js-docker-base-image-with-onbuild/</guid>
-      <description>A reveal.js Docker Base Image with ONBUILD</description>
-      <content:encoded><![CDATA[<p>Docker 0.8 introduced the <code>ONBUILD</code> instruction for Dockerfiles. I'll admit, when I read <a href="http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/">the release announcement</a>, I glossed right over this new feature. Now that I've had time to <a href="http://docs.docker.io/en/latest/reference/builder/#onbuild">read more about it</a>, I can see its potential for creating build environments.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

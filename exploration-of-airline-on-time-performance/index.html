@@ -49,8 +49,7 @@
   <h1 class="pageTitle">Exploration of Airline On-Time Performance</h1>
     <p class="pageDate">October 21, 2014</p>
   
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -59,13 +58,13 @@
 <p>In this notebook, we explore a sample of data from the U.S. Department of Transportation (US-DOT) Research and Innovative Technology Administration (RITA) <a href="http://www.rita.dot.gov/bts/about/">Bureau of Transportation Statistics</a> (BTS). The data comes from the <a href="http://www.transtats.bts.gov/Fields.asp?Table_ID=236">On-Time Performance</a> table:</p>
 <blockquote><p>This table contains on-time arrival data for non-stop domestic flights by major air carriers, and provides such additional items as departure and arrival delays, origin and destination airports, flight numbers, scheduled and actual departure and arrival times, cancelled or diverted flights, taxi-out and taxi-in times, air time, and non-stop distance.</p>
 </blockquote>
-<p>For the purposes of this notebook, I have captured a subset of the table in a <a href="https://cloudant.com">Cloudant</a> database. We will start by connecting to the database and simply looking at the available data. Once we understand the content, we will try to answer the following questions about flights during the month of June, 2014:</p>
+<h2 id="Questions">Questions<a class="anchor-link" href="#Questions">&#182;</a></h2><p>For the purposes of this notebook, I have captured a subset of the table in a <a href="https://cloudant.com">Cloudant</a> database. We will start by connecting to the database and simply looking at the available data. Once we understand the content, we will try to answer the following questions about flights during the month of June, 2014:</p>
 <ol>
 <li>What is the distribution of departure delays of at least 15 minutes by state? Arrival delays?</li>
 <li>Is there a tendency of flights from one state to another to experience a delay of 15 minutes or more on the arriving end?</li>
 <li>How did arrival delay in minutes vary day-by-day?</li>
 </ol>
-<p>To get to the data, we can use a <a href="https://cloudant.com/python/">Cloudant client for Python</a>. We'll can install the official client by shelling out to <code>bash</code> and running a <code>pip</code> command right here.</p>
+<h2 id="Connect-to-Cloudant">Connect to Cloudant<a class="anchor-link" href="#Connect-to-Cloudant">&#182;</a></h2><p>To get to the data, we can use a <a href="https://cloudant.com/python/">Cloudant client for Python</a>. We'll can install the official client by shelling out to <code>bash</code> and running a <code>pip</code> command right here.</p>
 
 </div>
 </div>
@@ -86,7 +85,11 @@
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Requirement already satisfied (use --upgrade to upgrade): cloudant in /usr/local/lib/python2.7/dist-packages
 Requirement already satisfied (use --upgrade to upgrade): requests-futures==0.9.4 in /usr/local/lib/python2.7/dist-packages (from cloudant)
@@ -101,8 +104,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -150,8 +152,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -176,7 +177,11 @@ Cleaning up...
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -198,8 +203,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -228,7 +232,11 @@ Cleaning up...
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>[{u&#39;value&#39;: {u&#39;rev&#39;: u&#39;1-40fc15f608f95f0428e2e9d6b468e483&#39;}, u&#39;id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;key&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;doc&#39;: {u&#39;DISTANCE&#39;: 1947.0, u&#39;DEST_AIRPORT_ID&#39;: 12892, u&#39;ARR_DEL15&#39;: 0.0, u&#39;ORIGIN_STATE_ABR&#39;: u&#39;GA&#39;, u&#39;_rev&#39;: u&#39;1-40fc15f608f95f0428e2e9d6b468e483&#39;, u&#39;ARR_DELAY_NEW&#39;: 0.0, u&#39;UNIQUE_CARRIER&#39;: u&#39;DL&#39;, u&#39;ORIGIN_AIRPORT_ID&#39;: 10397, u&#39;DISTANCE_GROUP&#39;: 8, u&#39;DEP_DEL15&#39;: 0.0, u&#39;_id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a000a35&#39;, u&#39;DEST_STATE_ABR&#39;: u&#39;CA&#39;, u&#39;DEP_DELAY_NEW&#39;: 0.0, u&#39;FL_DATE&#39;: u&#39;2014-06-30&#39;}}, {u&#39;value&#39;: {u&#39;rev&#39;: u&#39;1-4dd24d56dc537210f49fe327c7773178&#39;}, u&#39;id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;key&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;doc&#39;: {u&#39;DISTANCE&#39;: 282.0, u&#39;DEST_AIRPORT_ID&#39;: 13487, u&#39;ARR_DEL15&#39;: 0.0, u&#39;ORIGIN_STATE_ABR&#39;: u&#39;NE&#39;, u&#39;_rev&#39;: u&#39;1-4dd24d56dc537210f49fe327c7773178&#39;, u&#39;ARR_DELAY_NEW&#39;: 0.0, u&#39;UNIQUE_CARRIER&#39;: u&#39;DL&#39;, u&#39;ORIGIN_AIRPORT_ID&#39;: 13871, u&#39;DISTANCE_GROUP&#39;: 2, u&#39;DEP_DEL15&#39;: 0.0, u&#39;_id&#39;: u&#39;04da0d01eb0f15d5c56eb1399a001198&#39;, u&#39;DEST_STATE_ABR&#39;: u&#39;MN&#39;, u&#39;DEP_DELAY_NEW&#39;: 0.0, u&#39;FL_DATE&#39;: u&#39;2014-06-30&#39;}}]
 </pre>
@@ -239,8 +247,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -278,7 +285,11 @@ Cleaning up...
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[8]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -348,8 +359,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -391,7 +401,7 @@ Cleaning up...
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">u&#39;FL_DATE&#39;</span><span class="p">,</span> <span class="s1">u&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">u&#39;ARR_DEL15&#39;</span><span class="p">,</span> <span class="s1">u&#39;ARR_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="s1">u&#39;DEP_DELAY_NEW&#39;</span><span class="p">,</span> <span class="s1">u&#39;DISTANCE&#39;</span><span class="p">,</span> <span class="s1">u&#39;DISTANCE_GROUP&#39;</span><span class="p">,]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;FL_DATE&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ARR_DEL15&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ARR_DELAY_NEW&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEP_DELAY_NEW&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DISTANCE&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DISTANCE_GROUP&#39;</span><span class="p">,]</span>
 </pre></div>
 
 </div>
@@ -399,8 +409,7 @@ Cleaning up...
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -438,7 +447,11 @@ dfs.append(df)
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Processed #20000
 Processed #40000
@@ -475,8 +488,7 @@ Wall time: 43.5 s
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -498,8 +510,7 @@ Wall time: 43.5 s
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -551,7 +562,11 @@ Wall time: 43.5 s
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>             total       used       free     shared    buffers     cached
 Mem:           989        700        289          1         73        178
@@ -565,8 +580,7 @@ Swap:         2047         29       2017
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -588,8 +602,7 @@ Swap:         2047         29       2017
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -616,7 +629,11 @@ Swap:         2047         29       2017
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[16]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -647,7 +664,11 @@ dtype: float64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[17]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -662,8 +683,7 @@ dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -714,8 +734,7 @@ dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -752,8 +771,7 @@ dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -791,7 +809,11 @@ dtype: float64</pre>
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[24]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[24]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -800,7 +822,11 @@ dtype: float64</pre>
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1160,8 +1186,7 @@ AElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1184,8 +1209,7 @@ AElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1210,7 +1234,11 @@ AElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[26]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1219,7 +1247,11 @@ AElFTkSuQmCC
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1534,8 +1566,7 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1560,7 +1591,11 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[27]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1569,7 +1604,11 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -1897,8 +1936,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1936,7 +1974,11 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[29]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1945,7 +1987,11 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -2337,8 +2383,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2384,7 +2429,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[31]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2434,8 +2483,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2461,7 +2509,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[32]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2511,8 +2563,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2538,7 +2589,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[33]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2730,8 +2785,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2758,7 +2812,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[34]:</div>
+
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
@@ -2946,8 +3004,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3019,8 +3076,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3047,7 +3103,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[39]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[39]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -3056,7 +3116,11 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -3803,8 +3867,7 @@ aokAAAAASUVORK5CYII=
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3826,8 +3889,7 @@ aokAAAAASUVORK5CYII=
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3850,8 +3912,7 @@ aokAAAAASUVORK5CYII=
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3873,8 +3934,7 @@ aokAAAAASUVORK5CYII=
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -3908,7 +3968,11 @@ aokAAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[43]:</div>
+
+
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -3917,7 +3981,11 @@ aokAAAAASUVORK5CYII=
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -4754,8 +4822,7 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -4781,7 +4848,11 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>COUNTS    3
 Name: (RI, CO), dtype: float64
@@ -4795,8 +4866,7 @@ Name: (RI, CO), dtype: int64
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -4806,8 +4876,7 @@ Name: (RI, CO), dtype: int64
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -4836,7 +4905,11 @@ Name: (RI, CO), dtype: int64
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -5564,8 +5637,7 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5593,7 +5665,11 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 
 
 <div class="output_png output_subarea ">
@@ -5959,8 +6035,7 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -5985,7 +6060,11 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>     June 2014        
 Su Mo Tu We Th Fr Sa  
@@ -6003,8 +6082,7 @@ Su Mo Tu We Th Fr Sa
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -6018,6 +6096,9 @@ Su Mo Tu We Th Fr Sa
 </div>
 </div>
 </div>
+ 
+
+
 
       </article>
 
@@ -6043,10 +6124,10 @@ Su Mo Tu We Th Fr Sa
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="../jupyter-tip-%run">Jupyter Tidbit: %run your ipynb file</a></li>
             <li><a href="../flatten-nested-json-with-pandas">Flatten Nested JSON with Pandas</a></li>
             <li><a href="../bluemix-insights-for-weather">Kicking the Tires: Bluemix Insights for Weather</a></li>
             <li><a href="../code-hiding-on-nbviewer">Code Hiding on nbviewer</a></li>
-            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
           </ul>
         </div>
 
@@ -6061,7 +6142,7 @@ Su Mo Tu We Th Fr Sa
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2018 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

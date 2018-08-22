@@ -47,7 +47,7 @@
     <p class="pageDate">June 22, 2014</p>
   <p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>
 <div class="codehilite"><pre><span></span>me@local$ mkdir -p /mnt/registry
-me@local$ sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registry
+me@local$ sudo docker run -d -p <span class="m">5000</span>:5000 -v /mnt/registry:/tmp/registry registry
 </pre></div>
 
 
@@ -85,7 +85,7 @@ me@local$ sudo docker run -d -p 5000:5000 -v /mnt/registry:/tmp/registry registr
 <div class="codehilite"><pre><span></span><span class="c1"># start from a registry release known to work</span>
 FROM registry:0.7.3
 <span class="c1"># get the swift driver for the registry</span>
-RUN pip install docker-registry-driver-swift<span class="o">==</span>0.0.1
+RUN pip install docker-registry-driver-swift<span class="o">==</span><span class="m">0</span>.0.1
 <span class="c1"># SoftLayer uses v1 auth and the sample config doesn&#39;t have an option </span>
 <span class="c1"># for it so inject one</span>
 RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSION&#39;</span> /docker-registry/config/config_sample.yml
@@ -107,7 +107,7 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
     -e <span class="nv">OS_PASSWORD</span><span class="o">=</span><span class="s1">&#39;my_api_key&#39;</span> <span class="se">\</span>
     -e <span class="nv">OS_CONTAINER</span><span class="o">=</span><span class="s1">&#39;docker-registry&#39;</span> <span class="se">\</span>
     -e <span class="nv">GUNICORN_WORKERS</span><span class="o">=</span><span class="m">8</span> <span class="se">\</span>
-    -p 127.0.0.1:5000:5000 <span class="se">\</span>
+    -p <span class="m">127</span>.0.0.1:5000:5000 <span class="se">\</span>
     parente/registry-swift:0.7.3
 </pre></div>
 
@@ -125,12 +125,12 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
 </ul>
 <h2>Push to Test</h2>
 <p>With the registry running, you can now test it by pushing something to it. Since you have the registry image you just built on hand, you can use that. First, tag it with the registry IP and port as a prefix, again replacing <code>parente</code> with your username.</p>
-<div class="codehilite"><pre><span></span>root@vm$ docker tag parente/registry-swift:0.7.3 127.0.0.1:5000/parente/registry-swift:0.7.3
+<div class="codehilite"><pre><span></span>root@vm$ docker tag parente/registry-swift:0.7.3 <span class="m">127</span>.0.0.1:5000/parente/registry-swift:0.7.3
 </pre></div>
 
 
 <p>Now push it.</p>
-<div class="codehilite"><pre><span></span>root@vm$ docker push 127.0.0.1:5000/parente/registry-swift:0.7.3
+<div class="codehilite"><pre><span></span>root@vm$ docker push <span class="m">127</span>.0.0.1:5000/parente/registry-swift:0.7.3
 </pre></div>
 
 
@@ -162,10 +162,10 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="../jupyter-tip-%run">Jupyter Tidbit: %run your ipynb file</a></li>
             <li><a href="../flatten-nested-json-with-pandas">Flatten Nested JSON with Pandas</a></li>
             <li><a href="../bluemix-insights-for-weather">Kicking the Tires: Bluemix Insights for Weather</a></li>
             <li><a href="../code-hiding-on-nbviewer">Code Hiding on nbviewer</a></li>
-            <li><a href="../4-ways-to-extend-jupyter-notebook">Four Ways to Extend Jupyter Notebook</a></li>
           </ul>
         </div>
 
@@ -180,7 +180,7 @@ RUN sed -i <span class="s1">&#39;91i\    swift_auth_version: _env:OS_AUTH_VERSIO
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2016 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2018 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>

@@ -1,0 +1,9 @@
+---
+title: "Jupyter Tidbit: %run your ipynb file"
+date: "2018-08-21"
+git_url: "https://gist.github.com/parente/8932dac5a430dba4c17f49af16568da7.git"
+merge:
+    - README.md
+    - reusable_stuff.ipynb
+    - run_demo.ipynb
+prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/8932dac5a430dba4c17f49af16568da7">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/8932dac5a430dba4c17f49af16568da7/master">binder</a>.<hr/>
