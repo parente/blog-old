@@ -1,30 +1,29 @@
-.PHONY: build clean dev env help release
+.PHONY: build clean env help release server
 
 GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
-
-IMAGE:=parente/blog:latest
 
 export SITE_AUTHOR:=Peter Parente
 export SITE_NAME:=Parente's Mindtrove
 export SITE_DOMAIN:=mindtrove.info
 
 help:
-	@echo '1. Setup - make env'
-	@echo '2. Render - make build'
-	@echo '3. Inspect - make server'
-	@echo '4. Release - make release'
+# http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@echo
+	@echo Note: Changes to master trigger travis pushes to gh-pages
 
-clean:
+
+clean: ## Make a clean workspace
 	@rm -rf _output
 	@git clean -f .
 
-env:
-	@conda create -n blog --file requirements.txt python=3
+env: ## Make the current python environment install the generator prereqs
+	@pip install -r requirements.txt
 
-build:
+build: ## Make a local copy of the blog
 	python generate.py
 
-release: build
+release: build ## Make a manual deployment of the blog
 	@cd _output && \
 		git init && \
 		git remote add upstream 'git@github.com:parente/blog.git' && \
@@ -35,5 +34,5 @@ release: build
 		git commit -m "Release $(GIT_VERSION)" && \
 		git push upstream HEAD:gh-pages
 
-server:
+server: ## Make a local web server point to the latest local build
 	@open http://localhost:8000/_output && python -m http.server
