@@ -74,7 +74,7 @@
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install cloudant
+<div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">cloudant</span>
 </pre></div>
 
 </div>
@@ -424,19 +424,19 @@ Cleaning up...
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
-dfs = []
-buff = []
-for i, item in enumerate(database.all_docs(params={&#39;include_docs&#39; : True})):
-    buff.append(item[&#39;doc&#39;])
-    if i &gt; 0 and i % 20000 == 0:
-        print &#39;Processed #{}&#39;.format(i)
-        df = pandas.DataFrame(buff, columns=columns)
-        dfs.append(df)
-        buff = []
-# don&#39;t forget the leftovers
-df = pandas.DataFrame(buff, columns=columns)
-dfs.append(df)
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="n">time</span>
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">buff</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">database</span><span class="o">.</span><span class="n">all_docs</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;include_docs&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">})):</span>
+    <span class="n">buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;doc&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">20000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s1">&#39;Processed #</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">buff</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># don&#39;t forget the leftovers</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -551,7 +551,7 @@ Wall time: 43.5 s
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>free -m
+<div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">free</span> <span class="o">-</span><span class="n">m</span>
 </pre></div>
 
 </div>
@@ -697,7 +697,7 @@ dtype: float64</pre>
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 </pre></div>
 
 </div>
@@ -6049,7 +6049,7 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 <div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cal <span class="m">6</span> <span class="m">2014</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">cal</span> <span class="mi">6</span> <span class="mi">2014</span>
 </pre></div>
 
 </div>
