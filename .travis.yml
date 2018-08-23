@@ -9,7 +9,7 @@ deploy:
   provider: pages
   fqdn: mindtrove.info
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN
+  github-token: "$GITHUB_TOKEN"
   keep-history: true
   local-dir: _output
   verbose: true
