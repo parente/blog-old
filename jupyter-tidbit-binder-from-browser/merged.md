@@ -17,3 +17,8 @@ You can launch a temporary [Jupyter Notebook](https://github.com/jupyter/noteboo
 When I add the `requirements.txt` file below to a new gist, enter `parente/3675d82eae802db2c011037033d614a5` into the binder web UI, and click the launch, here's the result:
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master)
+<h4 class="embedFilename"><i class="fa fa-file" aria-hidden="true"></i> requirements.txt</h4>
+```
+pandas
+altair
+```

@@ -5,7 +5,7 @@
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  <title>Jupyter Tidbit: Use nbconvert to clear notebook outputs - Parente's Mindtrove</title>
+  <title>Jupyter Tidbit: Launch Notebook on Binder without leaving your browser - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="./feed/atom/index.xml" />
@@ -43,33 +43,37 @@
       <!-- Main Body -->
       <article id="mainColumn">
         
-  <h1 class="pageTitle">Jupyter Tidbit: Use nbconvert to clear notebook outputs</h1>
-    <p class="pageDate">August 22, 2018</p>
-    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/bfd7548ee08b6e377da85f8e4f88d6b8">gist</a> that supports comments and forks.<hr/></p>
+  <h1 class="pageTitle">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</h1>
+    <p class="pageDate">August 23, 2018</p>
+    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/3675d82eae802db2c011037033d614a5">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master">binder</a>.<hr/></p>
   <h3>Summary</h3>
-<p><a href="http://nbconvert.readthedocs.io/en/stable/">nbconvert</a> has a preprocessor that clears cell outputs from notebook files, leaving cell inputs intact.</p>
+<p>You can launch a temporary <a href="https://github.com/jupyter/notebook">Jupyter Notebook</a> server in the cloud with any pip or conda packaged libraries preinstalled using the <a href="https://gist.github.com">GitHub Gist</a> and <a href="https://mybinder.org">Binder</a> web UIs.</p>
+<ol>
+<li>Visit https://gist.github.com/</li>
+<li>Click <em>New Gist</em> in the top right</li>
+<li>Enter <code>requirements.txt</code> as the filename (or <code>environment.yaml</code> if you prefer conda). </li>
+<li>Add libraries you wish to use in your notebook server (e.g., <code>pandas</code>, <code>altair</code>).</li>
+<li>Click <em>Create Public Gist</em>.</li>
+<li>Visit https://mybinder.org/ </li>
+<li>Select <em>Gist</em> from the dropdown.</li>
+<li>Enter your gist <code>username/gistid</code>.</li>
+<li>Click <em>Launch</em>.</li>
+</ol>
 <h3>Example</h3>
-<p>The following shell command reads <code>my_input_notebook.ipynb</code>, removes its cell outputs, prints the cleaned notebook to stdout, and redirects that output to a new notebook file named <code>my_output_notebook.ipynb</code>.</p>
-<div class="codehilite"><pre><span></span>jupyter nbconvert my_input_notebook.ipynb --to notebook --ClearOutputPreprocessor.enabled<span class="o">=</span>True --stdout &gt; my_output_notebook.ipynb
+<p>When I add the <code>requirements.txt</code> file below to a new gist, enter <code>parente/3675d82eae802db2c011037033d614a5</code> into the binder web UI, and click the launch, here's the result:</p>
+<p><a href="https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a>
+<h4 class="embedFilename"><i class="fa fa-file" aria-hidden="true"></i> requirements.txt</h4></p>
+<div class="codehilite"><pre><span></span>pandas
+altair
 </pre></div>
-
-
-<p>The following command works similiarly, but without using a redirect.</p>
-<div class="codehilite"><pre><span></span>jupyter nbconvert my_input_notebook.ipynb --to notebook --ClearOutputPreprocessor.enabled<span class="o">=</span>True --output my_output_notebook
-</pre></div>
-
-
-<h3>Why is this useful?</h3>
-<p>One day, you may run a notebook, walk away, and return later to find your notebook has produced so much output that it has brought your browser to its knees ... after autosaving. You'll try to reload that notebook to see what went wrong, only to find that your browser tab slows to a crawl and crashes once again. Clearing outputs at the command line is one way to get out of this sticky situation.</p>
-<p>On a lighter note, you may just want to quickly purge your notebook of output before sharing it, without having to open it in Jupyter Notebook, JupyterLab, etc.</p>
 
       </article>
 
       <!-- Meta -->
       
     <div class="footerSection" id="pageMeta">
-        <h3>Another Read: <a href="./jupyter-tidbit-run-ipynb-files">Jupyter Tidbit: %run your ipynb file &#187;</a></h3>
-        <div class="excerpt"><p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p></div>
+        <h3>Another Read: <a href="./jupyter-tidbit-clear-outputs">Jupyter Tidbit: Use nbconvert to clear notebook outputs &#187;</a></h3>
+        <div class="excerpt"><p><a href="http://nbconvert.readthedocs.io/en/stable/">nbconvert</a> has a preprocessor that clears cell outputs from notebook files, leaving cell inputs intact.</p></div>
     </div>
 
 
@@ -87,10 +91,10 @@
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="./jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</a></li>
             <li><a href="./jupyter-tidbit-clear-outputs">Jupyter Tidbit: Use nbconvert to clear notebook outputs</a></li>
             <li><a href="./jupyter-tidbit-run-ipynb-files">Jupyter Tidbit: %run your ipynb file</a></li>
             <li><a href="./flatten-nested-json-with-pandas">Flatten Nested JSON with Pandas</a></li>
-            <li><a href="./bluemix-insights-for-weather">Kicking the Tires: Bluemix Insights for Weather</a></li>
           </ul>
         </div>
 

@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Thu, 23 Aug 2018 02:03:16 GMT</pubDate>
+    <pubDate>Fri, 24 Aug 2018 02:43:32 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</title>
+      <link>mindtrove.info/jupyter-tidbit-binder-from-browser/</link>
+      <pubDate>Thu, 23 Aug 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-binder-from-browser/</guid>
+      <description>Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</description>
+      <content:encoded><![CDATA[<p>You can launch a temporary <a href="https://github.com/jupyter/notebook">Jupyter Notebook</a> server in the cloud with any pip or conda packaged libraries preinstalled using the <a href="https://gist.github.com">GitHub Gist</a> and <a href="https://mybinder.org">Binder</a> web UIs.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Use nbconvert to clear notebook outputs</title>
       <link>mindtrove.info/jupyter-tidbit-clear-outputs/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/my-blog-on-docker-ipython/</guid>
       <description>This is My Blog on Docker + IPython</description>
       <content:encoded><![CDATA[<p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Run a Docker Registry Backed by IBM SoftLayer Object Storage</title>
-      <link>mindtrove.info/docker-registry-softlayer-object-storage/</link>
-      <pubDate>Sun, 22 Jun 2014 00:00:00 </pubDate>
-      <guid>mindtrove.info/docker-registry-softlayer-object-storage/</guid>
-      <description>Run a Docker Registry Backed by IBM SoftLayer Object Storage</description>
-      <content:encoded><![CDATA[<p>A <a href="https://docs.docker.com/reference/api/registry_api/">Docker registry</a> stores the images and the graph for a set of repositories. The shiny, new <a href="https://hub.docker.com/">Docker Hub</a> uses one to store all of the wonderful repositories created by the Docker community. You too can run a registry by spinning up an instance of the official <a href="https://registry.hub.docker.com/_/registry/">Docker registry image</a>. In fact, it's trivial to get a registry running using host local disk:</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
