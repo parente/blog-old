@@ -192,3 +192,7 @@ body .gist {
 .commentary {
     font-size: 0.8em;
 }
+
+.container{
+    max-width:980px !important;
+ }
