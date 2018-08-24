@@ -224,11 +224,25 @@ class FileMerger(object):
 
     @classmethod
     def _join_into_md(cls, paths):
+        needs_header = False
+        embed_tmpl = TMPL_LOOKUP.get_template('embed.mako')
+
         merged = []
         for path in paths:
+            if needs_header:
+                # Introduce the file if it's not the first file
+                header_html = embed_tmpl.render(filename=os.path.basename(path))
+                merged.append(header_html.decode('utf-8'))
+            else:
+                needs_header = True
+
             with open(path) as fh:
                 lines = fh.read()
-            merged.append(lines)
+
+            if path.endswith('.md'):
+                merged.append(lines)
+            else:
+                merged.append(f'```\n{lines}\n```')
         return '\n'.join(merged)
 
 
