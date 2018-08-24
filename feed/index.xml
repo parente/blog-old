@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Fri, 24 Aug 2018 03:13:49 GMT</pubDate>
+    <pubDate>Fri, 24 Aug 2018 20:37:42 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Kernels for text files in JupyterLab</title>
+      <link>mindtrove.info/jupyter-tidbit-kernels-for-text-files/</link>
+      <pubDate>Fri, 24 Aug 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-kernels-for-text-files/</guid>
+      <description>Jupyter Tidbit: Kernels for text files in JupyterLab</description>
+      <content:encoded><![CDATA[<p>You can associate a Console panel and kernel with a text editor in JupyterLab, and use it to execute selected code, RStudio style.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</title>
       <link>mindtrove.info/jupyter-tidbit-binder-from-browser/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/exploration-of-airline-on-time-performance/</guid>
       <description>Exploration of Airline On-Time Performance</description>
       <content:encoded><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content:encoded>
-    </item>
-    <item>
-      <title>This is My Blog on Docker + IPython</title>
-      <link>mindtrove.info/my-blog-on-docker-ipython/</link>
-      <pubDate>Sun, 13 Jul 2014 00:00:00 </pubDate>
-      <guid>mindtrove.info/my-blog-on-docker-ipython/</guid>
-      <description>This is My Blog on Docker + IPython</description>
-      <content:encoded><![CDATA[<p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

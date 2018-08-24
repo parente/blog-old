@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-24T03:13:49Z</updated>
+  <updated>2018-08-24T20:37:42Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Kernels for text files in JupyterLab]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-kernels-for-text-files/" />
+    <id>mindtrove.info/jupyter-tidbit-kernels-for-text-files/</id>
+    <updated>2018-08-24T00:00:00Z</updated>
+    <published>2018-08-24T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Kernels for text files in JupyterLab]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-kernels-for-text-files/"><![CDATA[<p>You can associate a Console panel and kernel with a text editor in JupyterLab, and use it to execute selected code, RStudio style.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2014-10-21T00:00:00Z</published>
     <summary type="html"><![CDATA[Exploration of Airline On-Time Performance]]></summary>
     <content type="html" xml:base="mindtrove.info/exploration-of-airline-on-time-performance/"><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[This is My Blog on Docker + IPython]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/my-blog-on-docker-ipython/" />
-    <id>mindtrove.info/my-blog-on-docker-ipython/</id>
-    <updated>2014-07-13T00:00:00Z</updated>
-    <published>2014-07-13T00:00:00Z</published>
-    <summary type="html"><![CDATA[This is My Blog on Docker + IPython]]></summary>
-    <content type="html" xml:base="mindtrove.info/my-blog-on-docker-ipython/"><![CDATA[<p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>]]></content>
   </entry>
 </feed>

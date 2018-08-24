@@ -5,7 +5,7 @@
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  <title>pass on OSX - Parente's Mindtrove</title>
+  <title>Jupyter Tidbit: Kernels for text files in JupyterLab - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
@@ -43,63 +43,35 @@
       <!-- Main Body -->
       <article id="mainColumn">
         
-  <h1 class="pageTitle">pass on OSX</h1>
-    <p class="pageDate">January 08, 2014</p>
-  <p>I setup <a href="http://zx2c4.com/projects/password-store/">pass</a> on my OSX boxes as a simple password manager. The doc for <code>pass</code> is good, but assumes you have a GPG key already. Here's what I did top to bottom.</p>
-<div class="codehilite"><pre><span></span>desktop$ brew update
-desktop$ brew install pass
-
-<span class="c1"># create a key, answer all prompts</span>
-desktop$ gpg2 --gen-key
-
-<span class="c1"># init password store using email from key</span>
-desktop$ pass init parente@cs.unc.edu
-
-<span class="c1"># add passwords</span>
-desktop$ pass insert Home/wifi
-desktop$ pass insert Home/rpi
-desktop$ pass insert Webfaction/panel
-
-<span class="c1"># make it a git repo</span>
-desktop$ pass git init
-
-<span class="c1"># export keys for laptop</span>
-desktop$ gpg2 --export parente@cs.unc.edu &gt; /tmp/key.pub
-desktop$ gpg2 --export-secret-key parente@cs.unc.edu &gt; /tmp/key
-
-<span class="c1"># import keys on laptop</span>
-laptop$ scp desktop:/tmp/key* /tmp
-laptop$ gpg2 --import /tmp/key.pub
-laptop$ gpg2 --import /tmp/key
-
-<span class="c1"># trust keys on laptop</span>
-laptop$ gpg --edit-key parente@cs.unc.edu
-...
-gpg&gt; trust
-...
-  <span class="nv">5</span> <span class="o">=</span> I trust ultimately
-  <span class="nv">m</span> <span class="o">=</span> back to the main menu
-
-Your decision? <span class="m">5</span>
-Do you really want to <span class="nb">set</span> this key to ultimate trust? <span class="o">(</span>y/N<span class="o">)</span> y
-...
-gpg&gt; quit
-
-<span class="c1"># git clone to laptop</span>
-laptop$ git clone desktop/.password-store ~/.password-store
-</pre></div>
-
-
-<p><em>Update 2015-02-08</em>: If you're using <a href="https://gpgtools.org/">GPG Tools</a> for Mac, the password prompt appears in a GUI dialog. If you prefer a curses command line prompt, add <code>export PINENTRY_USER_DATA="USE_CURSES=1"</code> to your interactive shell startup script.</p>
-<p><em>Update 2014-09-03</em>: I added the missing step of assigning ultimate trust to the imported key on the laptop.</p>
+  <h1 class="pageTitle">Jupyter Tidbit: Kernels for text files in JupyterLab</h1>
+    <p class="pageDate">August 24, 2018</p>
+    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/4affb14e025cf805ebd21703f117bc5d">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master">binder</a>.<hr/></p>
+  <h3>Summary</h3>
+<p>You can associate a Console panel and kernel with a text editor in JupyterLab, and use it to execute selected code, RStudio style.</p>
+<ol>
+<li>Create or open a text source file in JupyterLab.</li>
+<li>Right click in the text editor panel.</li>
+<li>Click <em>Create Console for Editor</em>.</li>
+<li>Select a kernel matched to the programming language you want to execute in the file.</li>
+<li>Notice the Console panel that appears.</li>
+<li>Highlight one or more lines back in the text editor you'd like to run.</li>
+<li>Press <em>Shift-Enter</em> to execute those lines.</li>
+<li>Notice the input and output that appears in the Console.</li>
+</ol>
+<h3>Example</h3>
+<p><a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a></p>
+<p>Here's a screencast showing how to launch a kernel and console for a simple <code>tryit.py</code> file. Click the Binder button to try this example yourself.</p>
+<p><img alt="Screencast of attaching a kernel and console to a tryit.py file in JupyterLab" src="https://gist.githubusercontent.com/parente/4affb14e025cf805ebd21703f117bc5d/raw/jlab-console-for-text.gif" /></p>
+<h3>Why is this useful?</h3>
+<p>You may want to develop a traditional Python (or other language) module alongside your notebooks. Attaching a kernel-plus-console to the source file allows you to iterate quickly on developing, executing, and evaluating your work without leaving the Jupyter environment or having to copy/paste code between a notebook / console and the module file.</p>
 
       </article>
 
       <!-- Meta -->
       
     <div class="footerSection" id="pageMeta">
-        <h3>Another Read: <a href="../watch-vagrant-changes">Watch Vagrant Changes &#187;</a></h3>
-        <div class="excerpt"><p><a href="http://vagrantup.com">Vagrant</a> is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type <code>vagrant up</code> and <code>vagrant ssh</code> in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient <code>/vagrant</code> project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.</p></div>
+        <h3>Another Read: <a href="../jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser &#187;</a></h3>
+        <div class="excerpt"><p>You can launch a temporary <a href="https://github.com/jupyter/notebook">Jupyter Notebook</a> server in the cloud with any pip or conda packaged libraries preinstalled using the <a href="https://gist.github.com">GitHub Gist</a> and <a href="https://mybinder.org">Binder</a> web UIs.</p></div>
     </div>
 
 

@@ -5,7 +5,7 @@
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  <title>Jupyter Tidbit: Launch Notebook on Binder without leaving your browser - Parente's Mindtrove</title>
+  <title>Jupyter Tidbit: Kernels for text files in JupyterLab - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="./feed/atom/index.xml" />
@@ -43,37 +43,35 @@
       <!-- Main Body -->
       <article id="mainColumn">
         
-  <h1 class="pageTitle">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</h1>
-    <p class="pageDate">August 23, 2018</p>
-    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/3675d82eae802db2c011037033d614a5">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master">binder</a>.<hr/></p>
+  <h1 class="pageTitle">Jupyter Tidbit: Kernels for text files in JupyterLab</h1>
+    <p class="pageDate">August 24, 2018</p>
+    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/4affb14e025cf805ebd21703f117bc5d">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master">binder</a>.<hr/></p>
   <h3>Summary</h3>
-<p>You can launch a temporary <a href="https://github.com/jupyter/notebook">Jupyter Notebook</a> server in the cloud with any pip or conda packaged libraries preinstalled using the <a href="https://gist.github.com">GitHub Gist</a> and <a href="https://mybinder.org">Binder</a> web UIs.</p>
+<p>You can associate a Console panel and kernel with a text editor in JupyterLab, and use it to execute selected code, RStudio style.</p>
 <ol>
-<li>Visit <a href="https://gist.github.com/">https://gist.github.com/</a>.</li>
-<li>Click <em>New Gist</em> in the top right</li>
-<li>Enter <code>requirements.txt</code> as the filename (or <code>environment.yaml</code> if you prefer conda). </li>
-<li>Add libraries you wish to use in your notebook server (e.g., <code>pandas</code>, <code>altair</code>).</li>
-<li>Click <em>Create Public Gist</em>.</li>
-<li>Visit <a href="https://mybinder.org/">https://mybinder.org/</a>.</li>
-<li>Select <em>Gist</em> from the dropdown.</li>
-<li>Enter your gist <code>username/gistid</code>.</li>
-<li>Click <em>Launch</em>.</li>
+<li>Create or open a text source file in JupyterLab.</li>
+<li>Right click in the text editor panel.</li>
+<li>Click <em>Create Console for Editor</em>.</li>
+<li>Select a kernel matched to the programming language you want to execute in the file.</li>
+<li>Notice the Console panel that appears.</li>
+<li>Highlight one or more lines back in the text editor you'd like to run.</li>
+<li>Press <em>Shift-Enter</em> to execute those lines.</li>
+<li>Notice the input and output that appears in the Console.</li>
 </ol>
 <h3>Example</h3>
-<p>When I add the <code>requirements.txt</code> file below to a new gist, enter <code>parente/3675d82eae802db2c011037033d614a5</code> into the binder web UI, and click the launch, here's the result:</p>
-<p><a href="https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a>
-<h4 class="embedFilename"><i class="fa fa-file" aria-hidden="true"></i> requirements.txt</h4></p>
-<div class="codehilite"><pre><span></span>pandas
-altair
-</pre></div>
+<p><a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master"><img alt="Binder" src="https://mybinder.org/badge.svg" /></a></p>
+<p>Here's a screencast showing how to launch a kernel and console for a simple <code>tryit.py</code> file. Click the Binder button to try this example yourself.</p>
+<p><img alt="Screencast of attaching a kernel and console to a tryit.py file in JupyterLab" src="https://gist.githubusercontent.com/parente/4affb14e025cf805ebd21703f117bc5d/raw/jlab-console-for-text.gif" /></p>
+<h3>Why is this useful?</h3>
+<p>You may want to develop a traditional Python (or other language) module alongside your notebooks. Attaching a kernel-plus-console to the source file allows you to iterate quickly on developing, executing, and evaluating your work without leaving the Jupyter environment or having to copy/paste code between a notebook / console and the module file.</p>
 
       </article>
 
       <!-- Meta -->
       
     <div class="footerSection" id="pageMeta">
-        <h3>Another Read: <a href="./jupyter-tidbit-clear-outputs">Jupyter Tidbit: Use nbconvert to clear notebook outputs &#187;</a></h3>
-        <div class="excerpt"><p><a href="http://nbconvert.readthedocs.io/en/stable/">nbconvert</a> has a preprocessor that clears cell outputs from notebook files, leaving cell inputs intact.</p></div>
+        <h3>Another Read: <a href="./jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser &#187;</a></h3>
+        <div class="excerpt"><p>You can launch a temporary <a href="https://github.com/jupyter/notebook">Jupyter Notebook</a> server in the cloud with any pip or conda packaged libraries preinstalled using the <a href="https://gist.github.com">GitHub Gist</a> and <a href="https://mybinder.org">Binder</a> web UIs.</p></div>
     </div>
 
 
@@ -90,10 +88,10 @@ altair
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="./jupyter-tidbit-kernels-for-text-files">Jupyter Tidbit: Kernels for text files in JupyterLab</a></li>
             <li><a href="./jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</a></li>
             <li><a href="./jupyter-tidbit-clear-outputs">Jupyter Tidbit: Use nbconvert to clear notebook outputs</a></li>
             <li><a href="./jupyter-tidbit-run-ipynb-files">Jupyter Tidbit: %run your ipynb file</a></li>
-            <li><a href="./flatten-nested-json-with-pandas">Flatten Nested JSON with Pandas</a></li>
           </ul>
         </div>
 
