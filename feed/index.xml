@@ -10,7 +10,7 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Tue, 28 Aug 2018 01:34:16 GMT</pubDate>
+    <pubDate>Tue, 28 Aug 2018 03:13:26 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -20,7 +20,7 @@
       <pubDate>Mon, 27 Aug 2018 00:00:00 </pubDate>
       <guid>mindtrove.info/jupyter-tidbit-run-and-say-done/</guid>
       <description>Jupyter Tidbit: Run and say "done!"</description>
-      <content:encoded><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content:encoded>
+      <content:encoded><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it in JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content:encoded>
     </item>
     <item>
       <title>Jupyter Tidbit: Kernels for text files in JupyterLab</title>

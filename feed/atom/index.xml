@@ -7,7 +7,7 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-28T01:34:16Z</updated>
+  <updated>2018-08-28T03:13:26Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
@@ -23,7 +23,7 @@
     <updated>2018-08-27T00:00:00Z</updated>
     <published>2018-08-27T00:00:00Z</published>
     <summary type="html"><![CDATA[Jupyter Tidbit: Run and say "done!"]]></summary>
-    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-and-say-done/"><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-and-say-done/"><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it in JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content>
   </entry>
   <entry>
     <author>

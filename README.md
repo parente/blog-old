@@ -2,7 +2,7 @@
 
 [Many modern web browsers](https://caniuse.com/#feat=speech-synthesis) provide a speech synthesis API for JavaScript.
 You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether 
-you're running it JupyterLab (>=0.34) or classic Jupyter Notebook.
+you're running it in JupyterLab (>=0.34) or classic Jupyter Notebook.
 
 ```python
 def speak(text):
