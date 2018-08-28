@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Fri, 24 Aug 2018 20:37:42 GMT</pubDate>
+    <pubDate>Tue, 28 Aug 2018 01:34:16 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Run and say "done!"</title>
+      <link>mindtrove.info/jupyter-tidbit-run-and-say-done/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-run-and-say-done/</guid>
+      <description>Jupyter Tidbit: Run and say "done!"</description>
+      <content:encoded><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Kernels for text files in JupyterLab</title>
       <link>mindtrove.info/jupyter-tidbit-kernels-for-text-files/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/control-read-write-access-docker-private-registry/</guid>
       <description>Control Read/Write Access to Your Private Docker Registry</description>
       <content:encoded><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Exploration of Airline On-Time Performance</title>
-      <link>mindtrove.info/exploration-of-airline-on-time-performance/</link>
-      <pubDate>Tue, 21 Oct 2014 00:00:00 </pubDate>
-      <guid>mindtrove.info/exploration-of-airline-on-time-performance/</guid>
-      <description>Exploration of Airline On-Time Performance</description>
-      <content:encoded><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content:encoded>
     </item>
   </channel>
 </rss>

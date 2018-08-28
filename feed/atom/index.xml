@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-24T20:37:42Z</updated>
+  <updated>2018-08-28T01:34:16Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Run and say "done!"]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-run-and-say-done/" />
+    <id>mindtrove.info/jupyter-tidbit-run-and-say-done/</id>
+    <updated>2018-08-27T00:00:00Z</updated>
+    <published>2018-08-27T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Run and say "done!"]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-and-say-done/"><![CDATA[<p><a href="https://caniuse.com/#feat=speech-synthesis">Many modern web browsers</a> provide a speech synthesis API for JavaScript.You can write and invoke a function to have your notebook speak when it finishes executing certain cells, whether you're running it JupyterLab (&gt;=0.34) or classic Jupyter Notebook.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2015-02-07T00:00:00Z</published>
     <summary type="html"><![CDATA[Control Read/Write Access to Your Private Docker Registry]]></summary>
     <content type="html" xml:base="mindtrove.info/control-read-write-access-docker-private-registry/"><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Exploration of Airline On-Time Performance]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/exploration-of-airline-on-time-performance/" />
-    <id>mindtrove.info/exploration-of-airline-on-time-performance/</id>
-    <updated>2014-10-21T00:00:00Z</updated>
-    <published>2014-10-21T00:00:00Z</published>
-    <summary type="html"><![CDATA[Exploration of Airline On-Time Performance]]></summary>
-    <content type="html" xml:base="mindtrove.info/exploration-of-airline-on-time-performance/"><![CDATA[<p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity. </p>]]></content>
   </entry>
 </feed>
