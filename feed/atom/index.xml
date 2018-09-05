@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-08-28T03:13:26Z</updated>
+  <updated>2018-09-05T11:46:14Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Run a notebook headlessly]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-run-notebook-headlessly/" />
+    <id>mindtrove.info/jupyter-tidbit-run-notebook-headlessly/</id>
+    <updated>2018-09-05T00:00:00Z</updated>
+    <published>2018-09-05T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Run a notebook headlessly]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-notebook-headlessly/"><![CDATA[<p>You can use <a href="https://github.com/jupyter/nbconvert">nbconvert</a> to execute a notebook from the command line (aka headlessly) and store the results in a new notebook file, an HTML file, a PDF, etc. Tools based on nbconvert, like <a href="https://github.com/nteract/papermill">papermill</a> and <a href="https://github.com/jhamrick/nbflow">nbflow</a>, take this capability a step further and let you easily parameterize and chain notebooks.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2015-07-19T00:00:00Z</published>
     <summary type="html"><![CDATA[Four Ways to Extend Jupyter Notebook]]></summary>
     <content type="html" xml:base="mindtrove.info/4-ways-to-extend-jupyter-notebook/"><![CDATA[<p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Control Read/Write Access to Your Private Docker Registry]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/control-read-write-access-docker-private-registry/" />
-    <id>mindtrove.info/control-read-write-access-docker-private-registry/</id>
-    <updated>2015-02-07T00:00:00Z</updated>
-    <published>2015-02-07T00:00:00Z</published>
-    <summary type="html"><![CDATA[Control Read/Write Access to Your Private Docker Registry]]></summary>
-    <content type="html" xml:base="mindtrove.info/control-read-write-access-docker-private-registry/"><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content>
   </entry>
 </feed>

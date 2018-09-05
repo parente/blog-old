@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Tue, 28 Aug 2018 03:13:26 GMT</pubDate>
+    <pubDate>Wed, 05 Sep 2018 11:46:14 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Run a notebook headlessly</title>
+      <link>mindtrove.info/jupyter-tidbit-run-notebook-headlessly/</link>
+      <pubDate>Wed, 05 Sep 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-run-notebook-headlessly/</guid>
+      <description>Jupyter Tidbit: Run a notebook headlessly</description>
+      <content:encoded><![CDATA[<p>You can use <a href="https://github.com/jupyter/nbconvert">nbconvert</a> to execute a notebook from the command line (aka headlessly) and store the results in a new notebook file, an HTML file, a PDF, etc. Tools based on nbconvert, like <a href="https://github.com/nteract/papermill">papermill</a> and <a href="https://github.com/jhamrick/nbflow">nbflow</a>, take this capability a step further and let you easily parameterize and chain notebooks.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Run and say "done!"</title>
       <link>mindtrove.info/jupyter-tidbit-run-and-say-done/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/4-ways-to-extend-jupyter-notebook/</guid>
       <description>Four Ways to Extend Jupyter Notebook</description>
       <content:encoded><![CDATA[<p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Control Read/Write Access to Your Private Docker Registry</title>
-      <link>mindtrove.info/control-read-write-access-docker-private-registry/</link>
-      <pubDate>Sat, 07 Feb 2015 00:00:00 </pubDate>
-      <guid>mindtrove.info/control-read-write-access-docker-private-registry/</guid>
-      <description>Control Read/Write Access to Your Private Docker Registry</description>
-      <content:encoded><![CDATA[<p>Last year, I wrote a post on how to run a <a href="docker-registry-softlayer-object-storage">private Docker registry backed by SoftLayer Object Storage</a>. Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, <a href="https://www.google.com/webhp?#q=docker%20registry%20nginx">documented in numerous places on the web</a>, sufficed for the last six months: it let our team to push and pull images while denying anonymous access.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
