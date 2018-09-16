@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Wed, 05 Sep 2018 11:46:14 GMT</pubDate>
+    <pubDate>Sun, 16 Sep 2018 02:06:15 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: IPython's ! returns an SList</title>
+      <link>mindtrove.info/jupyter-tidbit-ipython-slists/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-ipython-slists/</guid>
+      <description>Jupyter Tidbit: IPython's ! returns an SList</description>
+      <content:encoded><![CDATA[<p>IPython <em>shell assignment</em> (the <code>!</code> operator) evaluates a command using the local shell (e.g., <code>bash</code>) and returns a <em>string list</em>  (<code>IPython.utils.text.SList</code>). An <code>SList</code> is a list-like object containing "chunks" of stdout and stderr, properties for accessing those chunks in different forms, and convenience methods for operating on them.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Run a notebook headlessly</title>
       <link>mindtrove.info/jupyter-tidbit-run-notebook-headlessly/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/code-hiding-on-nbviewer/</guid>
       <description>Code Hiding on nbviewer</description>
       <content:encoded><![CDATA[<p>When this notebook first loads on <a href="http://nbviewer.jupyter.org/gist/parente/35f5d3a9145bd3f030c8">nbviewer</a>, all of the input cells are hidden. To reveal them, click the element tag icon in the top right of nbviewer. Click it again to hide them once more.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Four Ways to Extend Jupyter Notebook</title>
-      <link>mindtrove.info/4-ways-to-extend-jupyter-notebook/</link>
-      <pubDate>Sun, 19 Jul 2015 00:00:00 </pubDate>
-      <guid>mindtrove.info/4-ways-to-extend-jupyter-notebook/</guid>
-      <description>Four Ways to Extend Jupyter Notebook</description>
-      <content:encoded><![CDATA[<p><a href="https://try.jupyter.org/">Jupyter Notebook</a> (n&#233;e <a href="http://ipython.org">IPython Notebook</a>) is a web-based environment for interactive computing in notebook documents. In addition to supporting the execution of user-defined code, Jupyter Notebook has a <a href="http://carreau.gitbooks.io/jupyter-book/content/notebook-extensions.html">variety of plug-in points</a> that you can use to <a href="http://jupyter-notebook.readthedocs.org/en/latest/extending/index.html">extend the capabilities of the authoring environment itself</a>. In this post, I'll touch on four of these extension mechanisms and finish off with a word on <a href="#pkg-dist">packaging and distribution</a>:</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

@@ -50,8 +50,7 @@
     <p class="pageDate">October 21, 2014</p>
   
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html">developerWorks article about running IPython in Docker on SoftLayer</a>. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity.</p>
 <hr>
@@ -77,7 +76,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">cloudant</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -87,7 +86,7 @@
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -105,8 +104,7 @@ Cleaning up...
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we'll import the <code>cloudant</code> package we just installed and use it to connect to the read-only <code>rita_transtats_2014_06</code> database in the <code>parente</code> user account.</p>
 
@@ -121,7 +119,7 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">cloudant</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -134,7 +132,7 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="n">cloudant</span><span class="o">.</span><span class="n">Account</span><span class="p">(</span><span class="s1">&#39;parente&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -147,14 +145,13 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">database</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="s1">&#39;rita_transtats_2014_06&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>cloudant</code> package builds on the popular Python <a href="http://docs.python-requests.org/en/latest/">requests</a> package. Almost every object that comes back from the API is a subclass of a <code>requests</code> class. This means we can perform a HTTP GET against the database and get the JSON body of the response with a couple method calls.</p>
 
@@ -169,7 +166,7 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -179,7 +176,7 @@ Cleaning up...
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -204,8 +201,7 @@ Cleaning up...
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From the above, we can see the database contains roughly 500,000 documents. We can grab a couple from the database to inspect locally.</p>
 
@@ -224,7 +220,7 @@ Cleaning up...
 <span class="nb">print</span> <span class="n">items</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -234,7 +230,7 @@ Cleaning up...
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -248,8 +244,7 @@ Cleaning up...
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The dictionary format is hard to read and contains metadata from Cloudant that we don't care about. Let's use the <code>pandas</code> package to put the data in a tabular, HTML format instead.</p>
 
@@ -264,7 +259,7 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -277,7 +272,7 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;doc&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">])</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -287,7 +282,7 @@ Cleaning up...
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -360,8 +355,7 @@ Cleaning up...
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Returning to <a href="http://www.transtats.bts.gov/Fields.asp?Table_ID=236">the source of the data</a>, we can get definitions for each of these fields.</p>
 <dl class="dl-horizontal">
@@ -404,14 +398,13 @@ Cleaning up...
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;FL_DATE&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ARR_DEL15&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;ARR_DELAY_NEW&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DEP_DELAY_NEW&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DISTANCE&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;DISTANCE_GROUP&#39;</span><span class="p">,]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Moving forward, we'll assume we only have 1 GB of RAM total. Since we're only dealing with half a million records here, we can probably pull the entire contents of the database into local memory. If the data proves too large, we can rely on the map/reduce and search capabilities in Cloudant to work with the data instead.</p>
 <p>Being optimistic, we write a little loop that gets up to 20,000 docs at a time from the database. It stores the 20,000 in a simple Python list. Once the buffer reaches the threshold, we create a DataFrame from the buffer which reduces the data to just the fields we want. We do this chunking because appending to a DataFrame one row at a time is much slower.</p>
@@ -439,7 +432,7 @@ Cleaning up...
 <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -449,7 +442,7 @@ Cleaning up...
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -489,8 +482,7 @@ Wall time: 43.5 s
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can build one DataFrame by quickly concatenating all the subframes we built in the loop above.</p>
 
@@ -505,14 +497,13 @@ Wall time: 43.5 s
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point, we have two copies of all the data in memory, which is undesirable. Before we delete the temporary buffer and subframes to free up some RAM, let's ensure the DataFrame row count matches the document count in the database.</p>
 
@@ -527,7 +518,7 @@ Wall time: 43.5 s
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="n">database</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;doc_count&#39;</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -541,7 +532,7 @@ Wall time: 43.5 s
 <span class="k">del</span> <span class="n">buff</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -554,7 +545,7 @@ Wall time: 43.5 s
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">free</span> <span class="o">-</span><span class="n">m</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -564,7 +555,7 @@ Wall time: 43.5 s
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -581,8 +572,7 @@ Swap:         2047         29       2017
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As one last step, we reset the index on the DataFrame so that it is a unique, monotonically increasing integer. As it stands, we have dupes in our index because of our chunking (i.e., each chunk starts at index 0). This reset will prove important in some of our later plots where the index must be unique per row.</p>
 
@@ -597,14 +587,13 @@ Swap:         2047         29       2017
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Distribution-of-Delay-Counts-by-State">Distribution of Delay Counts by State<a class="anchor-link" href="#Distribution-of-Delay-Counts-by-State">&#182;</a></h2><blockquote><p>What is the distribution of departure delays of at least 15 minutes by state? Arrival delays?</p>
 </blockquote>
@@ -621,7 +610,7 @@ Swap:         2047         29       2017
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">DEP_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -631,7 +620,7 @@ Swap:         2047         29       2017
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -656,7 +645,7 @@ dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ARR_DEL15</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -666,7 +655,7 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -684,8 +673,7 @@ dtype: float64</pre>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Roughly a quarter of all departures and a quarter of all arrivals have delays. We can look at the distribution more closely once we enable and configure plotting with <a href="http://matplotlib.org/">matplotlib</a> and <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">seaborn</a>.</p>
 
@@ -700,7 +688,7 @@ dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -713,7 +701,7 @@ dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -729,14 +717,13 @@ dtype: float64</pre>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">rc</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's group by state now and sum the number of delays. We'll do it for both departure and arrival delays.</p>
 
@@ -752,7 +739,7 @@ dtype: float64</pre>
 <span class="n">departure_delay_counts</span> <span class="o">=</span> <span class="n">by_origin_state</span><span class="o">.</span><span class="n">DEP_DEL15</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -766,14 +753,13 @@ dtype: float64</pre>
 <span class="n">arrival_delay_counts</span> <span class="o">=</span> <span class="n">by_dest_state</span><span class="o">.</span><span class="n">ARR_DEL15</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To plot, we'll put both series in a DataFrame so we can view the arrival and departure delays for each state side-by-side.</p>
 
@@ -788,7 +774,7 @@ dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">departure_delay_counts</span><span class="p">,</span> <span class="n">arrival_delay_counts</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -801,7 +787,7 @@ dtype: float64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;DEP_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Number of delayed flights by state&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -811,7 +797,7 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -824,7 +810,7 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1187,8 +1173,7 @@ AElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Big states with big airports appear to be in the top five. But we haven't accounted for how many total flights these states service. We should plot the percentage of flights that are delayed.</p>
 
@@ -1204,14 +1189,13 @@ AElFTkSuQmCC
 <span class="n">pct_arrival_delay</span> <span class="o">=</span> <span class="n">arrival_delay_counts</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">DEST_STATE_ABR</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Ranking states of origin by their percentage of departures tells a different story than the plot above. For example, here we see Illinois and Arkansas at the top of the list whereas IL was third in total departure delay counts and AR was ranked 25th or so. California, which is #2 in the number of total departure delays is only #17 in percentage of departures delayed. Not bad.</p>
 
@@ -1226,7 +1210,7 @@ AElFTkSuQmCC
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_departure_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">% f</span><span class="s1">lights with departure delays by origin state&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1236,7 +1220,7 @@ AElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[26]:</div>
+    <div class="prompt output_prompt">Out[26]:</div>
 
 
 
@@ -1249,7 +1233,7 @@ AElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1567,8 +1551,7 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Similarly, when we look at destination states ranked by percentage of arrivals delayed, we see some new states at the head of the list. For instance, Delaware, second to last in the total number of delays overall, has the highest percentage of arrival delays for inbound flights. Iowa and Kansas are also new entries near the top.</p>
 
@@ -1583,7 +1566,7 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_arrival_delay</span><span class="o">.</span><span class="n">order</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">% f</span><span class="s1">lights with arrival delay by destination state&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1593,7 +1576,7 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[27]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -1606,7 +1589,7 @@ yIhRYEFEREREREREWlNgQURERERERERaU2BBRERERERERFr7DT3YIdVeJ8E1AAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1937,8 +1920,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can get a sense of the difference between the two percentages for each state by plotting them on the same axes. In the plot below, we find that most states see more arrival delays than departure delays. The disparity seems greatest for smaller, less populated states that don't have huge airports (e.g., DE, IA, RI). We can't say for sure without studying more data or perhaps correlating the disparity with the state's ranking in terms of the total number of flights it serviced. We'll leave that as an exercise for the future.</p>
 
@@ -1953,7 +1935,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_delay_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">pct_departure_delay</span><span class="p">,</span> <span class="n">pct_arrival_delay</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PCT_DEP_DEL15&#39;</span><span class="p">,</span> <span class="s1">&#39;PCT_ARR_DEL15&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1966,7 +1948,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pct_delay_df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;PCT_ARR_DEL15&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Overlapping </span><span class="si">% d</span><span class="s1">elay plots for comparison&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1976,7 +1958,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt output_prompt">Out[29]:</div>
 
 
 
@@ -1989,7 +1971,7 @@ WJxEM0W3ZYsAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2384,8 +2366,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Delay-Tendency">Delay Tendency<a class="anchor-link" href="#Delay-Tendency">&#182;</a></h2><blockquote><p>Is there a tendency of flights from one state to another to experience a delay of 15 minutes or more on the arriving end?</p>
 </blockquote>
@@ -2407,7 +2388,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2421,7 +2402,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <span class="n">delay_counts_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2431,7 +2412,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[31]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -2484,8 +2465,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We divide each (origin &rarr; destination) delay count by the total number of flights during the period.</p>
 
@@ -2501,7 +2481,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2511,7 +2491,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[32]:</div>
+    <div class="prompt output_prompt">Out[32]:</div>
 
 
 
@@ -2564,8 +2544,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We unstack the multiple indices so that we have a N x N matrix with origins as rows and destinations as columns.</p>
 
@@ -2581,7 +2560,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2591,7 +2570,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[33]:</div>
+    <div class="prompt output_prompt">Out[33]:</div>
 
 
 
@@ -2786,8 +2765,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Unfortunately, we now have a multilevel set of columns. One way to remove the outer level is to rotate the matrix, reset the outer index to drop it, and then rotate it back.</p>
 <p>In the resulting matrix, each cell represents the proportion of total, system-wide flights that were delayed between an (origin &rarr; destination) pair.</p>
@@ -2804,7 +2782,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <span class="n">support</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2814,7 +2792,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[34]:</div>
+    <div class="prompt output_prompt">Out[34]:</div>
 
 
 
@@ -3005,8 +2983,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point, we have a DataFrame that we can query but no clear idea of where to start looking. A visualization of the entire DataFrame can help us find interesting pairs. We borrow and slightly modify some code from <code>seaborn</code> to plot our asymmetric matrix as a heatmap.</p>
 
@@ -3021,7 +2998,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3071,14 +3048,13 @@ ED94iWmlAAAAAElFTkSuQmCC
     <span class="k">return</span> <span class="n">ax</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the plot, gray boxes represent cases where there are no flights between the origin (row) and destination (column) states. We see mostly light yellowish boxes representing state pairs where delays occur, but in tiny numbers compared to the total number of system-wide flights.</p>
 <p>We do see a couple very hot spots, namely in the (CA &rarr; CA) and (TX &rarr; TX) cells. We also see a few moderately hot spots, for example (TX &rarr; CA) and (FL &rarr; NY). We can interpret these cells as indicators of where delays tend to occur most across the entire set of flights.</p>
@@ -3095,7 +3071,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 <span class="n">asymmatplot</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">support</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3105,7 +3081,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[39]:</div>
+    <div class="prompt output_prompt">Out[39]:</div>
 
 
 
@@ -3118,7 +3094,7 @@ ED94iWmlAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3868,8 +3844,7 @@ aokAAAAASUVORK5CYII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To understand what the percentage of flights for a particular (origin &rarr; destination) state pair that are delayed, we can look at a second metric using the same visualization. Here we compute the total number of flights for each (origin &rarr; destination) pair.</p>
 
@@ -3884,14 +3859,13 @@ aokAAAAASUVORK5CYII=
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;FL_DATE&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;ORIGIN_STATE_ABR&#39;</span><span class="p">,</span> <span class="s1">&#39;DEST_STATE_ABR&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To put trip counts DataFrame and our earlier <code>delay_counts</code> DataFrame on the same axes, we rename the columns to <code>COUNTS</code> in both cases.</p>
 
@@ -3907,14 +3881,13 @@ aokAAAAASUVORK5CYII=
 <span class="n">trip_counts_df</span> <span class="o">=</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">({</span><span class="s1">&#39;FL_DATE&#39;</span> <span class="p">:</span> <span class="s1">&#39;COUNTS&#39;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we divide the delay counts by the total trip counts and perform the same transforms we did previous to produce the N by N matrix. In this case, each cell represents the proportion of flights between each (origin &rarr; destination) that were delayed.</p>
 
@@ -3929,14 +3902,13 @@ aokAAAAASUVORK5CYII=
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">delay_counts_df</span> <span class="o">/</span> <span class="n">trip_counts_df</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this second heatmap plot, the (CA &rarr; CA) and (TX &rarr; TX) hotspots from the firt visualization no longer stand out. Though there are many in-state delays for these two states, there are even more flights, keeping the percentage of delayed flights for these in-state trips lower than other routes.</p>
 <p>To the contrary, we see some cases where all flights from one state to another had arrival delays:</p>
@@ -3960,7 +3932,7 @@ aokAAAAASUVORK5CYII=
 <span class="n">asymmatplot</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">mat</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3970,7 +3942,7 @@ aokAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[43]:</div>
+    <div class="prompt output_prompt">Out[43]:</div>
 
 
 
@@ -3983,7 +3955,7 @@ aokAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -4823,8 +4795,7 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Of course, this plot only shows proportions of delayed flights between two states and doesn't depict the number of flights between the two nor the magnitude of the delay. So while all flights between Rhode Island and Colorado were delayed, we need to keep in mind ...</p>
 
@@ -4840,7 +4811,7 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 <span class="nb">print</span> <span class="n">trip_counts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;RI&#39;</span><span class="p">,</span> <span class="s1">&#39;CO&#39;</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -4850,7 +4821,7 @@ LUURERERERGRjlJiKyIiIiIiIl1Nia2IiIiIiIh0NSW2IiIiIiIi0tWU2IqIiIiIiEhX+/+SG/Eh
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -4867,8 +4838,7 @@ Name: (RI, CO), dtype: int64
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>there were only three of them!</p>
 <p>A visualization that captures both the proportion of (origin &rarr; destination) flights delayed as well as the proportion of total flights represented by that state pair is yet another exercise for the future.</p>
@@ -4877,8 +4847,7 @@ Name: (RI, CO), dtype: int64
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Delay-Distribution-by-Date">Delay Distribution by Date<a class="anchor-link" href="#Delay-Distribution-by-Date">&#182;</a></h2><blockquote><p>How did arrival delay in minutes vary day-by-day?</p>
 </blockquote>
@@ -4897,7 +4866,7 @@ Name: (RI, CO), dtype: int64
 <span class="n">fig</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -4907,7 +4876,7 @@ Name: (RI, CO), dtype: int64
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -5638,8 +5607,7 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Oh my, outliers! If the data are to be trusted, there's at least one flight every day that is over 500 minutes (8 hours) late in arriving. In the most extreme case, a flight scheduled on 2014-06-19 appears to have arrived 1800 minutes (30 hours) late.</p>
 <p>Whether this information is accurate or not requires some fact checking against other historical sources. For now, we can turn off the fliers to get a better view of the interquartile range.</p>
@@ -5657,7 +5625,7 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 <span class="n">fig</span><span class="o">.</span><span class="n">autofmt_xdate</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -5667,7 +5635,7 @@ MYE7KRzHcRzHcRzHcRzHMYE7KRzHcRzHcRzHcRzHMcH/B0hOJ9U4UtDGAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -6036,8 +6004,7 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see that the median arrival delay on most days is zero (or better than zero: this data column counts early arrivals as zeros). Some days see greater skew toward longer delays than others, particularly over the five day periods of Sunday, 2014-06-08 through Friday, 2014-06-13 and Monday, 2014-06-23 through Friday, 2014-06-27. There's also another period of elongation from Wednesday, 2014-06-18 through Thursday, 2014-06-19. These might relate to weather patterns during those weeks or an increase in number of passengers (e.g., summer vacations). Further study and sources of data are required to test these hypotheses.</p>
 
@@ -6052,7 +6019,7 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">cal</span> <span class="mi">6</span> <span class="mi">2014</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -6062,7 +6029,7 @@ hBCiM9SIEEIIIYQQQgghRGeoESGEEEIIIYQQQojOUCNCCCGEEEIIIYQQnaFGhBBCCCGEEEIIITrj
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -6083,8 +6050,7 @@ Su Mo Tu We Th Fr Sa
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Going-Further">Going Further<a class="anchor-link" href="#Going-Further">&#182;</a></h2><p>If you wish to take this exploration further, here are some questions you might consider addressing with additional thinking and data.</p>
 <ul>
@@ -6123,10 +6089,10 @@ Su Mo Tu We Th Fr Sa
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="../jupyter-tidbit-ipython-slists">Jupyter Tidbit: IPython's ! returns an SList</a></li>
             <li><a href="../jupyter-tidbit-run-notebook-headlessly">Jupyter Tidbit: Run a notebook headlessly</a></li>
             <li><a href="../jupyter-tidbit-run-and-say-done">Jupyter Tidbit: Run and say "done!"</a></li>
             <li><a href="../jupyter-tidbit-kernels-for-text-files">Jupyter Tidbit: Kernels for text files in JupyterLab</a></li>
-            <li><a href="../jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</a></li>
           </ul>
         </div>
 

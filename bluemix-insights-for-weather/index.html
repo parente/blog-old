@@ -51,8 +51,7 @@
     <p class="commentary"><i class="fa fa-comment-o"></i> This post comes from a <a href="https://gist.github.com/parente/9ed8ae67705a44522fde767e5cd7d553">Jupyter notebook I wrote</a> to help a colleague learn how to access a Bluemix service from Python. Along the way, I learned about <code>pandas.io.json.json_normalize</code> and how great it is at turning nested JSON structures into flatter DataFrames. (It deserves a short post of its own.)<hr/></p>
   
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>
 
@@ -60,16 +59,14 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Get-some-handy-libs">Get some handy libs<a class="anchor-link" href="#Get-some-handy-libs">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's start by getting some handy Python libraries for making HTTP requests and looking at the data. You can install these with typical Python package management tools like <code>pip install &lt;name&gt;</code> or <code>conda install &lt;name&gt;</code>.</p>
 
@@ -91,14 +88,13 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Get-credentials">Get credentials<a class="anchor-link" href="#Get-credentials">&#182;</a></h2><p>Next, we need to <a href="https://new-console.ng.bluemix.net/catalog/services/insights-for-weather/">provision an Insights for Weather service instance</a> on Bluemix and get the access credentials. We can follow the instructions about <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#addservice">Adding Insights for Weather to your application</a> to do so.</p>
 
@@ -106,8 +102,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To keep our credentials out of this notebook, we can copy them from the Bluemix UI put them in a <code>weather_creds.json</code> file alongside this notebook. The credentials JSON should look something like the following.</p>
 
@@ -125,8 +120,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can load that file into memory without showing its contents here.</p>
 
@@ -142,14 +136,13 @@
     <span class="n">creds</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Try-a-request">Try a request<a class="anchor-link" href="#Try-a-request">&#182;</a></h2><p>Now we're ready to try a request against the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#api_docs">REST API</a>. We'll do this using the <a href="http://docs.python-requests.org/en/master/">requests</a> Python package.</p>
 <p class="alert alert-warning">Note: At the time of this writing, the paths documented in the REST API section of the docs are incorrect. Remove the `/geocode` section of the path and it should work. The other samples and API references in the docs are correct.</p>
@@ -157,8 +150,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>First we need to build a basic auth object with our service username and password.</p>
 
@@ -174,14 +166,13 @@
                      <span class="n">creds</span><span class="p">[</span><span class="s1">&#39;credentials&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Then we can build the base URL of the service.</p>
 
@@ -197,7 +188,7 @@
 <span class="n">url</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -207,7 +198,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -223,8 +214,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The API documentation says we need to pass latitude and longitude coordinates with our queries. Instead of hardcoding one here, we'll use the Google geocoder to get the lat/lng for my hometown.</p>
 
@@ -240,7 +230,7 @@
 <span class="n">g</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -250,7 +240,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -266,8 +256,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With these in hand, we'll build up a dictionary which requests will convert into URL query args for us. Besides the geocode, we'll include other parameters like the desired unit of measurement and language of the response. (These are all <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#api_docs">noted in the API docs</a>.)</p>
 
@@ -286,14 +275,13 @@
 <span class="p">}</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's make the request to one of the documented resources to get the 10 day forecast for Durham, NC. We pass the query parameters and our basic auth information.</p>
 
@@ -308,14 +296,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="s1">&#39;/forecast/daily/10day&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can sanity check that the response status is OK easily. If anything went wrong with our request, the next line of code will raise an exception</p>
 
@@ -330,22 +317,20 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Look-at-the-response">Look at the response<a class="anchor-link" href="#Look-at-the-response">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If we made it this far, our call was successful. Let's look at the results. We parse the JSON body of the response into a Python dictionary.</p>
 
@@ -360,14 +345,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see what keys are in the body without printing the whole thing.</p>
 
@@ -382,7 +366,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">body</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -392,7 +376,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -408,8 +392,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And let's take a closer look at the forecasts. Instead of printing the raw, potentially nested Python dictionary, we'll ask pandas to take a crack at it and give us a nicer table view of the data in our notebook.</p>
 
@@ -424,14 +407,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;forecasts&#39;</span><span class="p">])</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>How many columns do we have?</p>
 
@@ -446,7 +428,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -456,7 +438,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -472,8 +454,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Quite a few. Let's make sure pandas shows them all.</p>
 
@@ -488,14 +469,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">125</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And now we can emit the entire thing as a nice HTML table for inspection.</p>
 
@@ -510,7 +490,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -520,7 +500,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -2054,8 +2034,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Of course, if we weren't in a notebook, we probably wouldn't want to do this. Rather, we'd want to filter the DataFrame or the original JSON down to whatever values we needed in our application. Let's do a bit of that now.</p>
 
@@ -2063,16 +2042,14 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Look-at-some-specific-columns">Look at some specific columns<a class="anchor-link" href="#Look-at-some-specific-columns">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now that we have an idea of all the available columns, let's dive into a few.</p>
 <p>One of the columns appears to be a human readable forecast. Before we show it, let's make sure pandas doesn't ellipsize the text.</p>
@@ -2088,14 +2065,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">125</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can look at the narrative along side the day it describes.</p>
 
@@ -2110,7 +2086,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;day.alt_daypart_name&#39;</span><span class="p">,</span> <span class="s1">&#39;narrative&#39;</span><span class="p">]]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2120,7 +2096,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -2202,8 +2178,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>There's a few mentions of the word <code>golf</code> in the big table columns. Let's find those columns in particular.</p>
 
@@ -2218,7 +2193,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;golf&#39;</span><span class="p">)]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2228,7 +2203,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -2246,8 +2221,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's look at those alongside the day names.</p>
 
@@ -2262,7 +2236,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;day.alt_daypart_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;golf&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2272,7 +2246,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -2390,8 +2364,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The day time golf category and index are interesting. Night golf is ... well ... unexplained. &#127771;</p>
 
@@ -2399,8 +2372,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>How about temperatures? Let's get a summary of the values for the next ten days.</p>
 
@@ -2415,7 +2387,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;max_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;min_temp&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2425,7 +2397,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -2492,8 +2464,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Try-another-endpoint">Try another endpoint<a class="anchor-link" href="#Try-another-endpoint">&#182;</a></h2><p>So far we've poked at the 10-day forecast resource. Let's try another just to see how similar / different it is. Here we'll fetch historical observations for the same location.</p>
 
@@ -2511,7 +2482,7 @@
 <span class="n">body</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2521,7 +2492,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -2537,8 +2508,7 @@
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This time, the key of interest is <code>observations</code>.</p>
 
@@ -2553,14 +2523,13 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">obs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;observations&#39;</span><span class="p">])</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Fewer columns this time. Let's poke at the <code>blunt_phrase</code> and `valid_time_gmt.</p>
 
@@ -2575,7 +2544,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">obs</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2585,7 +2554,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -2615,7 +2584,7 @@
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">obs</span><span class="o">.</span><span class="n">valid_time_gmt</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2625,7 +2594,7 @@
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[23]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -2646,8 +2615,7 @@ Name: valid_time_gmt, dtype: int64</pre>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can make the times more human readable. They're seconds since the epoch expressed in UTC.</p>
 
@@ -2662,14 +2630,13 @@ Name: valid_time_gmt, dtype: int64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;time_utc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">valid_time_gmt</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can check the summary of the available observations within the last 24 hours. We'll reverse them so that they're sorted newest to oldest.</p>
 
@@ -2684,7 +2651,7 @@ Name: valid_time_gmt, dtype: int64</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">obs</span><span class="p">[[</span><span class="s1">&#39;blunt_phrase&#39;</span><span class="p">,</span> <span class="s1">&#39;time_utc&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -2694,7 +2661,7 @@ Name: valid_time_gmt, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[25]:</div>
 
 
 
@@ -2901,8 +2868,7 @@ Name: valid_time_gmt, dtype: int64</pre>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>&#127804; I guess it's seasonal right now. &#127804;</p>
 
@@ -2910,8 +2876,7 @@ Name: valid_time_gmt, dtype: int64</pre>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Go-further">Go further<a class="anchor-link" href="#Go-further">&#182;</a></h2><p>We'll stop here. What we did in this notebook is a prelude to what's possible. Here's some ideas for further experimentation:</p>
 <ul>
@@ -2950,10 +2915,10 @@ Name: valid_time_gmt, dtype: int64</pre>
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="../jupyter-tidbit-ipython-slists">Jupyter Tidbit: IPython's ! returns an SList</a></li>
             <li><a href="../jupyter-tidbit-run-notebook-headlessly">Jupyter Tidbit: Run a notebook headlessly</a></li>
             <li><a href="../jupyter-tidbit-run-and-say-done">Jupyter Tidbit: Run and say "done!"</a></li>
             <li><a href="../jupyter-tidbit-kernels-for-text-files">Jupyter Tidbit: Kernels for text files in JupyterLab</a></li>
-            <li><a href="../jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</a></li>
           </ul>
         </div>
 

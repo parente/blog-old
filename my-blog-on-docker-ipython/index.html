@@ -50,8 +50,7 @@
     <p class="pageDate">July 13, 2014</p>
   
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Late last year, I decided to refresh my blog with a more responsive design. In doing so, I looked for ways to simplify my <a href="http://www.blogofile.com/">blogofile</a> setup. I looked at <a href="http://wintersmith.io/">Wintersmith</a>, <a href="http://blog.getpelican.com/">Pelican</a>, and <a href="http://pygreen.neoname.eu/">PyGreen</a> but in the end decided to roll my own: five <a href="http://www.makotemplates.org/">Mako</a> templates, 170 lines of Python, and my posts in <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. I was pleased. Mostly. Two aspects of my generator nagged me, both of which I corrected this past weekend.</p>
 
@@ -59,8 +58,7 @@
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Dockerize-It">Dockerize It<a class="anchor-link" href="#Dockerize-It">&#182;</a></h2><p>First, my simple script had not-so-simple dependencies: the Mako, Markdown, and <a href="http://pygments.org/">Pygments</a> Python packages; a local webserver to preview the rendered site; and rsync to upload the generated site to my webhost. Originally, I setup my local box with all of these, choosing to "pay-later" should I get a new computer, have to restore my box, want to post from another machine, etc. Now eight months on, I decided to pay-down this technical debt by creating a <a href="https://docker.com">Docker</a> image that packages everything together using a simple Dockerfile:</p>
 <div class="highlight"><pre><span></span>FROM ubuntu:14.04
@@ -91,16 +89,14 @@ make publish
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="IPythonize-It">IPythonize It<a class="anchor-link" href="#IPythonize-It">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Second, I felt both liberated and limited by Markdown-only postings. I say liberated because writing in Markdown beat the heck out of writing pure HTML or using some WYSIWYG editor, especially for postings laden with code. I say limited because I missed the richness of explanation available in another tool I'd been using daily for over a year now, <a href="http://ipython.org">IPython Notebook</a>. To quiesce the latter feeling, I decided to <a href="https://www.google.com/#q=blogging+with+ipython">jump on the bandwagon</a> and support both pure Markdown files and IPython Notebooks as blog posts.</p>
 <p>The addition of a couple dependencies in my <a href="https://github.com/parente/blog/blob/a164528fe14092d9d9147e2747733c77ac7ded94/Dockerfile">Dockerfile</a>, the ballooning of my generator code to a <em>massive</em> 250 lines of Python, and the creation of a new template and stylesheet enabled the blog post you see before you.</p>
@@ -110,16 +106,14 @@ make publish
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="HOWTO:-xkcd-matplotlib-plots">HOWTO: xkcd matplotlib plots<a class="anchor-link" href="#HOWTO:-xkcd-matplotlib-plots">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>First, install the Humor Sans font.</p>
 
@@ -134,7 +128,7 @@ make publish
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">antiyawn</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">uploads</span><span class="o">/</span><span class="n">Humor</span><span class="o">-</span><span class="n">Sans</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">ttf</span> <span class="o">-</span><span class="n">O</span> <span class="o">~/.</span><span class="n">fonts</span><span class="o">/</span><span class="n">Humor</span>\ <span class="n">Sans</span><span class="o">.</span><span class="n">ttf</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -144,7 +138,7 @@ make publish
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -168,8 +162,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Next, flush the matplotlib font cache.</p>
 
@@ -184,14 +177,13 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span><span class="n">rm</span> <span class="o">~/.</span><span class="n">cache</span><span class="o">/</span><span class="n">matplotlib</span><span class="o">/</span><span class="n">fontList</span><span class="o">.</span><span class="n">cache</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Then, enable inline plots in the style of <a href="http://xkcd.com/">xkcd</a>.</p>
 
@@ -206,7 +198,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -220,7 +212,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -233,7 +225,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">xkcd</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -243,7 +235,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -259,8 +251,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Finally, humbly copy and tweak an <a href="http://matplotlib.org/xkcd/examples/showcase/xkcd.html">existing matplotlib example</a>.</p>
 
@@ -287,7 +278,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Useless plots on this blog&quot;</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -297,7 +288,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -313,8 +304,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>And voil&aacute;!</strong></p>
 
@@ -329,7 +319,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -339,7 +329,7 @@ Saving to: ‘/root/.fonts/Humor Sans.ttf’
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -750,8 +740,7 @@ YII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The future is bright, I tell you.</p>
 
@@ -759,16 +748,14 @@ YII=
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Genericize-It">Genericize It<a class="anchor-link" href="#Genericize-It">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So I've scratched my two blog itches, and, as expected from itching, have created more. The fact that my blog generator is now in a portable, reusable container yet still somewhat hardcoded to this site bugs me. With a bit more elbow grease, I believe I can make a Docker image that can seed a blog like mine for any purpose simply by setting a few environment variables.</p>
 <p>When or whether I get around to scratching this itch is an open question. Meanwhile, I solemnly promise never to write another veribified heading on this blog (but I refuse to make a similar promise for xkcd-style plots).</p>
@@ -803,10 +790,10 @@ YII=
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="../jupyter-tidbit-ipython-slists">Jupyter Tidbit: IPython's ! returns an SList</a></li>
             <li><a href="../jupyter-tidbit-run-notebook-headlessly">Jupyter Tidbit: Run a notebook headlessly</a></li>
             <li><a href="../jupyter-tidbit-run-and-say-done">Jupyter Tidbit: Run and say "done!"</a></li>
             <li><a href="../jupyter-tidbit-kernels-for-text-files">Jupyter Tidbit: Kernels for text files in JupyterLab</a></li>
-            <li><a href="../jupyter-tidbit-binder-from-browser">Jupyter Tidbit: Launch Notebook on Binder without leaving your browser</a></li>
           </ul>
         </div>
 
