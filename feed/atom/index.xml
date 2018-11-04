@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-09-16T02:06:15Z</updated>
+  <updated>2018-11-04T02:08:24Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Display handles]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-display-handles/" />
+    <id>mindtrove.info/jupyter-tidbit-display-handles/</id>
+    <updated>2018-11-03T00:00:00Z</updated>
+    <published>2018-11-03T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Display handles]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-display-handles/"><![CDATA[<p>IPython's <code>display()</code> function can return a <code>DisplayHandle</code> object. You can use a <code>DisplayHandle</code> to update the output of one cell from any other cell in a Jupyter Notebook.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2016-04-14T00:00:00Z</published>
     <summary type="html"><![CDATA[Kicking the Tires: Bluemix Insights for Weather]]></summary>
     <content type="html" xml:base="mindtrove.info/bluemix-insights-for-weather/"><![CDATA[<p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Code Hiding on nbviewer]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/code-hiding-on-nbviewer/" />
-    <id>mindtrove.info/code-hiding-on-nbviewer/</id>
-    <updated>2016-04-08T00:00:00Z</updated>
-    <published>2016-04-08T00:00:00Z</published>
-    <summary type="html"><![CDATA[Code Hiding on nbviewer]]></summary>
-    <content type="html" xml:base="mindtrove.info/code-hiding-on-nbviewer/"><![CDATA[<p>When this notebook first loads on <a href="http://nbviewer.jupyter.org/gist/parente/35f5d3a9145bd3f030c8">nbviewer</a>, all of the input cells are hidden. To reveal them, click the element tag icon in the top right of nbviewer. Click it again to hide them once more.</p>]]></content>
   </entry>
 </feed>
