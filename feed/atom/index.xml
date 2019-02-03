@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2018-11-04T02:08:24Z</updated>
+  <updated>2019-02-03T15:38:32Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Config, data, and runtime paths ]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-config-paths/" />
+    <id>mindtrove.info/jupyter-tidbit-config-paths/</id>
+    <updated>2019-02-03T00:00:00Z</updated>
+    <published>2019-02-03T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Config, data, and runtime paths ]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-config-paths/"><![CDATA[<p>You can get a list of standard paths Jupyter tools use for configuration, static assets, and temporary runtime files by running the command <code>jupyter --paths</code>.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2016-06-09T00:00:00Z</published>
     <summary type="html"><![CDATA[Flatten Nested JSON with Pandas]]></summary>
     <content type="html" xml:base="mindtrove.info/flatten-nested-json-with-pandas/"><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Kicking the Tires: Bluemix Insights for Weather]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/bluemix-insights-for-weather/" />
-    <id>mindtrove.info/bluemix-insights-for-weather/</id>
-    <updated>2016-04-14T00:00:00Z</updated>
-    <published>2016-04-14T00:00:00Z</published>
-    <summary type="html"><![CDATA[Kicking the Tires: Bluemix Insights for Weather]]></summary>
-    <content type="html" xml:base="mindtrove.info/bluemix-insights-for-weather/"><![CDATA[<p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>]]></content>
   </entry>
 </feed>

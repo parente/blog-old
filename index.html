@@ -5,10 +5,7 @@
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  
-  <title>Jupyter Tidbit: Display handles - Parente's Mindtrove</title>
-
-  <link rel="stylesheet" href="./static/css/notebook.css" type="text/css" media="screen" />
+  <title>Jupyter Tidbit: Config, data, and runtime paths  - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="./feed/atom/index.xml" />
@@ -46,121 +43,38 @@
       <!-- Main Body -->
       <article id="mainColumn">
         
-  <h1 class="pageTitle">Jupyter Tidbit: Display handles</h1>
-    <p class="pageDate">November 03, 2018</p>
-    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/5cab90125191d523e76fcb398f30da05">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/5cab90125191d523e76fcb398f30da05/master">binder</a>.<hr/></p>
-  
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Summary">Summary<a class="anchor-link" href="#Summary">&#182;</a></h3><p>IPython's <code>display()</code> function can return a <code>DisplayHandle</code> object. You can use a <code>DisplayHandle</code> to update the output of one cell from any other cell in a Jupyter Notebook.</p>
-<h3 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h3><p><a href="https://mybinder.org/v2/gist/parente/5cab90125191d523e76fcb398f30da05/master?filepath=display_handle.ipynb"><img src="https://mybinder.org/badge.svg" alt="Binder"></a></p>
-<p>The <code>display_handle.ipynb</code> notebook below calls <code>display(display_id=True)</code> to get a display handle instance. It then uses the <code>DisplayHandle.display</code> method to show some initial, static Markdown. Later, in a different cell, it calls <code>DisplayHandle.update</code> in a loop to show a range of emoji characters.</p>
-<h3 id="Why-is-this-useful?">Why is this useful?<a class="anchor-link" href="#Why-is-this-useful?">&#182;</a></h3><p>You can use display handles to redraw matplotlib plots, re-render DataFrame tables, print log file updates, etc. from code executed anywhere in the notebook.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 class="embedFilename"><i class="fa fa-file" aria-hidden="true"></i> display_handle.ipynb</h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Markdown</span>
+  <h1 class="pageTitle">Jupyter Tidbit: Config, data, and runtime paths </h1>
+    <p class="pageDate">February 03, 2019</p>
+    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/a9e81a787ece496b1e57bacb80345a54">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/a9e81a787ece496b1e57bacb80345a54/master">binder</a>.<hr/></p>
+  <h3>Summary</h3>
+<p>You can get a list of standard paths Jupyter tools use for configuration, static assets, and temporary runtime files by running the command <code>jupyter --paths</code>.</p>
+<h3>Example</h3>
+<p>When I run <code>jupyter --paths</code> on my laptop, I see the following output:</p>
+<div class="codehilite"><pre><span></span>config:
+    /Users/parente/.jupyter
+    /Users/parente/miniconda3/envs/jupyter/etc/jupyter
+    /usr/local/etc/jupyter
+    /etc/jupyter
+data:
+    /Users/parente/Library/Jupyter
+    /Users/parente/miniconda3/envs/jupyter/share/jupyter
+    /usr/local/share/jupyter
+    /usr/share/jupyter
+runtime:
+    /Users/parente/Library/Jupyter/runtime
 </pre></div>
 
-    </div>
-</div>
-</div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Make a display handle.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dh</span> <span class="o">=</span> <span class="n">display</span><span class="p">(</span><span class="n">display_id</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Show some Markdown (or plain text, or a plot, or ...)</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;# Display Update Fun&#39;</span><span class="p">))</span>
-<span class="n">dh</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Update the display above.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mh">0x1F600</span><span class="p">,</span> <span class="mh">0x1F650</span><span class="p">)):</span>
-    <span class="n">dh</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;## &amp;#</span><span class="si">{i}</span><span class="s1">; {hex(i)}&#39;</span><span class="p">))</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
- 
-
-
+<h3>Why is this useful?</h3>
+<p>You can use the list of paths to locate and troubleshoot errant extensions and configuration values. You can also use the programmatic equivalents (e.g., <a href="https://jupyter-core.readthedocs.io/en/latest/paths.html"><code>import jupyter_core.paths</code> in Python</a>, <a href="https://github.com/nteract/jupyter-paths"><code>var jp = require('jupyter-paths')</code> in JavaScript</a>) to read/write appropriate configs and data when building your own Jupyter compatible tools.</p>
 
       </article>
 
       <!-- Meta -->
       
     <div class="footerSection" id="pageMeta">
-        <h3>Another Read: <a href="./jupyter-tidbit-ipython-slists">Jupyter Tidbit: IPython's ! returns an SList &#187;</a></h3>
-        <div class="excerpt"><p>IPython <em>shell assignment</em> (the <code>!</code> operator) evaluates a command using the local shell (e.g., <code>bash</code>) and returns a <em>string list</em>  (<code>IPython.utils.text.SList</code>). An <code>SList</code> is a list-like object containing "chunks" of stdout and stderr, properties for accessing those chunks in different forms, and convenience methods for operating on them.</p></div>
+        <h3>Another Read: <a href="./jupyter-tidbit-display-handles">Jupyter Tidbit: Display handles &#187;</a></h3>
+        <div class="excerpt"><p>IPython's <code>display()</code> function can return a <code>DisplayHandle</code> object. You can use a <code>DisplayHandle</code> to update the output of one cell from any other cell in a Jupyter Notebook.</p></div>
     </div>
 
 
@@ -177,10 +91,10 @@
         <div class="col-md-5" id="latest">
           <h3>Latest</h3>
           <ul>
+            <li><a href="./jupyter-tidbit-config-paths">Jupyter Tidbit: Config, data, and runtime paths </a></li>
             <li><a href="./jupyter-tidbit-display-handles">Jupyter Tidbit: Display handles</a></li>
             <li><a href="./jupyter-tidbit-ipython-slists">Jupyter Tidbit: IPython's ! returns an SList</a></li>
             <li><a href="./jupyter-tidbit-run-notebook-headlessly">Jupyter Tidbit: Run a notebook headlessly</a></li>
-            <li><a href="./jupyter-tidbit-run-and-say-done">Jupyter Tidbit: Run and say "done!"</a></li>
           </ul>
         </div>
 

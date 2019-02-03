@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Sun, 04 Nov 2018 02:08:24 GMT</pubDate>
+    <pubDate>Sun, 03 Feb 2019 15:38:32 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Config, data, and runtime paths </title>
+      <link>mindtrove.info/jupyter-tidbit-config-paths/</link>
+      <pubDate>Sun, 03 Feb 2019 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-config-paths/</guid>
+      <description>Jupyter Tidbit: Config, data, and runtime paths </description>
+      <content:encoded><![CDATA[<p>You can get a list of standard paths Jupyter tools use for configuration, static assets, and temporary runtime files by running the command <code>jupyter --paths</code>.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Display handles</title>
       <link>mindtrove.info/jupyter-tidbit-display-handles/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/flatten-nested-json-with-pandas/</guid>
       <description>Flatten Nested JSON with Pandas</description>
       <content:encoded><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Kicking the Tires: Bluemix Insights for Weather</title>
-      <link>mindtrove.info/bluemix-insights-for-weather/</link>
-      <pubDate>Thu, 14 Apr 2016 00:00:00 </pubDate>
-      <guid>mindtrove.info/bluemix-insights-for-weather/</guid>
-      <description>Kicking the Tires: Bluemix Insights for Weather</description>
-      <content:encoded><![CDATA[<p>In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

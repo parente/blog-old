@@ -5,7 +5,7 @@
     <meta name="robots" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  <title>scp Backward - Parente's Mindtrove</title>
+  <title>Jupyter Tidbit: Config, data, and runtime paths  - Parente's Mindtrove</title>
 
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="../feed/index.xml" />
     <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="../feed/atom/index.xml" />
@@ -43,55 +43,38 @@
       <!-- Main Body -->
       <article id="mainColumn">
         
-  <h1 class="pageTitle">scp Backward</h1>
-    <p class="pageDate">January 10, 2011</p>
-  <p>I get into this situation all the time:</p>
-<ol>
-<li>ssh into a remote box</li>
-<li>Look around for a file</li>
-<li>Want to copy the file back to my local box</li>
-</ol>
-<p>Maybe I'm missing some magic everyone else knows, but at this point I usually:</p>
-<ol>
-<li><em>Grumble</em></li>
-<li>Run pwd on the remote box</li>
-<li>Copy the path to the clipboard</li>
-<li>Open another console</li>
-<li>scp the pasted path to my local box</li>
-</ol>
-<p>or:</p>
-<ol>
-<li><em>Grumble</em></li>
-<li>Make sure I'm running sshd locally</li>
-<li>Figure out the IP address of my local box</li>
-<li>scp the file to my local box</li>
-</ol>
-<p>Both suck. Here's my latest solution. As long as I have sshd running on the local machine and this script on the remote machine:</p>
-<div class="codehilite"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="nv">RIP</span><span class="o">=</span><span class="si">${</span><span class="nv">SSH_CLIENT</span><span class="p">%% *</span><span class="si">}</span>
-scp <span class="nv">$@</span> <span class="nv">$RIP</span>:
+  <h1 class="pageTitle">Jupyter Tidbit: Config, data, and runtime paths </h1>
+    <p class="pageDate">February 03, 2019</p>
+    <p class="commentary"><i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/a9e81a787ece496b1e57bacb80345a54">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/a9e81a787ece496b1e57bacb80345a54/master">binder</a>.<hr/></p>
+  <h3>Summary</h3>
+<p>You can get a list of standard paths Jupyter tools use for configuration, static assets, and temporary runtime files by running the command <code>jupyter --paths</code>.</p>
+<h3>Example</h3>
+<p>When I run <code>jupyter --paths</code> on my laptop, I see the following output:</p>
+<div class="codehilite"><pre><span></span>config:
+    /Users/parente/.jupyter
+    /Users/parente/miniconda3/envs/jupyter/etc/jupyter
+    /usr/local/etc/jupyter
+    /etc/jupyter
+data:
+    /Users/parente/Library/Jupyter
+    /Users/parente/miniconda3/envs/jupyter/share/jupyter
+    /usr/local/share/jupyter
+    /usr/share/jupyter
+runtime:
+    /Users/parente/Library/Jupyter/runtime
 </pre></div>
 
 
-<p>... I can do the following:</p>
-<div class="codehilite"><pre><span></span>$ ssh foobar.com
-$ <span class="nb">cd</span> some/place
-$ ls <span class="c1"># looking ...</span>
-$ <span class="nb">cd</span> some/other/place
-$ ls <span class="c1"># looking ... etc.</span>
-$ rscp -r some_file_or_dir
-</pre></div>
-
-
-<p>... to copy <code>some_file_or_dir</code> into my home dir on my local box.</p>
+<h3>Why is this useful?</h3>
+<p>You can use the list of paths to locate and troubleshoot errant extensions and configuration values. You can also use the programmatic equivalents (e.g., <a href="https://jupyter-core.readthedocs.io/en/latest/paths.html"><code>import jupyter_core.paths</code> in Python</a>, <a href="https://github.com/nteract/jupyter-paths"><code>var jp = require('jupyter-paths')</code> in JavaScript</a>) to read/write appropriate configs and data when building your own Jupyter compatible tools.</p>
 
       </article>
 
       <!-- Meta -->
       
     <div class="footerSection" id="pageMeta">
-        <h3>Another Read: <a href="../virtualenv-bootstrapping">virtualenv Bootstrapping &#187;</a></h3>
-        <div class="excerpt"><p><a href="http://virtualenv.openplans.org/">virtualenv </a>is a tool to create isolated Python environments. <a href="http://pip.openplans.org/">pip</a> installs Python packages. Together, they're awesome.</p></div>
+        <h3>Another Read: <a href="../jupyter-tidbit-display-handles">Jupyter Tidbit: Display handles &#187;</a></h3>
+        <div class="excerpt"><p>IPython's <code>display()</code> function can return a <code>DisplayHandle</code> object. You can use a <code>DisplayHandle</code> to update the output of one cell from any other cell in a Jupyter Notebook.</p></div>
     </div>
 
 
