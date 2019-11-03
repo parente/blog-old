@@ -1,0 +1,12 @@
+---
+title: "Jupyter Tidbit: Show an image gallery"
+date: "2019-11-03"
+git_url: "https://gist.github.com/parente/691d150c934b89ce744b5d54103d7f1e.git"
+merge:
+  - README.md
+  - gallery.ipynb
+prefix:
+  <i class="fa fa-comment-o"></i> This post originates from a <a
+  href="https://gist.github.com/parente/691d150c934b89ce744b5d54103d7f1e">gist</a> that supports
+  comments, forks, and execution in <a
+  href="https://mybinder.org/v2/gist/parente/691d150c934b89ce744b5d54103d7f1e/master">binder</a>.<hr/>
