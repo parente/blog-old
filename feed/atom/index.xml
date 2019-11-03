@@ -7,11 +7,24 @@
   <title type="text">Parente's Mindtrove</title>
   <subtitle type="text">Blog of Peter Parente</subtitle>
 
-  <updated>2019-05-03T20:44:06Z</updated>
+  <updated>2019-11-03T23:43:56Z</updated>
   <generator>custom</generator>
   <link rel="alternate" type="text/html" href="mindtrove.info" />
   <id>mindtrove.info/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="mindtrove.info/feed/atom/" />
+  <entry>
+    <author>
+      <name>Peter Parente</name>
+      <uri>mindtrove.info</uri>
+    </author>
+    <title type="html"><![CDATA[Jupyter Tidbit: Show an image gallery]]></title>
+    <link rel="alternate" type="text/html" href="mindtrove.info/jupyter-tidbit-image-gallery/" />
+    <id>mindtrove.info/jupyter-tidbit-image-gallery/</id>
+    <updated>2019-11-03T00:00:00Z</updated>
+    <published>2019-11-03T00:00:00Z</published>
+    <summary type="html"><![CDATA[Jupyter Tidbit: Show an image gallery]]></summary>
+    <content type="html" xml:base="mindtrove.info/jupyter-tidbit-image-gallery/"><![CDATA[<p>JupyterLab and Jupyter Notebook can display HTML-embedded images in notebook documents. You can usethe <code>IPython.display.HTML</code> class to structure these images into a basic image gallery.</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name>Peter Parente</name>
@@ -128,18 +141,5 @@
     <published>2018-08-21T00:00:00Z</published>
     <summary type="html"><![CDATA[Jupyter Tidbit: %run your ipynb file]]></summary>
     <content type="html" xml:base="mindtrove.info/jupyter-tidbit-run-ipynb-files/"><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name>Peter Parente</name>
-      <uri>mindtrove.info</uri>
-    </author>
-    <title type="html"><![CDATA[Flatten Nested JSON with Pandas]]></title>
-    <link rel="alternate" type="text/html" href="mindtrove.info/flatten-nested-json-with-pandas/" />
-    <id>mindtrove.info/flatten-nested-json-with-pandas/</id>
-    <updated>2016-06-09T00:00:00Z</updated>
-    <published>2016-06-09T00:00:00Z</published>
-    <summary type="html"><![CDATA[Flatten Nested JSON with Pandas]]></summary>
-    <content type="html" xml:base="mindtrove.info/flatten-nested-json-with-pandas/"><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content>
   </entry>
 </feed>

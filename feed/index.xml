@@ -10,10 +10,18 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Fri, 03 May 2019 20:44:06 GMT</pubDate>
+    <pubDate>Sun, 03 Nov 2019 23:43:56 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Jupyter Tidbit: Show an image gallery</title>
+      <link>mindtrove.info/jupyter-tidbit-image-gallery/</link>
+      <pubDate>Sun, 03 Nov 2019 00:00:00 </pubDate>
+      <guid>mindtrove.info/jupyter-tidbit-image-gallery/</guid>
+      <description>Jupyter Tidbit: Show an image gallery</description>
+      <content:encoded><![CDATA[<p>JupyterLab and Jupyter Notebook can display HTML-embedded images in notebook documents. You can usethe <code>IPython.display.HTML</code> class to structure these images into a basic image gallery.</p>]]></content:encoded>
+    </item>
     <item>
       <title>Jupyter Tidbit: Config, data, and runtime paths </title>
       <link>mindtrove.info/jupyter-tidbit-config-paths/</link>
@@ -85,14 +93,6 @@
       <guid>mindtrove.info/jupyter-tidbit-run-ipynb-files/</guid>
       <description>Jupyter Tidbit: %run your ipynb file</description>
       <content:encoded><![CDATA[<p>The <code>%run</code> magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb). </p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Flatten Nested JSON with Pandas</title>
-      <link>mindtrove.info/flatten-nested-json-with-pandas/</link>
-      <pubDate>Thu, 09 Jun 2016 00:00:00 </pubDate>
-      <guid>mindtrove.info/flatten-nested-json-with-pandas/</guid>
-      <description>Flatten Nested JSON with Pandas</description>
-      <content:encoded><![CDATA[<p>I believe the <a href="http://pandas.pydata.org">pandas</a> library takes the expression "batteries included" to a whole new level (in a good way). Recent evidence: the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.json.json_normalize.html">pandas.io.json.json_normalize</a> function. It turns an array of nested JSON objects into a flat DataFrame with dotted-namespace column names. It may not seem like much, but I've found it invaluable when working with responses from RESTful APIs.</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
