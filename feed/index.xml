@@ -10,14 +10,14 @@
     <title>Parente's Mindtrove</title>
     <link>mindtrove.info</link>
     <description>Blog of Peter Parente</description>
-    <pubDate>Sun, 03 Nov 2019 23:43:56 GMT</pubDate>
+    <pubDate>Tue, 12 Nov 2019 21:17:36 GMT</pubDate>
     <generator>custom</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>Jupyter Tidbit: Show an image gallery</title>
       <link>mindtrove.info/jupyter-tidbit-image-gallery/</link>
-      <pubDate>Sun, 03 Nov 2019 00:00:00 </pubDate>
+      <pubDate>Tue, 12 Nov 2019 00:00:00 </pubDate>
       <guid>mindtrove.info/jupyter-tidbit-image-gallery/</guid>
       <description>Jupyter Tidbit: Show an image gallery</description>
       <content:encoded><![CDATA[<p>JupyterLab and Jupyter Notebook can display HTML-embedded images in notebook documents. You can usethe <code>IPython.display.HTML</code> class to structure these images into a basic image gallery.</p>]]></content:encoded>
