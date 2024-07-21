@@ -2,9 +2,7 @@
 
 GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
 
-export SITE_AUTHOR:=Peter Parente
-export SITE_NAME:=Parente's Mindtrove
-export SITE_DOMAIN:=mindtrove.info
+export SITE_DOMAIN:=parente.dev
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

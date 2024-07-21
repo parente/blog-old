@@ -1,7 +1,0 @@
----
-title: "Jupyter Tidbit: Config, data, and runtime paths "
-date: "2019-02-03"
-git_url: "https://gist.github.com/parente/a9e81a787ece496b1e57bacb80345a54.git"
-merge:
-    - README.md
-prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/a9e81a787ece496b1e57bacb80345a54">gist</a> that supports comments and forks.

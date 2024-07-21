@@ -9,8 +9,8 @@
   % if 'date' in page:
     <p class="pageDate">${page['date'].strftime('%B %d, %Y')}</p>
   % endif
-  % if 'prefix' in page:
-    <p class="commentary">${page['prefix']}</p>
+  % if 'author_comment' in page:
+    <p class="commentary"><i class="fa fa-comment-o"></i> ${page['author_comment']}<hr /></p>
   % endif
   ${page['html']}
 </%block>

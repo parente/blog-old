@@ -1,6 +1,0 @@
----
-title: "Kicking the Tires: Bluemix Insights for Weather"
-date: "2016-04-14"
-git_url: "https://gist.github.com/parente/9ed8ae67705a44522fde767e5cd7d553.git"
-filename: bluemix_insights_for_weather.ipynb
-prefix: <i class="fa fa-comment-o"></i> This post comes from a <a href="https://gist.github.com/parente/9ed8ae67705a44522fde767e5cd7d553">Jupyter notebook I wrote</a> to help a colleague learn how to access a Bluemix service from Python. Along the way, I learned about <code>pandas.io.json.json_normalize</code> and how great it is at turning nested JSON structures into flatter DataFrames. (It deserves a short post of its own.)<hr/>
