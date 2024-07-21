@@ -1,4 +1,5 @@
 _output/
+.venv/
 tmp/
 .DS_Store
 
