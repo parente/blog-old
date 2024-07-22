@@ -1,5 +1,7 @@
-Title: A reveal.js Docker Base Image with ONBUILD
-Date: 2014-02-20
+---
+title: A reveal.js Docker Base Image with ONBUILD
+date: 2014-02-20
+---
 
 Docker 0.8 introduced the `ONBUILD` instruction for Dockerfiles. I'll admit, when I read [the release announcement](http://blog.docker.io/2014/02/docker-0-8-quality-new-builder-features-btrfs-storage-osx-support/), I glossed right over this new feature. Now that I've had time to [read more about it](http://docs.docker.io/en/latest/reference/builder/#onbuild), I can see its potential for creating build environments.
 
@@ -35,7 +37,6 @@ FROM parente/revealjs
 ```
 
 in the same folder as our `slides.md`:
-
 
 ```markdown
 # Docker + reveal.js

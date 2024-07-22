@@ -1,8 +1,0 @@
----
-title: "Jupyter Tidbit: Launch Notebook on Binder without leaving your browser"
-date: "2018-08-23"
-git_url: "https://gist.github.com/parente/3675d82eae802db2c011037033d614a5.git"
-merge:
-    - README.md
-    - requirements.txt
-prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/3675d82eae802db2c011037033d614a5">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/3675d82eae802db2c011037033d614a5/master">binder</a>.<hr/>

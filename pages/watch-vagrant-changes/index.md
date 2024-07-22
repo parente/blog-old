@@ -1,5 +1,7 @@
+---
 title: Watch Vagrant Changes
 date: 2013-11-07
+---
 
 [Vagrant](http://vagrantup.com) is a great tool for a building consistent, reproducible development environments. I can include a Vagrantfile in my code base, type `vagrant up` and `vagrant ssh` in my project folder, install project dependences in the Vagrant VM, and then run my code in the convenient `/vagrant` project mount. Meanwhile, I can continue to write my code and view the results on my Mac. It's a nice setup, especially when I need to hop among projects with very different setups or need to trash a VM due to conflicting libs or other damage.
 

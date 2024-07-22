@@ -1,5 +1,7 @@
-Title: pass on OSX
-Date: 2014-01-08
+---
+title: pass on OSX
+date: 2014-01-08
+---
 
 I setup [pass](http://zx2c4.com/projects/password-store/) on my OSX boxes as a simple password manager. The doc for `pass` is good, but assumes you have a GPG key already. Here's what I did top to bottom.
 
@@ -47,6 +49,6 @@ gpg> quit
 laptop$ git clone desktop/.password-store ~/.password-store
 ```
 
-*Update 2015-02-08*: If you're using [GPG Tools](https://gpgtools.org/) for Mac, the password prompt appears in a GUI dialog. If you prefer a curses command line prompt, add `export PINENTRY_USER_DATA="USE_CURSES=1"` to your interactive shell startup script.
+_Update 2015-02-08_: If you're using [GPG Tools](https://gpgtools.org/) for Mac, the password prompt appears in a GUI dialog. If you prefer a curses command line prompt, add `export PINENTRY_USER_DATA="USE_CURSES=1"` to your interactive shell startup script.
 
-*Update 2014-09-03*: I added the missing step of assigning ultimate trust to the imported key on the laptop.
+_Update 2014-09-03_: I added the missing step of assigning ultimate trust to the imported key on the laptop.

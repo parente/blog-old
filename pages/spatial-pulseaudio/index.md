@@ -1,13 +1,11 @@
+---
 title: Spatial PulseAudio
 date: 2008-01-01
-
-
+---
 
 <p>In his <a href="http://fedoraproject.org/wiki/Interviews/LennartPoettering">interview about Pulse Audio in Fedora 8</a>, Lennart Pottering mentions support for spatial sound as one of his future goals:</p>
 
 <blockquote>Spatial event sounds: click on a button on the left side of your screen, and the event sound comes out of your left speaker. Click on one on the right side of your screen, and the event sound comes of of the right speaker. It's earcandy, but I think this could actually be quite useful, but only if we get better quality event sounds, than we have right now.</blockquote>
-
-
 
 <p>While spatialized event sounds may be 'earcandy' as Lennart admits, there are other benefits of using 3D audio over mono sounds in certain applications. One interesting use concerns the separation of concurrent sound streams such that a user can distinguish and 'pick out' one of many. The theory of <em>auditory scene analysis</em> (<a href="http://www.amazon.com/Auditory-Scene-Analysis-Perceptual-Organization/dp/0262521954">Bregman, 1990</a>) says (among many other things) that we humans can better segregate different sound sources and select one for attentive processing if the acoustic and semantic properties of streams from distinct sources differ along certain dimensions while certain properties within a stream remain constant over time.</p>
 

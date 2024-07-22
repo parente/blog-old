@@ -1,8 +1,0 @@
----
-title: 'Jupyter Tidbit: Run and say "done!"'
-date: "2018-08-27"
-git_url: "https://gist.github.com/parente/41a13f4c8fa6165d345cc7703be291a3.git"
-merge:
-    - README.md
-    - demo.ipynb
-prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/41a13f4c8fa6165d345cc7703be291a3">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/41a13f4c8fa6165d345cc7703be291a3/master?filepath=demo.ipynb">binder</a>.<hr/>

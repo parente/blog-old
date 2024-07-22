@@ -1,5 +1,7 @@
+---
 title: Yes, This Too Shall Pass
 date: 2007-06-01
+---
 
 Yesterday, IBM decided to change strategies with respect to GNOME accessibility: http://www-03.ibm.com/developerworks/blogs/page/schwer. Under this new plan, IBM is no longer supporting development of LSR, accerciser, pyatspi, AT-SPI::Collection, or Firefox/AT-SPI accessibility. These projects will not vanish, but the news does have an impact on each.
 

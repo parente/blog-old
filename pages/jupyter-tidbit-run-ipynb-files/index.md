@@ -4,7 +4,6 @@ date: 2018-08-21
 excerpt: The %run magic provided by IPython not only supports the execution of regular Python scripts, it also runs Jupyter Notebook files (.ipynb).
 author_comment: This post originates from a <a href="https://gist.github.com/parente/8932dac5a430dba4c17f49af16568da7">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/8932dac5a430dba4c17f49af16568da7/master">binder</a>.
 template: notebook.mako
-legacy: true
 ---
 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">

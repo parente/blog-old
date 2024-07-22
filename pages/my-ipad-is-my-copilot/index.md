@@ -1,5 +1,7 @@
+---
 title: My iPad Is My Copilot
 date: 2011-06-05
+---
 
 For the past month, I've been running an eyes-busy, mobile computing experiment: I've been using VoiceOver on my iPad to listen to saved <a href="http://instapaper.com">Instapaper</a> articles during my 15 minute work commute. My hypothesis is that I can <em>enjoy</em> reading during my drive without sacrificing <em>safety</em>.
 
@@ -26,6 +28,7 @@ Using Instapaper with VoiceOver requires very few gestures. A few one-finger swi
 If I find my attention wandering, a one-finger swipe to the left backs VoiceOver up. If I hit a particularly dull section, a one-finger swipe to the right skips to the next paragraph. Another two-finger swipe down the screen starts VoiceOver reading continuously again from the new location.
 
 Sometimes my commute is long or the article is short. If I finish reading the first article, I select another by doing the following:
+
 <ul>
   <li>I feel for the top-left corner of the device with my fingers. This is no more complicated than searching for the buttons on my car radio.</li>
   <li>I touch the screen a little down from the top-left. This action selects the  "Articles" button. If I miss, I tap around a bit more until I hear "Articles."</li>

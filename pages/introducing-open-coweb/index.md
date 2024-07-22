@@ -1,12 +1,14 @@
+---
 title: Introducing the OpenCoweb Project
 date: 2011-04-25
-
+---
 
 I've been part of a project at IBM since 2007, exploring what our team calls <em>cooperative web</em> concepts: multi-user interaction and audio/video conferencing within web applications. In January, IBM approved our team's proposal to release a portion of this work as the <a href="http://opencoweb.org">Open Cooperative Web Framework</a>, or OpenCoweb for short. This release features a JavaScript API for adding lock-free, concurrent editing to new or existing web applications. The keystone in the framework is an <a href="http://en.wikipedia.org/wiki/Operational_transformation">operational transformation</a> (OT) algorithm that guarantees all users converge to the same shared state.
 
 <h2>Applying OT</h2>
 
 Operational transformation is most often associated with collaborative text editors in which all users can make changes to the document at the same time. While text-editing was the original embodiment of OT, and is certainly still a great application of the technique, operational transformation can prove useful in other domains. Consider some sample cooperative web applications in which:
+
   <ul>
     <li>a team of software developers can triage bugs together (think: real-time cooperative GitHub issue tracker)</li>
     <li>a realtor and potential out-of-state buyer can review properties of interest together</li>

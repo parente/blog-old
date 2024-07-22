@@ -1,9 +1,9 @@
+---
 title: virtualenv Bootstrapping
 date: 2011-01-02
+---
 
 <a href="http://virtualenv.openplans.org/">virtualenv </a>is a tool to create isolated Python environments. <a href="http://pip.openplans.org/">pip</a> installs Python packages. Together, they're awesome.
-
-
 
 In the virtualenv documentation, Ian Bicking gives a recipe for <a href="http://virtualenv.openplans.org/#creating-your-own-bootstrap-scripts"> creating project bootstrap scripts</a> that set up an environment and then perform custom steps to populate it. The bootstrap script is self-contained: it doesn't require the person running it to have virtualenv installed. The downside is that producing the bootstrap script requires running another script that invokes `virtualenv.create_bootstrap_script` and writing the result to disk.
 

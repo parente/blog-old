@@ -1,5 +1,7 @@
-Title: Two Years
-Date: 2013-05-07
+---
+title: Two Years
+date: 2013-05-07
+---
 
 I'm alive and kicking. You wouldn't know it looking at this blog. Or my Twitter account. Or my (deleted) Facebook account. But, yep, I'm still here.
 

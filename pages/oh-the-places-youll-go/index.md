@@ -1,9 +1,9 @@
+---
 title: Oh! The Places You'll Go!
 date: 2007-06-17
+---
 
-For those who read this, I'm not longer working on GNOME accessibility projects for IBM. I've been transfered to the [QEDWiki project](http://www.youtube.com/watch?v=ckGfhlZW0BY), and may or may not have accessibility duties in the long run, but possibly some in the short term.
-
-
+For those who read this, I'm no longer working on GNOME accessibility projects for IBM. I've been transferred to the [QEDWiki project](http://www.youtube.com/watch?v=ckGfhlZW0BY), and may or may not have accessibility duties in the long run, but possibly some in the short term.
 
 Nevertheless, I'm writing up some final documentation on LSR in hope that someone will find it useful:
 

@@ -103,14 +103,15 @@ def save_latest(pages):
 def save_html(pages):
     """Save every page as an HTML document."""
     for page in pages:
+        in_tree = page["src"]
+        out_tree = join(OUT_DIR, os.path.basename(in_tree))
+        print("Saving", out_tree)
+
         tmpl_name = page.get("template", "page.mako")
         page_tmpl = TMPL_LOOKUP.get_template(tmpl_name)
         html = page_tmpl.render(
             site_name=SITE_NAME, site_root="..", page=page, all_pages=pages
         )
-        in_tree = page["src"]
-        out_tree = join(OUT_DIR, os.path.basename(in_tree))
-        print("Saving", out_tree)
         shutil.copytree(in_tree, out_tree)
         with open(join(out_tree, "index.html"), "wb") as f:
             f.write(html)

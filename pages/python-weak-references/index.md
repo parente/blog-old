@@ -1,5 +1,7 @@
+---
 title: Python Weak References
 date: 2008-04-30
+---
 
 The weakref module in the Python standard library is a useful tool for creating Python references without impeding object destruction. This tutorial covers the basics of weak references, and introduces a Proxy class enabling weak references to method objects.
 
@@ -19,7 +21,7 @@ In this case, the list object has two strong references to it stored in a and b.
 >>> del b
 ```
 
-In this case, it is hard to tell exactly when the list object is destroyed. A class with a verbose __del__ method provides a better example:
+In this case, it is hard to tell exactly when the list object is destroyed. A class with a verbose **del** method provides a better example:
 
 ```python
 class Foo(object):

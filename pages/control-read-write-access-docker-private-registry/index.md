@@ -1,5 +1,7 @@
+---
 title: Control Read/Write Access to Your Private Docker Registry
 date: 2015-02-07
+---
 
 Last year, I wrote a post on how to run a [private Docker registry backed by SoftLayer Object Storage](docker-registry-softlayer-object-storage). Soon after, my team and I started using such a registry at work behind an nginx proxy requiring basic authentication. This setup, [documented in numerous places on the web](https://www.google.com/webhp?#q=docker%20registry%20nginx), sufficed for the last six months: it let our team to push and pull images while denying anonymous access.
 

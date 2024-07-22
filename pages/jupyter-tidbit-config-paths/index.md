@@ -1,6 +1,7 @@
 ---
 title: Jupyter Tidbit: Config, data, and runtime paths
 date: 2019-02-03
+excerpt: You can get a list of standard paths Jupyter tools use for configuration, static assets, and temporary runtime files by running the command jupyter --paths.
 author_comment: This post originates from a <a href="https://gist.github.com/parente a9e81a787ece496b1e57bacb80345a54">gist</a> that supports comments and forks.
 ---
 

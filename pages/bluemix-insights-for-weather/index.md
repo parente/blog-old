@@ -2,11 +2,9 @@
 title: Kicking the Tires: Bluemix Insights for Weather
 date: 2016-04-14
 excerpt: In this notebook, we're going to poke at the <a href="https://new-console.ng.bluemix.net/docs/services/Weather/index.html#weather">Bluemix Insights for Weather service</a> from Python. We'll look at what kinds of queries we can make and do a few basic things with the data. We'll keep a running commentary that can serve as an introductory tutorial for developers who want to go off and build more sophisticated apps and analyses using the service.
+author_comment: This post comes from a <a href="https://gist.github.com/parente/9ed8ae67705a44522fde767e5cd7d553">Jupyter notebook I wrote</a> to help a colleague learn how to access a Bluemix service from Python. Along the way, I learned about <code>pandas.io.json.json_normalize</code> and how great it is at turning nested JSON structures into flatter DataFrames. (It deserves a short post of its own.)
+template: notebook.mako
 ---
-
-<link rel="stylesheet" href="../static/css/notebook.css" type="text/css" media="screen" />
-
-<p class="commentary"><i class="fa fa-comment-o"></i> This post comes from a <a href="https://gist.github.com/parente/9ed8ae67705a44522fde767e5cd7d553">Jupyter notebook I wrote</a> to help a colleague learn how to access a Bluemix service from Python. Along the way, I learned about <code>pandas.io.json.json_normalize</code> and how great it is at turning nested JSON structures into flatter DataFrames. (It deserves a short post of its own.)<hr/></p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">

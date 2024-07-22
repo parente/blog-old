@@ -1,11 +1,9 @@
+---
 title: Python operator Module
 date: 2010-12-27
-
-
+---
 
 Today I learned about the Python operator module in the standard library while playing with Blogofile. The module includes functional equivalents of standard Python operators. These are particularly useful for sorting.
-
-
 
 ```python
 import operator

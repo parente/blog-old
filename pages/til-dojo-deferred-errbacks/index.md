@@ -1,5 +1,7 @@
+---
 title: Error Handlers in dojo.Deferred Chains
 date: 2011-02-06
+---
 
 <a href="http://www.sitepen.com/blog/2010/05/03/robust-promises-with-dojo-deferred-1-5/">Starting in 1.5</a>, Dojo's <a href="http://dojotoolkit.org/api/1.5/dojo/Deferred">Deferred class</a> exposes a `then()` method that accepts three arguments: a success handler for `callback()`, an error handler for `errback`, and a progress handler for `progress()` updates. One interesting feature of the `dojo.Deferred` implementation is the ability of a callback handler to return a new deferred which becomes the target of the next handler scheduled on the original deferred.
 
@@ -7,22 +9,22 @@ Consider these two snippets. The first shows chaining on a single deferred. The 
 
 ```javascript
 var d1 = functionReturningADeferred();
-d1.then(function() {
-    console.log('first success');
-}).then(function() {
-    // scheduled on the same deferred as the first
-    // runs if the first handler completes without an exception
-    console.log('second success');
+d1.then(function () {
+  console.log("first success");
+}).then(function () {
+  // scheduled on the same deferred as the first
+  // runs if the first handler completes without an exception
+  console.log("second success");
 });
 
 var d2 = functionReturningADeferred();
-d2.then(function() {
-    console.log('first success');
-    return anotherDeferredReturningFunction();
-}).then(function() {
-    // scheduled on deferred from anotherDeferredReturningFunction
-    // runs when the second deferred's callback is invoked
-    console.log('second success');
+d2.then(function () {
+  console.log("first success");
+  return anotherDeferredReturningFunction();
+}).then(function () {
+  // scheduled on deferred from anotherDeferredReturningFunction
+  // runs when the second deferred's callback is invoked
+  console.log("second success");
 });
 ```
 
@@ -32,21 +34,32 @@ I recently wrote some code in which my deferred callback handlers returned new d
 
 ```javascript
 var d = functionReturningADeferred();
-d.then(function() {
-    console.log('first success');
+d.then(
+  function () {
+    console.log("first success");
     return anotherDeferredReturningFunction();
-}, function() {
-    console.log('first error');
-}).then(function() {
-    console.log('second success');
-    return yetAnotherDeferredReturningFunction();
-}, function() {
-    console.log('second error');
-}).then(function() {
-    console.log('third success');
-}, function() {
-    console.log('third error');
-});
+  },
+  function () {
+    console.log("first error");
+  }
+)
+  .then(
+    function () {
+      console.log("second success");
+      return yetAnotherDeferredReturningFunction();
+    },
+    function () {
+      console.log("second error");
+    }
+  )
+  .then(
+    function () {
+      console.log("third success");
+    },
+    function () {
+      console.log("third error");
+    }
+  );
 ```
 
 To my surprise, when the very first deferred's `errback()` was invoked, the console output declared:
@@ -73,24 +86,35 @@ I next tried the following approach:
 
 ```javascript
 var d = functionReturningADeferred();
-d.then(function() {
-    console.log('first success');
+d.then(
+  function () {
+    console.log("first success");
     return anotherDeferredReturningFunction();
-}, function(err) {
-    console.log('first error');
+  },
+  function (err) {
+    console.log("first error");
     throw err;
-}).then(function() {
-    console.log('second success');
-    return yetAnotherDeferredReturningFunction();
-}, function(err) {
-    console.log('second error');
-    throw err;
-}).then(function() {
-    console.log('third success');
-}, function(err) {
-    console.log('third error');
-    throw err;
-});
+  }
+)
+  .then(
+    function () {
+      console.log("second success");
+      return yetAnotherDeferredReturningFunction();
+    },
+    function (err) {
+      console.log("second error");
+      throw err;
+    }
+  )
+  .then(
+    function () {
+      console.log("third success");
+    },
+    function (err) {
+      console.log("third error");
+      throw err;
+    }
+  );
 ```
 
 This code showed improvement, but still did not have my desired behavior. An `errback()` on the initial deferred produced the following output:
@@ -117,17 +141,22 @@ Finally, I hit upon a pattern with the behavior I wanted:
 
 ```javascript
 var d = functionReturningADeferred();
-d.then(function() {
-    console.log('first success');
-    return anotherDeferredReturningFunction();
-}).then(function() {
-    console.log('second success');
+d.then(function () {
+  console.log("first success");
+  return anotherDeferredReturningFunction();
+})
+  .then(function () {
+    console.log("second success");
     return yetAnotherDeferredReturningFunction();
-}).then(function() {
-    console.log('third success');
-}, function(err) {
-    console.log('any error');
-});
+  })
+  .then(
+    function () {
+      console.log("third success");
+    },
+    function (err) {
+      console.log("any error");
+    }
+  );
 ```
 
 A `errback()` on the first deferred now resulted in the following output:

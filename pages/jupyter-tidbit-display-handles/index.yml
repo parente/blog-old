@@ -1,8 +1,0 @@
----
-title: "Jupyter Tidbit: Display handles"
-date: "2018-11-03"
-git_url: "https://gist.github.com/parente/5cab90125191d523e76fcb398f30da05.git"
-merge:
-    - README.md
-    - display_handle.ipynb
-prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/5cab90125191d523e76fcb398f30da05">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/5cab90125191d523e76fcb398f30da05/master">binder</a>.<hr/>

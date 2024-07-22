@@ -1,11 +1,9 @@
+---
 title: GtkBuilder/Glade on IronPython
 date: 2009-08-28
-
-
+---
 
 Thanks to Stephane for his answer to my query about [using GtkBuilder in IronPython](http://blog.reblochon.org/2009/08/gtkbuilder-on-ironpython.html). It turns out his [Gtk#Beans](http://gitorious.org/gtk-sharp-beans) package provides the magic sauce that is currently missing from ~~gtk# trunk~~ the current stable release.
-
-
 
 For completeness, here's the code I sent him that accomplishes the same thing using the older Glade.XML object for those that are interested. It answers a [long standing mailing list question](http://lists.ironpython.com/pipermail/users-ironpython.com/2005-August/000968.html) about using Glade.XML.Autoconnect in IronPython.
 

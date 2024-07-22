@@ -2,9 +2,9 @@
 title: Exploration of Airline On-Time Performance
 date: 2014-10-21
 excerpt: This post comes from a <a href="https://gist.github.com/parente/7cf287e32dfa49cd6664">sample notebook</a> I created for a <a href="http://www.ibm.com/developerworks/cloud/library/cl-ipy-docker-softlayer-trs/index.html" >developerWorks article about running IPython in Docker on SoftLayer</a >. I had fun toying the data and using <a href="http://web.stanford.edu/~mwaskom/software/seaborn/">Seaborn</a> and <a href="http://cloudant.com">Cloudant</a> for the first time, so I decided to include it here for posterity.
+template: notebook.mako
 ---
 
-<link rel="stylesheet" href="../static/css/notebook.css" type="text/css" media="screen" />
 <div class="cell border-box-sizing text_cell rendered">
   <div class="prompt input_prompt"></div>
   <div class="inner_cell">

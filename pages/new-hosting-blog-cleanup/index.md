@@ -1,9 +1,9 @@
+---
 title: New Hosting, Blog Cleanup
 date: 2010-12-22
+---
 
 I decided to move to Webfaction for my hosting. I really like the ability to have long running processes and what Webfaction charges for that ability seems a pitance compared to other VPS hosting I've seen.
-
-
 
 I'm taking the move as an opportunity to clean up the content on my blog. Posts with technical knowledge remain while inane commentary are gone. Pages that still have relevance remain and have been overhauled to repair broken links and code.
 

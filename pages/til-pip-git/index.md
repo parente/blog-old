@@ -1,15 +1,13 @@
+---
 title: pip Install From a Git Repo
 date: 2010-12-28
-
-
+---
 
 [pip](http://pip.openplans.org/) installs Python packages. It knows about PyPI, various source control systems, and even local setup.py files. For example, to install Tornado HEAD from GitHub:
 
 ```console
 $ sudo pip install -e git+https://github.com/facebook/tornado.git#egg=Tornado
 ```
-
-
 
 To install Tornado 1.1 from PyPI:
 

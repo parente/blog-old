@@ -1,9 +1,9 @@
+---
 title: Creating an Accessible Dojo Rating Widget
 date: 2009-08-28
+---
 
 The widgets in the [Dojo toolkit](http://dojotoolkit.org/), called Dijits, support keyboard navigation, remain visible in high-contrast mode, contain [WAI-ARIA](http://www.w3.org/TR/wai-aria/) markup for assistive technologies, and enable internationalization. This combination of techniques makes Dijits accessible to a wide range of users with disabilities and native locales.
-
-
 
 As a developer, you can mimic the techniques used by the Diijit authors to ensure your own widgets are usable by as many people as possible. This tutorial instructs you on how to create such a Dojo widget. The rating widget developed here supports mouse and keyboard input, can be used with CSS turned off, reports its value and bounds via WAI-ARIA to assistive technologies, and has text that can be translated.
 
@@ -106,13 +106,15 @@ Create another message bundle file named rating.js in the project/nls/es folder 
 <p>Next create a file named <em>Rating.html</em> in <em>project/templates/</em>. This file serves as the starting template for your widget. When Dojo parses the test page, it replaces the <em>span</em> element having attribute <em>dojoType="info.mindtrove.Rating"</em> with the content of the template. Insert the HTML below into the template file:</p>
 
 ```javascript
-<span dojoAttachPoint="box"
-     tabindex="0"
-     role="slider"
-     aria-valuetext="${currentText}"
-     aria-valuemin="0"
-     aria-valuemax="${maximumValue}"
-     aria-valuenow="${currentValue}"></span>
+<span
+  dojoAttachPoint="box"
+  tabindex="0"
+  role="slider"
+  aria-valuetext="${currentText}"
+  aria-valuemin="0"
+  aria-valuemax="${maximumValue}"
+  aria-valuenow="${currentValue}"
+></span>
 ```
 
 <p>The rating widget template contains just one <em>span</em> element with quite a few attributes. The purpose of each of these attributes is given below:</p>
@@ -141,12 +143,12 @@ Create another message bundle file named rating.js in the project/nls/es folder 
 <p>Now create a file named <em>Rating.js</em> in the <em>project/</em> folder. Add the following lines at the top of the file to define this module and import other modules the widget will use.</p>
 
 ```javascript
-dojo.provide('info.mindtrove.Rating');
-dojo.require('dijit._Widget');
-dojo.require('dijit._Templated');
-dojo.require('dojo.string');
-dojo.require('dojo.i18n');
-dojo.requireLocalization('info.mindtrove', 'rating');
+dojo.provide("info.mindtrove.Rating");
+dojo.require("dijit._Widget");
+dojo.require("dijit._Templated");
+dojo.require("dojo.string");
+dojo.require("dojo.i18n");
+dojo.requireLocalization("info.mindtrove", "rating");
 ```
 
 <p>Under these lines, define an empty shell for the <em>Rating</em> class as shown below. This class derives from the base classes <em>_Widget</em> and <em>_Templated</em> so that it will follow the standard Dijit lifecycle for initialization and destruction.</p>

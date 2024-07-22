@@ -1,7 +1,8 @@
+---
 title: scp Backward
 date: 2011-01-10
-
-
+excerpt: I get into this situation all the time: (1) ssh into a remote box, (2) look around for a file, (3) want to copy the file back to my local box.
+---
 
 I get into this situation all the time:
 
@@ -9,11 +10,9 @@ I get into this situation all the time:
 2. Look around for a file
 3. Want to copy the file back to my local box
 
-
-
 Maybe I'm missing some magic everyone else knows, but at this point I usually:
 
-1. *Grumble*
+1. _Grumble_
 2. Run pwd on the remote box
 3. Copy the path to the clipboard
 4. Open another console
@@ -21,7 +20,7 @@ Maybe I'm missing some magic everyone else knows, but at this point I usually:
 
 or:
 
-1. *Grumble*
+1. _Grumble_
 2. Make sure I'm running sshd locally
 3. Figure out the IP address of my local box
 4. scp the file to my local box

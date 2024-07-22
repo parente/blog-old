@@ -1,9 +1,12 @@
+---
 title: Code Hiding on nbviewer
 date: 2016-04-08
 excerpt: When this notebook first loads on <a href="http://nbviewer.jupyter.org/gist/parente/35f5d3a9145bd3f030c8">nbviewer</a>, all of the input cells are hidden. To reveal them, click the element tag icon in the top right of nbviewer. Click it again to hide them once more.
+template: notebook.mako
+---
 
-<link rel="stylesheet" href="../static/css/notebook.css" type="text/css" media="screen" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+
   <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">

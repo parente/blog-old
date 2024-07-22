@@ -1,5 +1,7 @@
+---
 title: Ph.D. Thesis @ UNC
 date: 2008-08-01
+---
 
 **Clique: Perceptually Based, Task Oriented Auditory Display for GUI Applications**
 
@@ -18,8 +20,8 @@ To develop this method, I studied the literature on existing auditory displays, 
 
 ## Documents
 
-* Parente, Peter. [Clique: Perceptually Based, Task Oriented Auditory Display for GUI Applications](https://s3.amazonaws.com/mindtrove/clique/parente-clique.pdf) Ph.D. Thesis. University of North Carolina-Chapel Hill. July, 2008.
-* The [proposal document](https://s3.amazonaws.com/mindtrove/clique/parente-proposal.pdf) introducing Clique as my dissertation topic approved in December, 2004.
+- Parente, Peter. [Clique: Perceptually Based, Task Oriented Auditory Display for GUI Applications](https://s3.amazonaws.com/mindtrove/clique/parente-clique.pdf) Ph.D. Thesis. University of North Carolina-Chapel Hill. July, 2008.
+- The [proposal document](https://s3.amazonaws.com/mindtrove/clique/parente-proposal.pdf) introducing Clique as my dissertation topic approved in December, 2004.
 
 ## Example Movie
 
@@ -154,14 +156,13 @@ The following sounds are examples of various concepts described in the dissertat
 
 ## Source Code
 
-The [Clique source code](https://github.com/parente/clique) is  [BSD licensed](http://www.opensource.org/licenses/bsd-license.php). I provide it as a reference implementation of a task-based, multichannel auditory display in hope that developers will revise and extend its core concepts.
+The [Clique source code](https://github.com/parente/clique) is [BSD licensed](http://www.opensource.org/licenses/bsd-license.php). I provide it as a reference implementation of a task-based, multichannel auditory display in hope that developers will revise and extend its core concepts.
 
 The source includes the following sounds licensed under various [Creative Commons licenses](http://creativecommons.org/):
 
-* By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=14447">man</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=14624">soldati-marcia.aif</a>
-* By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=29612">jnr hacksaw</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=11221">Zap.flac</a>
-* By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=197070">csengeri</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=34218">Cricket2.wav</a>
-
+- By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=14447">man</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=14624">soldati-marcia.aif</a>
+- By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=29612">jnr hacksaw</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=11221">Zap.flac</a>
+- By <a href="http://freesound.iua.upf.edu/usersViewSingle.php?id=197070">csengeri</a>: <a href="http://freesound.iua.upf.edu/samplesViewSingle.php?id=34218">Cricket2.wav</a>
 
 ## Acknowledgement
 

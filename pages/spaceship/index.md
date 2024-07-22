@@ -1,11 +1,9 @@
+---
 title: Spaceship!
 date: 2009-05-24
-
-
+---
 
 <p>When Gary announced <a href="http://wwwx.cs.unc.edu/~gb/wp/blog/2008/07/27/outfox-speech-sound-and-more-for-firefox/">Outfox</a> back in 2008, all manner of ideas for using speech and sound in the browser popped into my head. I've always had the <a href="http://mindtrove.info/clique/">boring demos</a> (i.e., for adults) at <a href="http://wwwx.cs.unc.edu/~gb/wp/blog/2008/01/22/maze-day-2008/">Maze Day</a>, so I decided to work first on a fun, somewhat educational, self-voicing browser game for <a href="http://wwwx.cs.unc.edu/~gb/wp/blog/2009/02/15/maze-day-2009/">the 2009 rendition</a>. After all, keeping the mostly under-13, soda drinking, pizza eating, game playing clientele happy is always priority #1 at Maze Day.</p>
-
-
 
 <p>The result is Spaceship!, a JavaScript game for Firefox built using <a href="http://creativecommons.org/">Creative Commons</a> licensed music, sound, speech, and graphics; the <a href="http://dojotoolkit.org">Dojo toolkit</a>; and the <a href="http://code.google.com/p/outfox">Outfox add-on</a>. In the primary portion of the game, the player fires shots at a grid of tiles trying to hit enemy ships. When the player runs out of ammo, he or she plays a set of minigames in an attempt to earn more shots. Of course, hazards and bonuses abound to keep things interesting.</p>
 

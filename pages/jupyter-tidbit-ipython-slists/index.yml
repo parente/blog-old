@@ -1,8 +1,0 @@
----
-title: "Jupyter Tidbit: IPython's ! returns an SList"
-date: "2018-09-15"
-git_url: "https://gist.github.com/parente/b6ee0efe141822dfa18b6feeda0a45e5.git"
-merge:
-    - README.md
-    - SList.ipynb
-prefix: <i class="fa fa-comment-o"></i> This post originates from a <a href="https://gist.github.com/parente/b6ee0efe141822dfa18b6feeda0a45e5">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/b6ee0efe141822dfa18b6feeda0a45e5/master">binder</a>.<hr/>
