@@ -2,7 +2,7 @@
 title: Jupyter Tidbit: Kernels for text files in JupyterLab
 date: 2018-08-24
 excerpt: You can associate a Console panel and kernel with a text editor in JupyterLab, and use it to execute selected code, RStudio style.
-author_comment: This post originates from a <a href="https://gist.github.com/parente/4affb14e025cf805ebd21703f117bc5d">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master">binder</a>.<hr/>
+author_comment: This post originates from a <a href="https://gist.github.com/parente/4affb14e025cf805ebd21703f117bc5d">gist</a> that supports comments, forks, and execution in <a href="https://mybinder.org/v2/gist/parente/4affb14e025cf805ebd21703f117bc5d/master">binder</a>.
 template: notebook.mako
 ---
 

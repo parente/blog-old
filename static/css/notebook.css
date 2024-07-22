@@ -11,9 +11,8 @@
 }
 
 .prompt {
-    font-size: 0.8em;
-    padding-top: 8px;
     float: left;
+    font-size: 0.8em;
 }
 
 .input_prompt {
@@ -25,27 +24,29 @@
 }
 
 .inner_cell {
-    margin-left: 3em;
+    margin-left: 4em;
 }
 
 .input_area pre {
     background-color: #fafafa;
+    font-size: 0.75em;
 }
 
 .output_subarea {
-    margin-left: 3em;
+    margin-left: 4em;
 }
 
 .output_subarea pre {
     border-width: 0;
     background-color: transparent;
-
+    font-size: 0.75em;
 }
 
 .output_subarea th,
 .output_subarea td,
 .output_subarea table {
     padding: 4px;
+    border: 1px solid black;
 }
 
 .output_subarea th {
@@ -56,11 +57,11 @@
     max-width: 100%;
 }
 
-.output_html {
-    overflow-x: auto;
-}
-
 .output_html .dataframe {
     font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     font-size: 13px;
+}
+
+.output_html {
+    overflow-x: auto;
 }

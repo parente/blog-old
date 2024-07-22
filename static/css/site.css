@@ -1,6 +1,10 @@
+:root {
+    --bs-code-color: #338866;
+  }
+  
 body {
     font-family: "Gentium Basic", serif;
-    font-size: 2.125em;
+    font-size: 1.25em;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -26,10 +30,11 @@ a:active {
     color: red;
 }
 
-code {
-    color: #338866;
+pre {
     background-color: #fafafa;
-    font-size: 0.8em;
+    border: 1px solid #ccc;
+    font-size: 0.75em;
+    padding: 0.5em;
 }
 
 iframe {
@@ -93,7 +98,7 @@ iframe {
 
 #siteFooter {
     padding-top: 1em;
-    font-size: 0.6em;
+    font-size: 0.7em;
 }
 
 #mainColumn p {
@@ -121,7 +126,7 @@ iframe {
 
 body .gist {
     font-family: monospace;
-    font-size: 0.6em;
+    font-size: 0.7em;
 }
 
 .centered {
@@ -133,8 +138,7 @@ body .gist {
     padding: 5px;
 }
 
-.rounded {
-    -moz-border-radius: 64px;
+.profilePic {
     border-radius: 64px;
     border: 1px solid #ddd;
     padding: 5px;
@@ -185,7 +189,7 @@ body .gist {
     color: #338866;
     border-bottom: 1px solid #ddd;
     border-radius: 0px;
-    margin: 4em 0 1em 0;
+    margin: 2em 0 1em 0;
     padding: 0.5em 0em;
 }
 

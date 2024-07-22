@@ -13,10 +13,9 @@
     <link rel="stylesheet" type="text/css" href="${site_root}/static/css/pygments.css" />
     <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Dosis:300,600' type='text/css'>
     <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Gentium+Basic' type='text/css'>
-    <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="${site_root}/static/css/site.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${site_root}/static/css/site.css" type="text/css" />
   </head>
   <body>
     <div class="container">
@@ -42,9 +41,9 @@
         <div class="col-md-4" id="contact">
           <h3>Contact</h3>
           <div>
-            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@cs.unc.edu"> parente@cs.unc.edu</a><br/>
+            <i class="fa fa-envelope-o fa-fw"></i> <a title="Email address" href="mailto:parente@gmail.com">parente@gmail.com</a><br/>
             <i class="fa fa-github fa-fw"></i> <a title="GitHub account" href="https://github.com/parente">github.com/parente</a><br/>
-            <i class="fa fa-twitter fa-fw"></i> <a title="Twitter account" href="https://twitter.com/parente">twitter.com/parente</a><br/>
+            <i class="fa fa-linkedin fa-fw"></i> <a title="LinkedIn account" href="https://linkedin.com/in/parente">linkedin.com/in/parente</a><br/>
           </div>
         </div>
 
@@ -68,7 +67,7 @@
 
       <!-- Footer -->
       <footer id="siteFooter" class="footerSection">
-        <p class="footerText">Copyright &copy; 2008, 2019 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
+        <p class="footerText">Copyright &copy; 2008, 2024 Peter Parente. All rights reserved. Except for materials otherwise noted. </p>
       </footer>
     </div>
   </body>
